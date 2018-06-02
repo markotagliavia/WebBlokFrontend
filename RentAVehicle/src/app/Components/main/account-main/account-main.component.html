@@ -1,3 +1,63 @@
-<p>
-  account-main works!
-</p>
+<app-navbar></app-navbar>
+<section class="model-area section-gap" id="cars">
+	<div class="container" style="background:gray">
+		<div class="row justify-content-center">
+			<div class="col-md-4 header-text">
+				<br>
+				<h4 class=" pb-30" style="color:black">Informations about your account:</h4>
+			</div>
+		</div>
+		<div class="row justify-content-center">
+
+			<div class="col-lg-6 model-left">
+				<form class="form" role="form" autocomplete="off">					    
+					<div class="from-group">
+						<input class="form-control txt-field" type="text" name="username" placeholder="Your username" disabled>
+						<br>
+						<input class="form-control txt-field" type="password" name="pass" placeholder="Your password">                      
+					</div>
+					<br>
+					<div class="form-group row">
+						<div class="col-md-12">
+							<a href="#" class="genric-btn success text-center btn-block">SUBMIT</a>
+							<br>
+							<p style="color:red">place for error output</p>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="col-lg-6 model-right">
+				<form class="form" role="form" autocomplete="off">					    
+					<div class="from-group">
+						<input class="form-control txt-field" type="text" name="name" placeholder="Your name">
+						<br>
+						<input class="form-control txt-field" type="text" name="surname" placeholder="Your surname">
+						<br>
+						<input class="form-control txt-field" type="email" name="email" placeholder="Email address">
+						<br>
+						<input class="form-control txt-field" type="tel" name="phone" placeholder="Phone number">
+						<br>
+						<input class="form-control txt-field" type="text" name="date" placeholder="Birth date" type="text">                        
+					</div>
+					<div class="form-group row">
+						<div class="col-md-6 wrap-left">
+							<br>
+							<p style="color:black">Picture of your licence</p>
+						</div>
+						<div class="col-md-6 wrap-right">
+							<br>
+							<button id="uploadButton">Upload</button>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-md-12">
+							<a href="#" class="genric-btn success text-center btn-block">SUBMIT</a>
+							<br>
+							<p style="color:red">place for error output</p>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>			
+	</div>	
+</section>

@@ -1761,8 +1761,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .default-select .nice-select {
-  border: none;
-  border-radius: 0px;
+  border-radius: 1px;
   height: 40px;
   background: #f9f9ff;
   padding-left: 20px;
@@ -1771,8 +1770,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .default-select .nice-select .list {
   margin-top: 0;
-  border: none;
-  border-radius: 0px;
+  border-radius: 1px;
   box-shadow: none;
   width: 100%;
   padding: 10px 0 10px 0px;
@@ -2958,7 +2956,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 .about-content {
-  padding: 120px 0px;
+  padding: 50px 0px;
   text-align: center;
 }
 

@@ -1,3 +1,34 @@
-<p>
-  add-new-service works!
-</p>
+<app-navbar></app-navbar>
+<section class="model-area section-gap" id="new_car">
+	<div class="container" style="background:gray">
+		<h4 class="row d-flex pb-30 justify-content-center" style="color:black">Add new Service</h4>
+		<form class="form" role="form" autocomplete="off">					    
+			<div class="from-group">
+				<input class="form-control txt-field" type="text" name="username" placeholder="Your username">
+				<input class="form-control txt-field" type="password" name="pass" placeholder="Your password">
+				<hr>
+				<input class="form-control txt-field" type="text" name="name" placeholder="Your name">
+				<input class="form-control txt-field" type="text" name="surname" placeholder="Your surname">
+				<input class="form-control txt-field" type="email" name="email" placeholder="Email address">
+				<input class="form-control txt-field" type="tel" name="phone" placeholder="Phone number">
+				<input class="form-control txt-field" type="text" name="date" placeholder="Birth date" type="text">                        
+			</div>
+			<div class="form-group row">
+				<div class="col-md-6 wrap-left">
+					<p style="color:white">Picture of your licence</p>
+				</div>
+				<div class="col-md-6 wrap-right">
+					<button id="uploadButton">Upload</button>
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-12">
+					<button type="reset" class="btn btn-default btn-lg btn-block text-center text-uppercase">Register</button>
+					<br>
+					<p style="color:red">place for error output</p>
+				</div>
+			</div>
+		</form>	
+	</div>	
+</section>
+
