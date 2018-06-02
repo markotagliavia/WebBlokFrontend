@@ -1,9 +1,8 @@
 <app-navbar></app-navbar>
 <section class="model-area section-gap" id="new_car">
-	<div class="container" style="background:gray">
+	<div class="container">
 		<div class="row d-flex justify-content-center pb-40">
 			<div class="col-md-8 pb-40 header-text">
-			<br>
 				<h4 class="text-center pb-10">Add new vehicle to service_name</h4>
 			</div>
 		</div>
@@ -18,7 +17,7 @@
 						<input class="form-control txt-field" type="email" name="year" placeholder="Year">
 						<br>
 						<div class="input-group-icon mt-10">
-							<div class="form-select" id="default-select">
+							<div>
 								<select id="typeOfVehicle">
 									<option value="1">Car</option>
 									<option value="1">Truck</option>
@@ -30,7 +29,7 @@
 						<input class="form-control txt-field" type="tel" name="price" placeholder="Price per hour"> 
 						<br>
 						<div class="mt-10">
-							<textarea class="single-textarea" placeholder="Describtion" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Describtion'" style="border:1px"required></textarea>
+							<textarea class="single-textarea" placeholder="Describtion" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Describtion'" style="border:solid; border-color:gray; border-width:1px" required></textarea>
 						</div>						
 					</div>
 					<div class="form-group row">

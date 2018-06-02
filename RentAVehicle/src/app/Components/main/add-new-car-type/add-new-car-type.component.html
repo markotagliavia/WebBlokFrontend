@@ -1,17 +1,15 @@
 <app-navbar></app-navbar>
 <section class="model-area section-gap" id="new_car">
-	<div class="container" style="background:gray">
+	<div class="container">
 		<div class="row d-flex justify-content-center pb-40">
 			<div class="col-md-8 pb-40 header-text">
-				<h1 class="text-center pb-10">Vehicle types</h1>
+				<h1 class="text-center pb-10">Manage vehicle types:</h1>
 			</div>
 		</div>
 		<div class="row align-items-center single-model item">
 			<div class="col-lg-6 model-left">
 				<form class="form" role="form" autocomplete="off">					    
 					<div class="from-group">
-						<p></p>
-						<br><br>
 						<input class="form-control txt-field" type="text" name="typeName" placeholder="Type name">
 						<br>				
 					</div>
@@ -20,7 +18,7 @@
 			<div class="col-lg-6 model-right">
 				<form class="form" role="form" autocomplete="off">		
 					<div class="form-group">
-						<div class="form-select" id="default-select">
+						<div>
 							<p style="color:black">Types:</p>
 							<select size="3">
 								<option value="1">Tip1</option>
@@ -32,16 +30,16 @@
 				</form>
 			</div>
 		</div>
-	<div class="row d-flex pb-30 justify-content-center">
-		<div class="col-md-12">
+		<div class="row d-flex pb-30">
 			<br>
-			<a class="genric-btn success text-center" href="#">ADD NEW</a><p></p>
-			<a class="genric-btn info text-center" href="#">UPDATE SELECTED</a><p></p>
+			<div style="padding-right:1em"><a class="genric-btn success text-center" href="#" >ADD NEW</a></div>
+			<div style="padding-right:1em"><a class="genric-btn info text-center" href="#">UPDATE SELECTED</a></div>
 			<a class="genric-btn danger text-center" href="#">DELETE SELECTED</a>
 			<br>
-			<p style="color:red">place for error output</p>
 		</div>
-	</div>		
+		<div class="row-md-12">
+			<p style="color:red">place for error output</p>
+		</div>	
 	</div>	
 </section>
 

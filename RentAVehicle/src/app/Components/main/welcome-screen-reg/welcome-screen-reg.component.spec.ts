@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CentralPartComponent } from './central-part.component';
+import { WelcomeScreenRegComponent } from './welcome-screen-reg.component';
 
-describe('CentralPartComponent', () => {
-  let component: CentralPartComponent;
-  let fixture: ComponentFixture<CentralPartComponent>;
+describe('WelcomeScreenRegComponent', () => {
+  let component: WelcomeScreenRegComponent;
+  let fixture: ComponentFixture<WelcomeScreenRegComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CentralPartComponent ]
+      declarations: [ WelcomeScreenRegComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CentralPartComponent);
+    fixture = TestBed.createComponent(WelcomeScreenRegComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

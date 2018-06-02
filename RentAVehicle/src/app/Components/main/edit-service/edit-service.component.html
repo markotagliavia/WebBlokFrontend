@@ -1,3 +1,37 @@
-<p>
-  edit-service works!
-</p>
+<app-navbar></app-navbar>
+<section class="model-area section-gap" id="new_car">
+	<div class="container" style="width:30em">
+		<h4 class="row d-flex pb-30 justify-content-center" style="color:black">Add new Service</h4>
+		<form class="form" role="form" autocomplete="off">					    
+			<div class="from-group">
+				<input class="form-control txt-field" type="text" name="name" placeholder="Name">
+				<br>
+				<input class="form-control txt-field" type="text" name="surname" placeholder="Describtion">
+				<br>
+				<input class="form-control txt-field" type="email" name="email" placeholder="Email address">
+				<br>
+				<input class="form-control txt-field" type="tel" name="phone" placeholder="Phone number">                       
+			</div>
+			<div class="form-group row">
+				<div class="col-md-6 wrap-left">
+					<br>
+					<p style="color:black">Logo</p>
+					<br>
+				</div>
+				<div class="col-md-6 wrap-right">
+					<br>
+					<button id="uploadButton">Upload</button>
+					<br>
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-12">
+					<a class="text-uppercase primary-btn btn-block text-center text-uppercase" [routerLink]="['/services']">Submit</a>
+					<br>
+					<p style="color:red">place for error output</p>
+				</div>
+			</div>
+		</form>	
+	</div>	
+</section>
+

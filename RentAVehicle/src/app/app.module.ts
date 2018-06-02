@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { AppRoutingModule } from './app-routing/app-routing.module'
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './Components/core/header/header.component';
@@ -7,7 +8,6 @@ import { LoginFormComponent } from './Components/login/login-form/login-form.com
 import { RegistrationFormComponent } from './Components/registration/registration-form/registration-form.component';
 import { FooterComponent } from './Components/core/footer/footer.component';
 import { WelcomeScreenComponent } from './Components/main/welcome-screen/welcome-screen.component';
-import { CentralPartComponent } from './Components/main/central-part/central-part.component';
 import { NavbarComponent } from './Components/core/navbar/navbar.component';
 import { ServicesMainComponent } from './Components/main/services-main/services-main.component';
 import { ServiceUnitComponent } from './Components/main/service-unit/service-unit.component';
@@ -25,7 +25,7 @@ import { ReservationComponent } from './Components/main/reservation/reservation.
 import { AddNewCarTypeComponent } from './Components/main/add-new-car-type/add-new-car-type.component';
 import { EditServiceComponent } from './Components/main/edit-service/edit-service.component';
 import { EditCarComponent } from './Components/main/edit-car/edit-car.component';
-import { EditCarTypeComponent } from './Components/main/edit-car-type/edit-car-type.component';
+import { WelcomeScreenRegComponent } from './Components/main/welcome-screen-reg/welcome-screen-reg.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +35,6 @@ import { EditCarTypeComponent } from './Components/main/edit-car-type/edit-car-t
     RegistrationFormComponent,
     FooterComponent,
     WelcomeScreenComponent,
-    CentralPartComponent,
     NavbarComponent,
     ServicesMainComponent,
     ServiceUnitComponent,
@@ -53,10 +52,11 @@ import { EditCarTypeComponent } from './Components/main/edit-car-type/edit-car-t
     AddNewCarTypeComponent,
     EditServiceComponent,
     EditCarComponent,
-    EditCarTypeComponent
+    WelcomeScreenRegComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+	AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
