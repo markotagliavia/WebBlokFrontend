@@ -1,11 +1,9 @@
-import { CurrentUser } from "app/model/current-user";
+import { CurrentUser } from "../Model/current-user";
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { Injectable } from "@angular/core";
 
 @Injectable()
 export class AuthService {
-    
-    loggedIn : boolean;
 
     constructor(private http: Http){
         

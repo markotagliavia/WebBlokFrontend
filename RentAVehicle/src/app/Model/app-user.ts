@@ -1,9 +1,11 @@
 export class AppUser {
     constructor(
-      public FirstName: string,
-      public LastName: string,
-      public UserName: string,
-      public FullName: string,
-      public Allowed: boolean
+      public name: string,
+      public surname: string,
+	  public username: string,
+	  public birthDate : Date,
+      public allowed: boolean,
+	  public loggedIn: boolean,
+	  public createService: boolean
   ){}
 }

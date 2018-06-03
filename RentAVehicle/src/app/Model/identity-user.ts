@@ -1,10 +1,10 @@
 export class IdentityUser {
     constructor(
-      public Name: string,
-      public Surname: string,
-      public Username: string,
-      public Email: string,
-      public Password: string,
-      public ConfirmPassword: string
+	  public name: string,
+      public surname: string,
+      public username: string,
+      public email: string,
+      public password: string,
+      public confirmPassword: string
     ){}
 }

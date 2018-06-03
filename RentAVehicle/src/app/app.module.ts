@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing/app-routing.module'
-
+import { HttpModule } from '@angular/http';
+import {HttpClientModule, HttpClient} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './Components/core/header/header.component';
 import { LoginFormComponent } from './Components/login/login-form/login-form.component';
@@ -26,7 +27,8 @@ import { AddNewCarTypeComponent } from './Components/main/add-new-car-type/add-n
 import { EditServiceComponent } from './Components/main/edit-service/edit-service.component';
 import { EditCarComponent } from './Components/main/edit-car/edit-car.component';
 import { WelcomeScreenRegComponent } from './Components/main/welcome-screen-reg/welcome-screen-reg.component';
-
+import { HttpService } from './Services/http-service.service'; 
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,12 +55,16 @@ import { WelcomeScreenRegComponent } from './Components/main/welcome-screen-reg/
     EditServiceComponent,
     EditCarComponent,
     WelcomeScreenRegComponent
+	
   ],
   imports: [
     BrowserModule,
-	AppRoutingModule
+	AppRoutingModule,
+	HttpClientModule,
+	HttpModule,
+	FormsModule
   ],
-  providers: [],
+  providers: [HttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
