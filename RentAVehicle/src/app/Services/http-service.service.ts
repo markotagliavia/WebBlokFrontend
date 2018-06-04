@@ -21,6 +21,7 @@ export class HttpService {
 	    console.log(`Stiglo: ${user.username} i : ${user.password}`);
         const headers: Headers = new Headers();
         headers.append('Content-type', 'application/x-www-form-urlencoded');
+		headers.append('Access-Control-Allow-Origin','Origin, Content-Type, X-Auth-Token');
 
 
 
