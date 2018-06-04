@@ -14,6 +14,7 @@ export class LoginFormComponent implements OnInit {
 	
   ngZone: NgZone;
   user: User;
+  errorText : string;
   
   constructor(public httpService: HttpService) { 
 	this.ngZone = new NgZone({enableLongStackTrace: false});
@@ -21,6 +22,7 @@ export class LoginFormComponent implements OnInit {
 		'username' : '',
 		'password' : ''
 	}
+	this.errorText = "";
   }
   
   registerResponse: any;
@@ -29,7 +31,16 @@ export class LoginFormComponent implements OnInit {
   }
   
   loginUser(): boolean {
-    console.log('Dobili smo: ${this.user.username} i ${this.user.password}');
+	if(this.user.username.length == 0){
+		this.errorText = "All fields are required";
+		return false;
+	}
+	else
+	{
+		this.errorText = "";
+	}
+	
+    console.log('Dobili smo: ', JSON.stringify(this.user));
 	this.httpService.logIn(this.user).subscribe(
       (res: any) => {
                         console.log('token: ${data.access_token}');

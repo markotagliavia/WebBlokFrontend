@@ -1,16 +1,16 @@
 
 <h4 class="text-white pb-30">Please enter your credentials:</h4>
-<form class="form" role="form" autocomplete="off">					    
+<form class="form" role="form" autocomplete="off" novalidate>					    
 	<div class="from-group">
-		<input class="form-control txt-field" type="text" name="username" placeholder="Your username" [(ngModel)]="user.username">
-		<input class="form-control txt-field" type="password" name="pass" placeholder="Your password" [(ngModel)]="user.password">            
+		<input class="form-control txt-field" type="text" name="username" placeholder="Your username" [(ngModel)]="user.username" required>
+		<input class="form-control txt-field" type="password" name="pass" placeholder="Your password" [(ngModel)]="user.password" required>            
 	</div>
 	<br>
 	<div class="form-group row">
 		<div class="col-md-12">
 			<button (click)="loginUser()" type="reset" class="btn btn-default btn-lg btn-block text-center text-uppercase">Login</button>
 			<br>
-			<p style="color:red">place for error output</p>
+			<p style="color:red">{{errorText}}</p>
 			<br>
 			<p style="color:white">If you don't have account, hurry up and <a [routerLink]="['/home/registration']">register</a> now</p>
 		</div>

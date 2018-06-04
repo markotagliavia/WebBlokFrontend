@@ -1,15 +1,15 @@
 
 <h4 class="text-white pb-30">Register your account:</h4>
-<form class="form" role="form" autocomplete="off">					    
+<form class="form" role="form" autocomplete="off" novalidate>					    
 	<div class="from-group">
-		<input class="form-control txt-field" type="text" name="username" placeholder="Your username" [(ngModel)]="user.username">
-		<input class="form-control txt-field" type="password" name="pass" placeholder="Your password" [(ngModel)]="user.password">
+		<input class="form-control txt-field" type="text" name="username" placeholder="Your username" [(ngModel)]="user.username" required>
+		<input class="form-control txt-field" type="password" name="pass" placeholder="Your password" [(ngModel)]="user.password" required>
 		<hr>
-		<input class="form-control txt-field" type="text" name="name" placeholder="Your name" [(ngModel)]="user.name">
-		<input class="form-control txt-field" type="text" name="surname" placeholder="Your surname" [(ngModel)]="user.surname">
-		<input class="form-control txt-field" type="email" name="email" placeholder="Email address" [(ngModel)]="user.email">
-		<input class="form-control txt-field" type="tel" name="phone" placeholder="Phone number" [(ngModel)]="user.contact">
-		<input class="form-control txt-field" type="text" name="date" placeholder="Birth date" type="text" [(ngModel)]="user.birth">                        
+		<input class="form-control txt-field" type="text" name="name" placeholder="Your name" [(ngModel)]="user.name" required>
+		<input class="form-control txt-field" type="text" name="surname" placeholder="Your surname" [(ngModel)]="user.surname" required>
+		<input class="form-control txt-field" type="email" id="email" name="email" placeholder="Email address" [(ngModel)]="user.email" required email #email="ngModel">
+		<input class="form-control txt-field" type="tel" name="phone" placeholder="Phone number" [(ngModel)]="user.contact" required>
+		<input class="form-control txt-field" type="text" name="date" placeholder="Birth date" type="text" [(ngModel)]="user.birth" required>                        
 	</div>
 	<div class="form-group row">
 		<div class="col-md-6 wrap-left">
@@ -23,7 +23,7 @@
 		<div class="col-md-12">
 			<button (click) = "registerUser()" type="reset" class="btn btn-default btn-lg btn-block text-center text-uppercase">Register</button>
 			<br>
-			<p style="color:red">place for error output</p>
+			<p style="color:red">{{errorText}}</p>
 		</div>
 	</div>
 </form>
