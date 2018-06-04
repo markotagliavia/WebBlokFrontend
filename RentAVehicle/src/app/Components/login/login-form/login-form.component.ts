@@ -1,5 +1,6 @@
 import { Component, OnInit,Injectable,NgZone } from '@angular/core';
 import { CurrentUser } from '../../../Model/current-user';
+import { User } from '../../../Model/user';
 import { HttpService } from '../../../Services/http-service.service'; 
 
 @Injectable()
@@ -10,12 +11,17 @@ import { HttpService } from '../../../Services/http-service.service';
 })
 export class LoginFormComponent implements OnInit {
 
-  private user = {};
-  user.usename = "";
-  user.password = "";
+	
   ngZone: NgZone;
+  user: User;
   
-  constructor(public httpService: HttpService) { this.ngZone = new NgZone({enableLongStackTrace: false});}
+  constructor(public httpService: HttpService) { 
+	this.ngZone = new NgZone({enableLongStackTrace: false});
+	this.user = {
+		'username' : '',
+		'password' : ''
+	}
+  }
   
   registerResponse: any;
 
@@ -23,10 +29,10 @@ export class LoginFormComponent implements OnInit {
   }
   
   loginUser(): boolean {
-    console.log(`Dobili smo: ${this.user.username} i : ${this.user.password}`);
+    console.log('Dobili smo: ${this.user.username} i ${this.user.password}');
 	this.httpService.logIn(this.user).subscribe(
       (res: any) => {
-                        console('token: ${data.access_token}');
+                        console.log('token: ${data.access_token}');
 
                     },
       error => {

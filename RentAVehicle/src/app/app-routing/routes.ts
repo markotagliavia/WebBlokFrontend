@@ -10,6 +10,7 @@ import { AdminPanelMainComponent } from '../Components/main/admin-panel-main/adm
 import { AddNewServiceComponent } from '../Components/main/add-new-service/add-new-service.component';
 import { AddNewCarComponent } from '../Components/main/add-new-car/add-new-car.component';
 import { AddNewCarTypeComponent } from '../Components/main/add-new-car-type/add-new-car-type.component';
+import { ReservationComponent } from '../Components/main/reservation/reservation.component';
 
 export const routes :Routes = [
 	{path: 'home/login', component: WelcomeScreenComponent},
@@ -22,5 +23,6 @@ export const routes :Routes = [
 	{path: 'services/new', component: AddNewServiceComponent},
 	{path: 'cars/new', component: AddNewCarComponent},
 	{path: 'types', component: AddNewCarTypeComponent},
+	{path: 'reservation', component: ReservationComponent},
 	{path: '', redirectTo: '/home/login', pathMatch: 'full'}
 ];

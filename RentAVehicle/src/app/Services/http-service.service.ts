@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
-
+import { User } from '../Model/user';
 import { IdentityUser } from '../Model/identity-user';
 import { AppUser } from '../Model/app-user';
 import { Observable } from "rxjs";
@@ -16,7 +16,7 @@ export class HttpService {
         return body || [];
     }
 	
-  logIn(user: any): Observable<any> {
+  logIn(user: User): Observable<any> {
 	  
 	    console.log(`Stiglo: ${user.username} i : ${user.password}`);
         const headers: Headers = new Headers();
@@ -37,5 +37,11 @@ export class HttpService {
         return this.http.post(
             'http://localhost:51432/oauth/token/',
             body, opts);
+    }
+	
+	  register(user: AppUser) {
+	  
+	    console.log(`Stiglo: ${user.username} i : ${user.password} i ${user.name} i ${user.surname} i ${user.birth} i ${user.contact} i ${user.email}`);
+		return false;
     }
 }

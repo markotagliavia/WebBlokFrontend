@@ -29,6 +29,8 @@ import { EditCarComponent } from './Components/main/edit-car/edit-car.component'
 import { WelcomeScreenRegComponent } from './Components/main/welcome-screen-reg/welcome-screen-reg.component';
 import { HttpService } from './Services/http-service.service'; 
 import { FormsModule } from '@angular/forms';
+import { AdminPanelClientManagingComponent } from './Components/main/admin-panel-client-managing/admin-panel-client-managing.component';
+import { AdminPanelServiceManagingComponent } from './Components/main/admin-panel-service-managing/admin-panel-service-managing.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +56,9 @@ import { FormsModule } from '@angular/forms';
     AddNewCarTypeComponent,
     EditServiceComponent,
     EditCarComponent,
-    WelcomeScreenRegComponent
+    WelcomeScreenRegComponent,
+    AdminPanelClientManagingComponent,
+    AdminPanelServiceManagingComponent
 	
   ],
   imports: [

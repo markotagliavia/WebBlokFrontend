@@ -3,9 +3,9 @@ export class AppUser {
       public name: string,
       public surname: string,
 	  public username: string,
-	  public birthDate : Date,
-      public allowed: boolean,
-	  public loggedIn: boolean,
-	  public createService: boolean
+	  public password: string,
+	  public contact: string,
+	  public birth : string,
+	  public email: string,
   ){}
 }
