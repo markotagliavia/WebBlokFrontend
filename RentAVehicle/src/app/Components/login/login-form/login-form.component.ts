@@ -15,6 +15,7 @@ export class LoginFormComponent implements OnInit {
   ngZone: NgZone;
   user: User;
   errorText : string;
+  response: any;
   
   constructor(public httpService: HttpService) { 
 	this.ngZone = new NgZone({enableLongStackTrace: false});
@@ -25,7 +26,7 @@ export class LoginFormComponent implements OnInit {
 	this.errorText = "";
   }
   
-  registerResponse: any;
+  
 
   ngOnInit() {
   }
@@ -43,7 +44,29 @@ export class LoginFormComponent implements OnInit {
     console.log('Dobili smo: ', JSON.stringify(this.user));
 	this.httpService.logIn(this.user).subscribe(
       (res: any) => {
-                        console.log('token: ${data.access_token}');
+						this.response = res;
+						let data = res.json();
+            let role = res.headers.get("role");
+            if(data && data.access_token)  
+            {
+              this.httpService.getUserOnSession(this.user.username,data.access_token).subscribe(
+                res => {
+                  // console.log(res);
+                  let currentUser: CurrentUser;
+                  
+                  currentUser = new CurrentUser(res.LoggedIn,res.Username,res.Name,res.Surname,role,data.access_token,res.Id);
+
+
+
+                  console.log(currentUser);
+                }
+
+
+
+
+              )
+
+            }         
 
                     },
       error => {

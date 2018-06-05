@@ -4,6 +4,7 @@ import { User } from '../Model/user';
 import { IdentityUser } from '../Model/identity-user';
 import { AppUser } from '../Model/app-user';
 import { Observable } from "rxjs";
+import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -21,28 +22,37 @@ export class HttpService {
 	    console.log(`Stiglo: ${user.username} i : ${user.password}`);
         const headers: Headers = new Headers();
         headers.append('Content-type', 'application/x-www-form-urlencoded');
-		headers.append('Access-Control-Allow-Origin','Origin, Content-Type, X-Auth-Token');
-
-
-
         const opts: RequestOptions = new RequestOptions();
         opts.headers = headers;
 
-        let bodyURL = new URLSearchParams();
-        bodyURL.set('username', user.username);
-        bodyURL.set('password', user.password);
-        bodyURL.set('grant_type', "password");
+        //let bodyURL = new URLSearchParams();
+        //bodyURL.set('username', user.username);
+        //bodyURL.set('password', user.password);
+        //bodyURL.set('grant_type', "password");
 
-        let body = bodyURL.toString();
+        //let body = bodyURL.toString();
 
+		//console.log(body);
         return this.http.post(
-            'http://localhost:51432/oauth/token/',
-            body, opts);
+            'http://localhost:51432/oauth/token',
+            `username=${user.username}&password=${user.password}&grant_type=password`, opts);
     }
 	
 	  register(user: AppUser) {
 	  
 	    console.log(`Stiglo: ${user.username} i : ${user.password} i ${user.name} i ${user.surname} i ${user.birth} i ${user.contact} i ${user.email}`);
 		return false;
+    }
+
+    getUserOnSession(username: string, token: string): Observable<any> {
+        const headers: Headers = new Headers();
+        headers.append('Content-type', 'application/json');
+        let usertoken = `Bearer ${token}`;
+        headers.append('Authorization', usertoken);
+
+        const opts: RequestOptions = new RequestOptions();
+        opts.headers = headers;
+        var url = `http://localhost:51432/api/AppUser/GetAppUser/${username}`;
+        return this.http.get(url, opts).pipe(map((res: Response) => this.extractData(res)));
     }
 }
