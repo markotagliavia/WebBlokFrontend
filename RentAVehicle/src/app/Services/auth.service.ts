@@ -2,8 +2,12 @@ import { CurrentUser } from "../Model/current-user";
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { Injectable } from "@angular/core";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthService {
+
+    loggedIn : boolean;
 
     constructor(private http: Http){
         
@@ -92,7 +96,7 @@ export class AuthService {
         }
     }
 
-
+    //ovo cemo posle gadjati
     changePassword(currentPass: string, newPass: string, confirmPass: string, access_token: string){
        
         const headers: Headers = new Headers();
@@ -111,6 +115,4 @@ export class AuthService {
              ConfirmPassword: confirmPass
          }), opts);
     }
-
-    
 }

@@ -1,7 +1,12 @@
 import { Component, OnInit,Injectable,NgZone } from '@angular/core';
 import { CurrentUser } from '../../../Model/current-user';
+import { AuthService } from '../../../Services/auth.service';
 import { User } from '../../../Model/user';
-import { HttpService } from '../../../Services/http-service.service'; 
+import { HttpService } from '../../../Services/http-service.service';
+import {
+  Router,
+  ActivatedRoute
+} from '@angular/router'; 
 
 @Injectable()
 @Component({
@@ -17,7 +22,7 @@ export class LoginFormComponent implements OnInit {
   errorText : string;
   response: any;
   
-  constructor(public httpService: HttpService) { 
+  constructor(public httpService: HttpService, private router: Router, private authService: AuthService) { 
 	this.ngZone = new NgZone({enableLongStackTrace: false});
 	this.user = {
 		'username' : '',
@@ -55,23 +60,16 @@ export class LoginFormComponent implements OnInit {
                   let currentUser: CurrentUser;
                   
                   currentUser = new CurrentUser(res.LoggedIn,res.Username,res.Name,res.Surname,role,data.access_token,res.Id);
-
-
-
                   console.log(currentUser);
+                  this.authService.logIn(currentUser);
+                  //this.header.refreshView();
+                  this.router.navigate(['/home/login']);
                 }
-
-
-
-
               )
-
             }         
 
                     },
       error => {
-                  
-
                   console.log(error);
                }
 
