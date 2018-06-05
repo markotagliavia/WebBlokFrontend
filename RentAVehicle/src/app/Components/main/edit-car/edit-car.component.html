@@ -3,22 +3,22 @@
 	<div class="container">
 		<div class="row d-flex justify-content-center pb-40">
 			<div class="col-md-8 pb-40 header-text">
-				<h4 class="text-center pb-10">Edit car_name in service_name</h4>
+				<h4 class="text-center pb-10">Edit vehicle_name from service_name</h4>
 			</div>
 		</div>
 		<div class="row align-items-center single-model item">
 			<div class="col-lg-6 model-left">
-				<form class="form" role="form" autocomplete="off">					    
+				<form class="form" role="form" autocomplete="off" novalidate>					    
 					<div class="from-group">
-						<input class="form-control txt-field" type="text" name="manufacturer" placeholder="Manufacturer">
+						<input class="form-control txt-field" type="text" name="manufacturer" placeholder="Manufacturer" [(ngModel)]="car.manufacturer" required>
 						<br>
-						<input class="form-control txt-field" type="text" name="model" placeholder="Model">
+						<input class="form-control txt-field" type="text" name="model" placeholder="Model" [(ngModel)]="car.model" required>
 						<br>
-						<input class="form-control txt-field" type="email" name="year" placeholder="Year">
+						<input class="form-control txt-field" type="email" name="year" placeholder="Year" [(ngModel)]="car.year" required>
 						<br>
 						<div class="input-group-icon mt-10">
 							<div>
-								<select id="typeOfVehicle">
+								<select id="typeOfVehicle" [(ngModel)]="car.type" required>
 									<option value="1">Car</option>
 									<option value="1">Truck</option>
 									<option value="1">Motorcycle</option>
@@ -26,18 +26,18 @@
 							</div>
 						</div>
 						<br>
-						<input class="form-control txt-field" type="tel" name="price" placeholder="Price per hour"> 
+						<input class="form-control txt-field" type="tel" name="price" placeholder="Price per hour" [(ngModel)]="car.price" required> 
 						<br>
 						<div class="mt-10">
-							<textarea class="single-textarea" placeholder="Describtion" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Describtion'" style="border:solid; border-color:gray; border-width:1px" required></textarea>
+							<textarea class="single-textarea" placeholder="Description" [(ngModel)]="car.description" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Description'" style="border:solid; border-color:gray; border-width:1px" required></textarea>
 						</div>						
 					</div>
 					<div class="form-group row">
 						<div class="col-md-12">
 							<br>
-							<a class="text-uppercase primary-btn btn-block text-center" href="#">Submit</a>
+							<a class="text-uppercase primary-btn btn-block text-center" (click)="newCar()">Submit</a>
 							<br>
-							<p style="color:red">place for error output</p>
+							<p style="color:red">{{errorText}}</p>
 						</div>
 					</div>
 				</form>

@@ -26,7 +26,7 @@ export class AddNewServiceComponent implements OnInit {
 
   changeData()
   {
-    if(this.service.name.length == 0 || this.service.desc.length == 0 || this.service.email.length || this.service.contact.length == 0)
+    if(this.service.name.length == 0 || this.service.desc.length == 0 || this.service.email.length == 0 || this.service.contact.length == 0)
     {
       this.errorText = "All fields except logo are requiered";
       return false;

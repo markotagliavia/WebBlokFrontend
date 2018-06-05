@@ -7,9 +7,41 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddNewCarTypeComponent implements OnInit {
 
-  constructor() { }
+	errorText : string;
+	typeNameInput : string;
+	typeNameSelected : string;
+
+  constructor() {
+	this.errorText = "";
+	this.typeNameInput = "";
+	this.typeNameSelected = "";
+  }
 
   ngOnInit() {
   }
 
+  newType()
+  {
+	  if(this.typeNameInput.length == 0)
+	  {
+		  this.errorText = "You must enter type name";
+		  return false;
+	  }
+	  else
+	  {
+		  this.errorText = "";
+	  }
+	  
+  }
+  
+  updateType()
+  {
+	  
+  }
+  
+  deleteType()
+  {
+	  
+  }
+  
 }

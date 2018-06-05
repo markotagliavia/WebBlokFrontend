@@ -10,7 +10,7 @@
 			<div class="col-lg-6 model-left">
 				<form class="form" role="form" autocomplete="off">					    
 					<div class="from-group">
-						<input class="form-control txt-field" type="text" name="typeName" placeholder="Type name">
+						<input class="form-control txt-field" type="text" name="typeName" placeholder="Type name" [(ngModel)]="typeNameInput">
 						<br>				
 					</div>
 				</form>
@@ -20,7 +20,7 @@
 					<div class="form-group">
 						<div>
 							<p style="color:black">Types:</p>
-							<select size="3">
+							<select size="3" [(ngModel)]="typeNameSelected">
 								<option value="1">Tip1</option>
 								<option value="1">Tip2</option>
 								<option value="1">Tip3</option>
@@ -32,13 +32,13 @@
 		</div>
 		<div class="row d-flex pb-30">
 			<br>
-			<div style="padding-right:1em"><a class="genric-btn success text-center" href="#" >ADD NEW</a></div>
-			<div style="padding-right:1em"><a class="genric-btn info text-center" href="#">UPDATE SELECTED</a></div>
-			<a class="genric-btn danger text-center" href="#">DELETE SELECTED</a>
+			<div style="padding-right:1em"><a class="genric-btn success text-center" (click)='newType()' >ADD NEW</a></div>
+			<div style="padding-right:1em"><a class="genric-btn info text-center" (click)='updateType()'>UPDATE SELECTED</a></div>
+			<a class="genric-btn danger text-center" (click)='delleteType()'>DELETE SELECTED</a>
 			<br>
 		</div>
 		<div class="row-md-12">
-			<p style="color:red">place for error output</p>
+			<p style="color:red">{{errorText}}</p>
 		</div>	
 	</div>	
 </section>
