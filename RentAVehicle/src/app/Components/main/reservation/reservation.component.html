@@ -2,45 +2,45 @@
 <section class="model-area section-gap" id="new_car">
 	<div class="container" style="width:30em">
 		<h4 class="row d-flex pb-30 justify-content-center" style="color:black">Book car_name from service_name</h4>
-							<form class="form" role="form" autocomplete="off">
+							<form class="form" role="form" autocomplete="off" novalidate>
 							    <div class="form-group">
 							       	<div class="default-select" id="default-select">
-										<select>
+										<select name="filijalaIn" [(ngModel)]="reservation.filijalaIn" required>
 											<option value="" disabled selected hidden>Pickup branch</option>
 											<option value="1">Filijala1</option>
 											<option value="1">Filijala2</option>
 											<option value="1">Filijala3</option>
 										</select>
 									</div>
-									<input id="datetime" type="datetime-local" placeholder="Pickup date and time">
+									<input id="datetime" name="pickupT" type="datetime-local" placeholder="Pickup date and time" [(ngModel)]="reservation.vremeIn" required>
 							    </div>
 							    <br><hr><br>
 								<div class="form-group">
 							       	<div class="default-select" id="default-select">
-										<select>
+										<select name="filijalaOut" [(ngModel)]="reservation.filijalaOut" required>
 											<option value="" disabled selected hidden>Release branch</option>
 											<option value="1">Filijala1</option>
 											<option value="1">Filijala2</option>
 											<option value="1">Filijala3</option>
 										</select>
 									</div>
-									<input id="datetime" type="datetime-local" placeholder="Release date and time">
+									<input id="datetime" name="releaseT" type="datetime-local" placeholder="Release date and time" [(ngModel)]="reservation.vremeOut" required>
 							    </div>
 								<br><hr><br>							    
 							    <div class="from-group">
 									<br>
-							    	<input class="form-control txt-field" type="text" name="pickup" placeholder="pickup address" disabled>
+							    	<input class="form-control txt-field" type="text" name="pickup" placeholder="pickup address" disabled [(ngModel)]="reservation.filijalaIn">
 									<br>
-							    	<input class="form-control txt-field" type="text" name="release" placeholder="release address" disabled>
+							    	<input class="form-control txt-field" type="text" name="release" placeholder="release address" disabled [(ngModel)]="reservation.vremeOut">
 									<br>
-							    	<input class="form-control txt-field" type="tel" name="priceOverall" placeholder="price overral" disabled>
+							    	<input class="form-control txt-field" type="tel" name="priceOverall" placeholder="price overral" disabled [(ngModel)]="reservation.ukupnaCena">
 									<br>
 							    </div>
 								<div class="form-group row">
 									<div class="col-md-12">
-										<a class="text-uppercase primary-btn btn-block text-center text-uppercase" [routerLink]="['/home']">Submit</a>
+										<a class="text-uppercase primary-btn btn-block text-center text-uppercase" (click) = 'submitRes()'>Submit</a>
 										<br>
-										<p style="color:red">place for error output</p>
+										<p style="color:red">{{errorText}}</p>
 									</div>
 								</div>
 							</form>
