@@ -32,7 +32,7 @@ export class LoginFormComponent implements OnInit {
   }
   
   loginUser(): boolean {
-	if(this.user.username.length == 0){
+	if(this.user.username.length == 0 || this.user.password.length == 0){
 		this.errorText = "All fields are required";
 		return false;
 	}

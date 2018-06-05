@@ -4,9 +4,9 @@
 		<div class="row d-flex align-items-center justify-content-center">
 			<div class="about-content col-lg-12">
 				<h1 class="text-white">
-					Page			
+					{{title}}			
 				</h1>	
-				<p class="text-white link-nav"><a href="index.html">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="service.html"> Page</a></p>
+				<p class="text-white link-nav"><a [routerLink]="['/home/login']">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a [routerLink]="['/services']"> {{title}}</a></p>
 			</div>											
 		</div>
 	</div>
