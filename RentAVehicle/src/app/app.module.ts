@@ -28,6 +28,7 @@ import { EditServiceComponent } from './Components/main/edit-service/edit-servic
 import { EditCarComponent } from './Components/main/edit-car/edit-car.component';
 import { WelcomeScreenRegComponent } from './Components/main/welcome-screen-reg/welcome-screen-reg.component';
 import { HttpService } from './Services/http-service.service'; 
+import { AuthService } from "./Services/auth.service";
 import { FormsModule } from '@angular/forms';
 import { AdminPanelClientManagingComponent } from './Components/main/admin-panel-client-managing/admin-panel-client-managing.component';
 import { AdminPanelServiceManagingComponent } from './Components/main/admin-panel-service-managing/admin-panel-service-managing.component';
@@ -68,7 +69,7 @@ import { AdminPanelServiceManagingComponent } from './Components/main/admin-pane
 	HttpModule,
 	FormsModule
   ],
-  providers: [HttpService],
+  providers: [HttpService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
