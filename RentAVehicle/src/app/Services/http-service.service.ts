@@ -38,10 +38,30 @@ export class HttpService {
             `username=${user.username}&password=${user.password}&grant_type=password`, opts);
     }
 	
-	  register(user: AppUser) {
+	  register(user: IdentityUser) {
 	  
 	    console.log(`Stiglo: ${user.username} i : ${user.password} i ${user.name} i ${user.surname} i ${user.birth} i ${user.contact} i ${user.email}`);
-		return false;
+        
+        const headers: Headers = new Headers();
+        headers.append('Accept', 'application/json');
+        headers.append('Content-type', 'application/json');
+
+        const opts: RequestOptions = new RequestOptions();
+        opts.headers = headers;
+
+        return this.http.post(
+            'http://localhost:51432/api/Account/Register',
+            JSON.stringify({
+                Username: user.username,
+                Name: user.name,
+                Surname: user.surname,
+                Email: user.email,
+                Password: user.password,
+                Contact: user.contact,
+                Birth: user.birth,
+                ConfirmPassword: user.confirmPassword
+            }), opts);
+        
     }
 
     getUserOnSession(username: string, token: string): Observable<any> {

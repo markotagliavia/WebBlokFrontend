@@ -1,6 +1,6 @@
 import { Component, OnInit,Injectable,NgZone } from '@angular/core';
 import { CurrentUser } from '../../../Model/current-user';
-import { AppUser } from '../../../Model/app-user';
+import { IdentityUser } from '../../../Model/identity-user';
 import { HttpService } from '../../../Services/http-service.service'; 
 
 @Injectable()
@@ -12,13 +12,14 @@ import { HttpService } from '../../../Services/http-service.service';
 export class RegistrationFormComponent implements OnInit {
 
   ngZone: NgZone;
-  user: AppUser
+  user: IdentityUser
   errorText : string
 	
   constructor(public httpService: HttpService) { 
 	this.ngZone = new NgZone({enableLongStackTrace: false});
 	this.user = {
 		'username' : '',
+		'confirmPassword' : '',
 		'password' : '',
 		'name' : '',
 		'surname' : '',
@@ -52,6 +53,14 @@ export class RegistrationFormComponent implements OnInit {
 			this.errorText = "Password must have minimum 6 characters";
 			return false;
 		}
+		else
+		{
+			if(this.user.confirmPassword != this.user.password)
+			{
+				this.errorText = "Password must be the same";
+				return false;
+			}
+		}
 		if(this.user.name.length < 2)
 		{
 			this.errorText = "Name must have minimum 2 characters";
@@ -69,7 +78,20 @@ export class RegistrationFormComponent implements OnInit {
 		}
 		this.errorText = "";
 	}
-    console.log(`Dobili smo: `, JSON.stringify(this.user));
+		this.httpService.register(this.user).subscribe
+		(
+			(res: any) => {
+				
+				console.log("AppUser created successfully "+ res);
+	
+				},
+			error => {
+		
+				console.log("ERROR " + error);
+			}
+		)
+			
+		
     return false; 
   }
 
