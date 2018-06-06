@@ -3,6 +3,7 @@ import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { User } from '../Model/user';
 import { IdentityUser } from '../Model/identity-user';
 import { AppUser } from '../Model/app-user';
+import { TypeOfVehicle} from '../Model/type-of-vehicle';
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
 @Injectable({
@@ -74,5 +75,27 @@ export class HttpService {
         opts.headers = headers;
         var url = `http://localhost:51432/api/AppUser/GetAppUser/${username}`;
         return this.http.get(url, opts).pipe(map((res: Response) => this.extractData(res)));
+    }
+
+    createTypeOfVehicle(type : TypeOfVehicle, token: string): Observable<any>
+    {
+        const headers: Headers = new Headers();
+        headers.append('Content-type', 'application/json');
+        let usertoken = `Bearer ${token}`;
+        headers.append('Authorization', usertoken);
+
+        const opts: RequestOptions = new RequestOptions();
+        opts.headers = headers;
+        return this.http.post(
+            'http://localhost:51432/api/TypeOfVehicle/PostTypeOfVehicle',
+            JSON.stringify({
+                Id: type.Id,
+                Name: type.Name
+            }), opts);
+    }
+
+    getTypeOfVehicle(token: string): Observable<any>
+    {
+        return this.http.get('http://localhost:51432/api/TypeOfVehicle/Register');
     }
 }

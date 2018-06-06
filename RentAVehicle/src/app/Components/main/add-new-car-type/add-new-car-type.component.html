@@ -1,6 +1,4 @@
-<app-navbar [title] = "'New car type'"></app-navbar>
-<section class="model-area section-gap" id="new_car">
-	<div class="container">
+
 		<div class="row d-flex justify-content-center pb-40">
 			<div class="col-md-8 pb-40 header-text">
 				<h1 class="text-center pb-10">Manage vehicle types:</h1>
@@ -20,10 +18,8 @@
 					<div class="form-group">
 						<div>
 							<p style="color:black">Types:</p>
-							<select size="3" [(ngModel)]="typeNameSelected">
-								<option value="1">Tip1</option>
-								<option value="1">Tip2</option>
-								<option value="1">Tip3</option>
+							<select size="3" style="width:10em" name="typeNameSel" [(ngModel)] ="typeNameSelected">
+								<option *ngFor = "let type of types" [value]="type">{{type}}</option>
 							</select>
 						</div>
 					</div>
@@ -40,6 +36,4 @@
 		<div class="row-md-12">
 			<p style="color:red">{{errorText}}</p>
 		</div>	
-	</div>	
-</section>
 
