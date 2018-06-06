@@ -26,20 +26,25 @@ export class HttpService {
         const opts: RequestOptions = new RequestOptions();
         opts.headers = headers;
 
-        //let bodyURL = new URLSearchParams();
-        //bodyURL.set('username', user.username);
-        //bodyURL.set('password', user.password);
-        //bodyURL.set('grant_type', "password");
-
-        //let body = bodyURL.toString();
-
-		//console.log(body);
         return this.http.post(
             'http://localhost:51432/oauth/token',
             `username=${user.username}&password=${user.password}&grant_type=password`, opts);
     }
+
+    logOut(token : string, id : number) : Observable<any>
+    {
+        const headers: Headers = new Headers();
+        headers.append('Content-type', 'application/json');
+        let usertoken = `Bearer ${token}`;
+        headers.append('Authorization', usertoken);
+
+        const opts: RequestOptions = new RequestOptions();
+        opts.headers = headers;
+        var url = `http://localhost:51432/api/Account/Logout/${id}`;
+        return this.http.post(url,null, opts).pipe(map((res: Response) => this.extractData(res)));
+    }
 	
-	  register(user: IdentityUser) {
+	register(user: IdentityUser) {
 	  
 	    console.log(`Stiglo: ${user.username} i : ${user.password} i ${user.name} i ${user.surname} i ${user.birth} i ${user.contact} i ${user.email}`);
         
@@ -96,6 +101,50 @@ export class HttpService {
 
     getTypeOfVehicle(token: string): Observable<any>
     {
-        return this.http.get('http://localhost:51432/api/TypeOfVehicle/Register');
+        const headers: Headers = new Headers();
+        headers.append('Content-type', 'application/json');
+        let usertoken = `Bearer ${token}`;
+        headers.append('Authorization', usertoken);
+
+        const opts: RequestOptions = new RequestOptions();
+        opts.headers = headers;
+        var url = 'http://localhost:51432/api/TypeOfVehicle/GetAllTypeOfVehicles';
+        return this.http.get(url, opts).pipe(map((res: Response) => this.extractData(res)));
     }
+
+    putTypeOfVehicle(type: TypeOfVehicle, novi: string, token: string) : Observable<any>
+    {
+        const headers: Headers = new Headers();
+        headers.append('Content-type', 'application/json');
+        let usertoken = `Bearer ${token}`;
+        headers.append('Authorization', usertoken);
+
+        const opts: RequestOptions = new RequestOptions();
+        opts.headers = headers;
+
+        return this.http.put(
+            `http://localhost:51432/api/TypeOfVehicle/PutTypeOfVehicle/${type.Id}`
+            ,
+            JSON.stringify({
+                Id: type.Id,
+                Name: novi,
+            }), opts);
+    }
+
+    deleteTypeOfVehicle(type: TypeOfVehicle, token: string) : Observable<any>
+    {
+        const headers: Headers = new Headers();
+        headers.append('Content-type', 'application/json');
+        let usertoken = `Bearer ${token}`;
+        headers.append('Authorization', usertoken);
+
+        const opts: RequestOptions = new RequestOptions();
+        opts.headers = headers;
+
+        return this.http.delete(
+            `http://localhost:51432/api/TypeOfVehicle/DeleteTypeOfVehicle/${type.Id}`
+            , opts);
+    }
+
+    
 }

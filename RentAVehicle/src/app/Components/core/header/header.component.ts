@@ -1,5 +1,6 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { AuthService } from '../../../Services/auth.service';
+import { HttpService } from '../../../Services/http-service.service';
 import {
   Router,
   ActivatedRoute
@@ -17,7 +18,7 @@ export class HeaderComponent implements OnInit {
   manager : boolean;
   admin : boolean;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, private httpService: HttpService) {
     this.client = false;
     this.manager = false;
     this.admin = false;
@@ -53,8 +54,20 @@ export class HeaderComponent implements OnInit {
 
   logOut()
   {
-    this.authService.logOut();
-    window.location.reload();
+    this.httpService.logOut(this.authService.currentUserToken(),this.authService.currentUserId()).subscribe
+    (
+          (res: any) => {
+             
+            this.authService.logOut();
+            window.location.reload();
+          },
+          error =>{
+                
+        }
+      
+      
+      )
+    
   }
 
 }

@@ -10,7 +10,7 @@ import { TypeOfVehicle } from '../../../Model/type-of-vehicle';
 })
 export class AddNewCarTypeComponent implements OnInit {
 
-  types: string[];
+  types: TypeOfVehicle[];
 	errorText : string;
 	typeNameInput : string;
   typeNameSelected : string;
@@ -20,11 +20,26 @@ export class AddNewCarTypeComponent implements OnInit {
 	this.errorText = "";
 	this.typeNameInput = "";
   this.typeNameSelected = "";
-  this.types = ['kola','motor']; //to do uraditi zahtev za dobijanje...
+  this.types = []; //to do uraditi zahtev za dobijanje...
+  this.httpService.getTypeOfVehicle(this.authService.currentUserToken()).subscribe(
+    (res: any) => {
+             
+            for(let i=0; i<res.length; i++){
+              this.types.push(res[i]); //use i instead of 0
+          }     
+    },
+    error =>{
+
+    }
+    
+  )
+  
   }
 
   
   ngOnInit() {
+
+    
   }
 
   newType()
@@ -50,11 +65,24 @@ export class AddNewCarTypeComponent implements OnInit {
 				},
 			error => {
 		
-				console.log("ERROR " + error);
+				alert(error.json().Message);
 
-				this.errorText = error;
+				this.errorText = error.json().Message;
 			}
-		)
+    )
+    this.types = [];
+    this.httpService.getTypeOfVehicle(this.authService.currentUserToken()).subscribe(
+      (res: any) => {
+               
+              for(let i=0; i<res.length; i++){
+                this.types.push(res[i]); //use i instead of 0
+            }     
+      },
+      error =>{
+  
+      }
+      
+    )
 
     this.typeNameInput = '';
     return false;
@@ -62,11 +90,92 @@ export class AddNewCarTypeComponent implements OnInit {
   
   updateType()
   {
-	  
+    if(this.typeNameInput.length == 0 || this.typeNameSelected.length == 0 ){
+      this.errorText = "All fields are required";
+      return false;		
+      }
+
+      for(let i=0; i<this.types.length; i++){
+        
+        if(this.types[i].Name == this.typeNameSelected )
+        {
+          this.httpService.putTypeOfVehicle(this.types[i],this.typeNameInput,this.authService.currentUserToken()).subscribe(
+
+            (res: any) => {
+                   
+              alert('Successfully modify type');
+              this.types = [];
+              this.typeNameInput = '';
+              this.httpService.getTypeOfVehicle(this.authService.currentUserToken()).subscribe(
+                (res: any) => {
+                        
+                        for(let i=0; i<res.length; i++){
+                          this.types.push(res[i]); //use i instead of 0
+                      }     
+                },
+                error =>{
+                  alert(error.json().Message);
+                })
+                 
+            },
+            error =>{
+                  alert(error.json().Message);
+            }
+    
+    
+          )
+
+          break;
+        }
+        
+      }     
+      
+      return false;
   }
   
   deleteType()
   {
+
+    if(this.typeNameSelected.length == 0 ){
+      this.errorText = "Type must be selected";
+      return false;		
+      }
+
+      for(let i=0; i<this.types.length; i++){
+        
+        if(this.types[i].Name == this.typeNameSelected )
+        {
+          this.httpService.deleteTypeOfVehicle(this.types[i],this.authService.currentUserToken()).subscribe(
+
+            (res: any) => {
+                   
+              alert('Successfully deleted type');
+              this.types = [];
+              this.httpService.getTypeOfVehicle(this.authService.currentUserToken()).subscribe(
+                (res: any) => {
+                        
+                        for(let i=0; i<res.length; i++){
+                          this.types.push(res[i]); //use i instead of 0
+                      }     
+                },
+                error =>{
+                  alert(error.json().Message);
+                })
+                 
+            },
+            error =>{
+                  alert(error.json().Message);
+            }
+    
+    
+          )
+
+          break;
+        }
+        
+      }     
+      
+      return false;
 	  
   }
   

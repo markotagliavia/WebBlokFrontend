@@ -1,8 +1,14 @@
+
 export class Service {
     constructor(
-        public name: string,
-        public desc: string,
-        public contact: string,
-        public email: string,
+        public Id: number,
+        public Name: string, 
+        public Email: string,
+        public Description: string,
+        public Contact: string,
+        public AppUserId: number,
+        public Path: string,
+        public Approved: boolean,
+        public AverageMark: number
     ){}
     }

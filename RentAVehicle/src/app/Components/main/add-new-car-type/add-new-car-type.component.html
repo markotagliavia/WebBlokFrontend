@@ -19,7 +19,7 @@
 						<div>
 							<p style="color:black">Types:</p>
 							<select size="3" style="width:10em" name="typeNameSel" [(ngModel)] ="typeNameSelected">
-								<option *ngFor = "let type of types" [value]="type">{{type}}</option>
+								<option *ngFor = "let type of types" [value]="type.Name">{{type.Name}}</option>
 							</select>
 						</div>
 					</div>
@@ -30,7 +30,7 @@
 			<br>
 			<div style="padding-right:1em"><a class="genric-btn success text-center" (click)='newType()' >ADD NEW</a></div>
 			<div style="padding-right:1em"><a class="genric-btn info text-center" (click)='updateType()'>UPDATE SELECTED</a></div>
-			<a class="genric-btn danger text-center" (click)='delleteType()'>DELETE SELECTED</a>
+			<a class="genric-btn danger text-center" (click)='deleteType()'>DELETE SELECTED</a>
 			<br>
 		</div>
 		<div class="row-md-12">
