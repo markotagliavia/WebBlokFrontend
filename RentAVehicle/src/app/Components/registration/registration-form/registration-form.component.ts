@@ -2,6 +2,12 @@ import { Component, OnInit,Injectable,NgZone } from '@angular/core';
 import { CurrentUser } from '../../../Model/current-user';
 import { IdentityUser } from '../../../Model/identity-user';
 import { HttpService } from '../../../Services/http-service.service'; 
+import {
+  Router,
+  ActivatedRoute
+} from '@angular/router'; 
+
+
 
 @Injectable()
 @Component({
@@ -15,7 +21,7 @@ export class RegistrationFormComponent implements OnInit {
   user: IdentityUser
   errorText : string
 	
-  constructor(public httpService: HttpService) { 
+  constructor(public httpService: HttpService,private router: Router) { 
 	this.ngZone = new NgZone({enableLongStackTrace: false});
 	this.user = {
 		'username' : '',
@@ -82,12 +88,18 @@ export class RegistrationFormComponent implements OnInit {
 		(
 			(res: any) => {
 				
-				console.log("AppUser created successfully "+ res);
+				//console.log("AppUser created successfully ");
+
+				alert("You are registered successfully, to confirm your account go to Account and upload picture of licence card.");
+
+				this.router.navigate(['/home/login']);
 	
 				},
 			error => {
 		
 				console.log("ERROR " + error);
+
+				this.errorText = "Username already exists";
 			}
 		)
 			
