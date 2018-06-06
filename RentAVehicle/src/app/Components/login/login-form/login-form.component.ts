@@ -63,7 +63,7 @@ export class LoginFormComponent implements OnInit {
                   console.log(currentUser);
                   this.authService.logIn(currentUser);
                   //this.header.refreshView();
-                  this.router.navigate(['/home/login']);
+                  window.location.reload();
                 }
               )
             }         
@@ -71,6 +71,7 @@ export class LoginFormComponent implements OnInit {
                     },
       error => {
                   console.log(error);
+                  this.errorText = "Your data are not valid";
                }
 
     );

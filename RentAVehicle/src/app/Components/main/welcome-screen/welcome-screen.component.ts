@@ -20,6 +20,11 @@ export class WelcomeScreenComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.refreshUI();
+  }
+
+  refreshUI()
+  {
     if(this.authService.currentUserName() != undefined)
     {
         if(this.authService.currentUserName().length > 0)
@@ -40,6 +45,7 @@ export class WelcomeScreenComponent implements OnInit {
             }
         }
     }
+
   }
 
 }
