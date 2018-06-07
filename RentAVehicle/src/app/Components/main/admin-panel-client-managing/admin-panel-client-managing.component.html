@@ -12,6 +12,9 @@
 									<div class="visit">Action</div>
 									<div class="visit">Service</div>
 								</div>
+								<div *ngFor="let user of users">
+									<app-table-row-user [user] = 'user'></app-table-row-user>>	
+								</div>
 								<div class="table-row">
 									<div class="visit">645032</div>
 									<div class="visit">645032</div>
