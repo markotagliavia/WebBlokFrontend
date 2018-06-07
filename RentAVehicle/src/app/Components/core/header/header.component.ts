@@ -59,9 +59,12 @@ export class HeaderComponent implements OnInit {
           (res: any) => {
              
             this.authService.logOut();
+            this.router.navigate(['home/login']);
             window.location.reload();
           },
           error =>{
+
+            alert(error.json().Message);
                 
         }
       
