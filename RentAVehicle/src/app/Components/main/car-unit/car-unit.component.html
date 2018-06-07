@@ -13,7 +13,9 @@
 			Air Condition    : Dual Zone <br>
 			Transmission     : Automatic
 		</p>
-		<a class="text-uppercase primary-btn" [routerLink]="['/reservation']">Book This Car Now</a>
+		<a class="text-uppercase primary-btn" [routerLink]="['/reservation']" *ngIf = "client">Book This Vehicle Now</a>
+		<a class="text-uppercase info-btn" [routerLink]="['/editVehicle']" *ngIf = "manager">Edit Vehicle</a>
+		<a class="text-uppercase danger-btn" (click)='deleteVehicle()' *ngIf = "manager">Delete Vehicle</a>
 	</div>
 	<div class="col-lg-6 model-right">
 		<img class="img-fluid" src="assets/img/car.jpg" alt="">
