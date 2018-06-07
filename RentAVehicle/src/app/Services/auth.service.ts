@@ -63,6 +63,57 @@ export class AuthService {
         }
     }
 
+    currentUserPath(): string {
+        let curretUser = localStorage.getItem("currentUser");
+        if ( curretUser !== null){
+            let user: CurrentUser = JSON.parse(curretUser);
+            if(user.Path == null)
+                return '';
+            else
+                return user.Path;
+        }
+        else
+        {
+            return '';
+        }
+    }
+
+    currentUser(): CurrentUser{
+        let curretUser = localStorage.getItem("currentUser");
+        if ( curretUser !== null){
+            let user: CurrentUser = JSON.parse(curretUser);
+            return user;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    currentUserApproved(): boolean {
+        let curretUser = localStorage.getItem("currentUser");
+        if ( curretUser !== null){
+            let user: CurrentUser = JSON.parse(curretUser);
+            return user.approved;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    currentUserCreateService(): boolean {
+        let curretUser = localStorage.getItem("currentUser");
+        if ( curretUser !== null){
+            let user: CurrentUser = JSON.parse(curretUser);
+            return user.createService;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     currentUserSurname(): string {
         let currentUser = localStorage.getItem("currentUser");
         if (currentUser !== null) {
@@ -100,7 +151,7 @@ export class AuthService {
         let currentUser = localStorage.getItem("currentUser");
         if (currentUser !== null) {
             let user: CurrentUser = JSON.parse(currentUser);
-            return user.email;
+            return user.contact;
         }
         else {
             return null;

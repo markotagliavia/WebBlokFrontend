@@ -10,6 +10,9 @@ export class CurrentUser {
         public birth : string,
         public email: string,
         public password: string,
+        public approved: boolean,
+        public createService: boolean,
+        public Path: string,
         public id: number
     ){}
 }

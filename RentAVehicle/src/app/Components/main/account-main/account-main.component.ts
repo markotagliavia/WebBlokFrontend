@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../../Model/user';
 import { IdentityUser } from '../../../Model/identity-user';
+import { CurrentUser} from '../../../Model/current-user';
 import { HttpService } from '../../../Services/http-service.service'; 
 import {AuthService } from '../../../Services/auth.service'
 
@@ -16,11 +17,12 @@ export class AccountMainComponent implements OnInit {
   errorTextReg : string;
   selectedFile: File; 
 
+
   constructor(private http: HttpService, private authService: AuthService) {
     
 
     this.regUser = {
-      'username' :  this.authService.currentUserName(),
+      'username' :  this.authService.currentUser().username,
       'confirmPassword' : '',
       'password' : '',
       'name' : this.authService.currentUserName(),
@@ -64,6 +66,30 @@ export class AccountMainComponent implements OnInit {
             {
               this.errorTextLogin = "";
               alert("Successful change password");
+
+              this.http.getUserOnSession(this.regUser.username,this.authService.currentUserToken()).subscribe(
+                res => {
+                  // console.log(res);
+                  let currentUser: CurrentUser;
+                  
+                  currentUser = new CurrentUser(res.LoggedIn,res.Username,res.Name,res.Surname,this.authService.currentUserRole(),this.authService.currentUserToken(),
+                  res.Contact,res.BirthDate,this.authService.currentUserEmail(), this.regUser.password,res.Approved,
+                  res.CreateService,res.Path,res.Id);
+                  console.log(currentUser);
+                  this.authService.logIn(currentUser);
+                  //this.header.refreshView();
+                  this.regUser = {
+                    'username' :  this.authService.currentUserName(),
+                    'confirmPassword' : '',
+                    'password' : '',
+                    'name' : this.authService.currentUserName(),
+                    'surname' : this.authService.currentUserSurname(),
+                    'birth' : this.authService.currentUserBirth(),
+                    'contact' : this.authService.currentUserContact(),
+                    'email' : this.authService.currentUserEmail(),
+                    'createService' : false
+                  }
+                })
             },
             error =>
             {
@@ -112,16 +138,78 @@ export class AccountMainComponent implements OnInit {
     }
      // console.log(`Dobili smo: `, JSON.stringify(this.regUser));
 
-     this.http.uploadPicture(this.authService.currentUserId(),this.selectedFile,this.authService.currentUserToken()).subscribe
-     (
-           (res : any) => {
-                   alert(res._body);
-           },
-           error =>
-           {
-                   alert(error.json().Message);
-           }
-     )
+    let userpom = new CurrentUser(
+      this.authService.isLoggedIn(),
+      this.authService.currentUser().username,
+      this.regUser.name,
+      this.regUser.surname,
+      this.authService.currentUserRole(),
+      this.authService.currentUserToken(),
+      this.regUser.contact,
+      this.regUser.birth,
+      this.regUser.email,
+      this.authService.currentUserPassword(),
+      this.authService.currentUserApproved(),
+      this.authService.currentUserCreateService(),
+      this.authService.currentUserPath(),
+      this.authService.currentUserId()
+
+
+    );
+     this.http.putUser(userpom,this.authService.currentUserToken()).subscribe(
+      (res : any) => {
+
+                  if(this.selectedFile != undefined)
+                  {
+                    this.http.uploadPicture(this.authService.currentUserId(),this.selectedFile,this.authService.currentUserToken()).subscribe
+                    (
+                          (res : any) => {
+                                  alert(res._body);
+                                  
+                          },
+                          error =>
+                          {
+                                  alert(error.json().Message);
+                                  return false;
+                          }
+                    )
+                  }
+                  this.errorTextLogin = "";
+                alert("Successful change account");
+
+                this.http.getUserOnSession(this.regUser.username,this.authService.currentUserToken()).subscribe(
+                  res => {
+                    // console.log(res);
+                    let currentUser: CurrentUser;
+                    
+                    currentUser = new CurrentUser(res.LoggedIn,res.Username,res.Name,res.Surname,this.authService.currentUserRole(),this.authService.currentUserToken(),
+                    res.Contact,res.BirthDate,this.authService.currentUserEmail(), this.regUser.password,res.Approved,
+                    res.CreateService,res.Path,res.Id);
+                    console.log(currentUser);
+                    this.authService.logIn(currentUser);
+                    //this.header.refreshView();
+                    this.regUser = {
+                      'username' :  this.authService.currentUserName(),
+                      'confirmPassword' : '',
+                      'password' : '',
+                      'name' : this.authService.currentUserName(),
+                      'surname' : this.authService.currentUserSurname(),
+                      'birth' : this.authService.currentUserBirth(),
+                      'contact' : this.authService.currentUserContact(),
+                      'email' : this.authService.currentUserEmail(),
+                      'createService' : false
+                    }
+                  })
+                  
+        
+          },
+          error =>
+          {
+                  alert(error.json().Message);
+                  return false;
+          }
+    )
+     
 
       return false; 
   }

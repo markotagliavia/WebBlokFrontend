@@ -6,6 +6,7 @@ import { AppUser } from '../Model/app-user';
 import { TypeOfVehicle} from '../Model/type-of-vehicle';
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
+import { CurrentUser } from '../Model/current-user';
 @Injectable({
   providedIn: 'root'
 })
@@ -69,6 +70,33 @@ export class HttpService {
                 CreateService : user.createService
             }), opts);
         
+    }
+
+    putUser(user: CurrentUser, token: string) : Observable<any>
+    {
+        const headers: Headers = new Headers();
+        headers.append('Content-type', 'application/json');
+        let usertoken = `Bearer ${token}`;
+        headers.append('Authorization', usertoken);
+
+        const opts: RequestOptions = new RequestOptions();
+        opts.headers = headers;
+
+        return this.http.put(
+            `http://localhost:51432/api/AppUser/PutAppUser/${user.id}`
+            ,
+            JSON.stringify({
+             Id: user.id,
+             Name: user.name,
+             Surname: user.surname,
+             Contact: user.contact,
+             Username: user.username,
+             BirthDate: user.birth,
+             Approved: user.approved,
+             LoggedIn: user.login,
+             CreateService: user.createService,
+             Path: user.Path
+            }), opts);
     }
 
     getUserOnSession(username: string, token: string): Observable<any> {

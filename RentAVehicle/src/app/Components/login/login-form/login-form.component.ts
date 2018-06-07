@@ -60,7 +60,7 @@ export class LoginFormComponent implements OnInit {
                   // console.log(res);
                   let currentUser: CurrentUser;
                   
-                  currentUser = new CurrentUser(res.LoggedIn,res.Username,res.Name,res.Surname,role,data.access_token,res.Contact,res.BirthDate,email, this.user.password,res.Id);
+                  currentUser = new CurrentUser(res.LoggedIn,res.Username,res.Name,res.Surname,role,data.access_token,res.Contact,res.BirthDate,email, this.user.password,res.Approved,res.CreateService,res.Path,res.Id);
                   console.log(currentUser);
                   this.authService.logIn(currentUser);
                   //this.header.refreshView();
