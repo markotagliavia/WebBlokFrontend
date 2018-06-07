@@ -13,12 +13,7 @@ export class EditServiceComponent implements OnInit {
 
   constructor() { 
     this.errorText = '';
-    this.service = {
-      'name' : '',
-      'desc' : '',
-      'email' : '',
-      'contact' : ''
-    }
+    this.service = new Service(0,'', '','','',-1,'',false,0)
   }
 
   ngOnInit() {
@@ -26,7 +21,8 @@ export class EditServiceComponent implements OnInit {
 
   changeData()
   {
-    if(this.service.name.length == 0 || this.service.desc.length == 0 || this.service.email.length == 0 || this.service.contact.length == 0)
+    if(this.service.Name.length == 0 || this.service.Description.length == 0 || this.service.
+      Email.length == 0 || this.service.Contact.length == 0)
     {
       this.errorText = "All fields except logo are requiered";
       return false;
