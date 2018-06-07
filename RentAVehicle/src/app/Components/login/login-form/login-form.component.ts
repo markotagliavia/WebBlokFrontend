@@ -52,6 +52,7 @@ export class LoginFormComponent implements OnInit {
 						this.response = res;
 						let data = res.json();
             let role = res.headers.get("role");
+            let email = res.headers.get("email");
             if(data && data.access_token)  
             {
               this.httpService.getUserOnSession(this.user.username,data.access_token).subscribe(
@@ -59,7 +60,7 @@ export class LoginFormComponent implements OnInit {
                   // console.log(res);
                   let currentUser: CurrentUser;
                   
-                  currentUser = new CurrentUser(res.LoggedIn,res.Username,res.Name,res.Surname,role,data.access_token,res.Id);
+                  currentUser = new CurrentUser(res.LoggedIn,res.Username,res.Name,res.Surname,role,data.access_token,res.Contact,res.BirthDate,email, this.user.password,res.Id);
                   console.log(currentUser);
                   this.authService.logIn(currentUser);
                   //this.header.refreshView();

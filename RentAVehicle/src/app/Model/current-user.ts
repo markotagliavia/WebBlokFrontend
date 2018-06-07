@@ -6,6 +6,10 @@ export class CurrentUser {
         public surname: string,
         public role: string,
         public token: string,
+        public contact: string,
+        public birth : string,
+        public email: string,
+        public password: string,
         public id: number
     ){}
 }
