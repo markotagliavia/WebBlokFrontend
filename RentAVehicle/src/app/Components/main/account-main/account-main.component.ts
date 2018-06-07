@@ -21,13 +21,15 @@ export class AccountMainComponent implements OnInit {
     }
 
     this.regUser = {
-      'username' : '',
-      'password' : '',
-      'name' : '',
-      'surname' : '',
-      'birth' : '',
-      'contact' : '',
-      'email' : ''
+      'Username' : '',
+      'Password' : '',
+      'Name' : '',
+      'Surname' : '',
+      'Birth' : '',
+      'Contact' : '',
+      'Email' : '',
+      'Odobren' : false,
+      'Role' : ''
     }
 
     this.errorTextLogin = '';
@@ -51,24 +53,24 @@ export class AccountMainComponent implements OnInit {
 
   changeReg()
   {
-    if(this.regUser.name.length == 0 
-      || this.regUser.surname.length == 0 || this.regUser.birth.length == 0 || this.regUser.contact.length == 0 || this.regUser.email.length == 0){
+    if(this.regUser.Name.length == 0 
+      || this.regUser.Surname.length == 0 || this.regUser.Birth.length == 0 || this.regUser.Contact.length == 0 || this.regUser.Email.length == 0){
       this.errorTextReg = "All fields except document are required";
       return false;		
       }
     else
     {
-      if(this.regUser.name.length < 2)
+      if(this.regUser.Name.length < 2)
       {
         this.errorTextReg = "Name must have minimum 2 characters";
         return false;
       }
-      if(this.regUser.surname.length < 2)
+      if(this.regUser.Surname.length < 2)
       {
         this.errorTextReg = "Surname must have minimum 2 characters";
         return false;
       }
-      if(!this.regUser.email.includes('@'))
+      if(!this.regUser.Email.includes('@'))
       {
         this.errorTextReg = "Invalid email";
         return false;

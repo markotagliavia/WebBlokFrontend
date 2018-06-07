@@ -32,6 +32,7 @@ import { AuthService } from "./Services/auth.service";
 import { FormsModule } from '@angular/forms';
 import { AdminPanelClientManagingComponent } from './Components/main/admin-panel-client-managing/admin-panel-client-managing.component';
 import { AdminPanelServiceManagingComponent } from './Components/main/admin-panel-service-managing/admin-panel-service-managing.component';
+import { TableRowUserComponent } from './Components/main/admin-panel-client-managing/table-row-user/table-row-user.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +60,8 @@ import { AdminPanelServiceManagingComponent } from './Components/main/admin-pane
     EditCarComponent,
     WelcomeScreenRegComponent,
     AdminPanelClientManagingComponent,
-    AdminPanelServiceManagingComponent
+    AdminPanelServiceManagingComponent,
+    TableRowUserComponent
 	
   ],
   imports: [

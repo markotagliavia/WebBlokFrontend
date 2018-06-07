@@ -1,0 +1,23 @@
+		<div class="table-row">
+			<div class="visit">645032</div>
+			<div class="visit">645032</div>
+			<div class="visit">645032</div>
+			<div class="visit">645032</div>
+			<div class="visit"><a class="genric-btn primary">View</a></div>
+			<div class="visit" *ngIf = "unverified">Unverified</div>
+			<div class="visit" *ngIf = "unverified"><a class="genric-btn primary" (click) = 'verifyUser()'>Verify</a></div>
+			<div class="visit" *ngIf = "unverified"></div>
+			
+									<div class="visit" *ngIf = "manager">Manager</div>
+									<div class="visit" *ngIf = "manager"><a class="genric-btn primary">Client</a></div>
+									<div class="visit" *ngIf = "manager">
+										<div class="confirm-switch">
+											<input type="checkbox" id="confirm-switch" checked (onchange) = "removeServiceCreationRight(this)">
+											<label for="confirm-switch"></label>
+										</div>
+									</div>
+									
+			<div class="visit" *ngIf = "client">Client</div>
+			<div class="visit" *ngIf = "client"><a class="genric-btn primary">Manager</a></div>
+			<div class="visit" *ngIf = "client"></div>
+		</div>
