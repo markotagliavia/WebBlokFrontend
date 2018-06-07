@@ -10,22 +10,35 @@ import { AppUser } from '../../../Model/app-user';
 })
 export class AdminPanelClientManagingComponent implements OnInit {
 
-  users : AppUser[];
+  appUsers : AppUser[];
+  managers : AppUser[];
 
   constructor(public httpService: HttpService,private authService: AuthService) { 
+    this.appUsers = [];
     this.httpService.getAllUsers(this.authService.currentUserToken()).subscribe(
       (res: any) => {
                
               for(let i=0; i<res.length; i++){
-                this.users.push(res[i]); //use i instead of 0
+                this.appUsers.push(res[i]); //use i instead of 0
             }     
       },
       error =>{
           console.log(error);
           window.alert(error);
-      }
-      
-    )
+      });
+
+      //tijana to do
+      this.httpService.getAllUsers(this.authService.currentUserToken()).subscribe(
+        (res: any) => {
+                 
+                for(let i=0; i<res.length; i++){
+                  this.managers.push(res[i]); //use i instead of 0
+              }     
+        },
+        error =>{
+            console.log(error);
+            window.alert(error);
+        });
   }
 
   ngOnInit() {

@@ -30,11 +30,11 @@ export class TableRowUserComponent implements OnInit {
 
   refresh()
   {
-    if(this.user.Role == "Client" && this.user.Odobren)
+    if(this.user.Role == "Client" && this.user.approved)
     {
       this.client = true;
     }
-    else if(this.user.Role == "Client" && !this.user.Odobren)
+    else if(this.user.Role == "Client" && !this.user.approved)
     {
       this.unverified = true;
     }
@@ -46,14 +46,15 @@ export class TableRowUserComponent implements OnInit {
 
   verifyUser()
   {
-   /* this.user.Odobren = true;
-    this.currUserPom = {
-      Id = this.user.Id;
-    };
-    this.http.putUser(this.user, this.authService.currentUserToken()).subscribe(
-      (res : any) => {
-
-    this.refresh();*/
+    this.user.approved = true;
+    this.http.approveUser(this.user.Id, this.authService.currentUserToken(),true).subscribe(
+      (res : any) => { 
+          this.refresh();
+      },
+      error =>{
+          console.log(error);
+          window.alert(error);
+      });
   }
 
   viewDocument()
