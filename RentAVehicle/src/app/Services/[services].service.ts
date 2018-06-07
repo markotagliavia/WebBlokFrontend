@@ -4,6 +4,7 @@ import { User } from '../Model/user';
 import { IdentityUser } from '../Model/identity-user';
 import { Service } from '../Model/service'
 import { Branch } from '../Model/branch'
+import { Car } from '../Model/car'
 import { AppUser } from '../Model/app-user';
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
@@ -21,31 +22,7 @@ export class ServiceManager {
         return body || [];
     }
 
-
-  addNewService(service : Service,id : number,  token : string):Observable<any>
-  {
-    const headers: Headers = new Headers();
-    headers.append('Content-type', 'application/json');
-    let usertoken = `Bearer ${token}`;
-    headers.append('Authorization', usertoken);
-
-    const opts: RequestOptions = new RequestOptions();
-    opts.headers = headers;
-    return this.http.post(
-        'http://localhost:51432/api/Services/PostService',
-        JSON.stringify({
-          Id: service.Id,
-          Name: service.Name, 
-          Email: service.Email,
-          Description: service.Description,
-          Contact: service.Contact,
-          AppUserId: id,
-          Path: service.Path,
-          Approved: false,
-          AverageMark: 0
-        }), opts);
-  }
-
+  //branch section ----------------------------------------------------------------------------
   createBranch(branch : Branch, token: string): Observable<any>
   {
     const headers: Headers = new Headers();
@@ -117,6 +94,58 @@ export class ServiceManager {
     var url = 'http://localhost:51432/api/Branches/GetAllBranches';
     return this.http.get(url, opts).pipe(map((res: Response) => this.extractData(res)));
   }
+    //end of branch section ----------------------------------------------------------------------------
+
+    //service section ----------------------------------------------------------------------------
+  addNewService(service : Service,id : number,  token : string):Observable<any>
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+    return this.http.post(
+        'http://localhost:51432/api/Services/PostService',
+        JSON.stringify({
+          Id: service.Id,
+          Name: service.Name, 
+          Email: service.Email,
+          Description: service.Description,
+          Contact: service.Contact,
+          AppUserId: id,
+          Path: service.Path,
+          Approved: false,
+          AverageMark: 0
+        }), opts);
+  }
+
+  putService(service: Service, serviceNovi : Service, id : number, token: string) : Observable<any>
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+
+    return this.http.put(
+        `http://localhost:51432/api/Services/PutService/${service.Id}`
+        ,
+        JSON.stringify({
+          Id: service.Id,
+          Name: serviceNovi.Name, 
+          Email: serviceNovi.Email,
+          Description: serviceNovi.Description,
+          Contact: serviceNovi.Contact,
+          AppUserId: id,
+          Path: serviceNovi.Path,
+          Approved: serviceNovi.Approved,
+          AverageMark: serviceNovi.AverageMark
+        }), opts);
+  }
 
   getServices(token: string): Observable<any>
   {
@@ -130,4 +159,123 @@ export class ServiceManager {
     var url = 'http://localhost:51432/api/Services/GetAllServices';
     return this.http.get(url, opts).pipe(map((res: Response) => this.extractData(res)));
   }
+
+  getService(token: string, serviceId : number) : any
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+    var url = `http://localhost:51432/api/Services/GetService/${serviceId}`;
+    return this.http.get(url, opts).pipe(map((res: Response) => this.extractData(res)));
+  }
+
+  deleteService(service: Service, token: string) : Observable<any>
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+
+    return this.http.delete(
+        `http://localhost:51432/api/Branches/DeleteService/${service.Id}`
+        , opts);
+  }
+    //end of service section ----------------------------------------------------------------------------
+
+
+  //cars section ----------------------------------------------------------------------------
+  addNewCar(car : Car,id : number,  token : string):Observable<any>
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+    return this.http.post(
+        'http://localhost:51432/api/Vehicles/PostVehicle',
+        JSON.stringify({
+          Id: car.Id,
+          Manufacturer: car.Manufacturer, 
+          Model: car.Model,
+          Description: car.Description,
+          Year : car.Year,
+          Type : car.Type,
+          Price : car.Price
+        }), opts);
+  }
+
+  putCar(car: Car, carNovi : Car, token: string) : Observable<any>
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+
+    return this.http.put(
+        `http://localhost:51432/api/Vehicles/PutVehicle/${car.Id}`
+        ,
+        JSON.stringify({
+          Id: car.Id,
+          Manufacturer: carNovi.Manufacturer, 
+          Model: carNovi.Model,
+          Description: carNovi.Description,
+          Year : carNovi.Year,
+          Type : carNovi.Type,
+          Price : carNovi.Price
+        }), opts);
+  }
+
+  getCars(token: string): Observable<any>
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+    var url = 'http://localhost:51432/api/Cars/GetAllVehicles';
+    return this.http.get(url, opts).pipe(map((res: Response) => this.extractData(res)));
+  }
+
+  getCar(token: string, carId : number) : any
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+    var url = `http://localhost:51432/api/Vehicles/GetVehicle/${carId}`;
+    return this.http.get(url, opts).pipe(map((res: Response) => this.extractData(res)));
+  }
+
+  deleteCar(car : Car, token: string) : Observable<any>
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+
+    return this.http.delete(
+        `http://localhost:51432/api/Vehicles/DeleteVehicle/${car.Id}`
+        , opts);
+  }
+    //end of cars section ----------------------------------------------------------------------------
 }

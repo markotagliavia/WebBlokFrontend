@@ -1,7 +1,7 @@
-<div class="single-review">
-		<h4>Service name <span class="lnr lnr-user"></span></h4>
+<a [routerLink]="['/serviceSingle', service.Id]"><div class="single-review" >
+		<h4>{{service.Name}} <span class="lnr lnr-user"></span></h4>
 	<p>
-		info
+		{{service.Description}}
 	</p>
 	<div class="star">
 		<span class="fa fa-star checked"></span>
@@ -10,4 +10,4 @@
 		<span class="fa fa-star"></span>
 		<span class="fa fa-star"></span>
 	</div>
-</div>
+</div></a>

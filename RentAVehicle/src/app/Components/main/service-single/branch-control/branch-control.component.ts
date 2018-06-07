@@ -28,7 +28,10 @@ export class BranchControlComponent implements OnInit {
       (res: any) => {
                
               for(let i=0; i<res.length; i++){
-                this.branches.push(res[i]); //use i instead of 0
+               if(this.service.Id == res[i].serviceId) 
+               {
+                 this.branches.push(res[i]); //use i instead of 0
+               }
             }     
       },
       error =>{

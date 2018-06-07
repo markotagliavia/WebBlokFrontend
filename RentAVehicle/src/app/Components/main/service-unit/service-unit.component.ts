@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable, Input } from '@angular/core';
+import { Service } from '../../../Model/service';  
 
+@Injectable()
 @Component({
   selector: 'app-service-unit',
   templateUrl: './service-unit.component.html',
@@ -7,7 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ServiceUnitComponent implements OnInit {
 
-  constructor() { }
+  @Input() service : Service;
+
+  constructor() { 
+    
+  }
 
   ngOnInit() {
   }
