@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpService } from '../../../../Services/http-service.service';
+import { Component, OnInit, Injectable, Input } from '@angular/core';
+import { ServiceManager } from '../../../../Services/[services].service';
 import { AuthService } from '../../../../Services/auth.service'; 
 import { Branch } from '../../../../Model/branch'; 
+import { Service } from '../../../../Model/service';
 
+@Injectable()
 @Component({
   selector: 'app-branch-control',
   templateUrl: './branch-control.component.html',
@@ -10,18 +12,19 @@ import { Branch } from '../../../../Model/branch';
 })
 export class BranchControlComponent implements OnInit {
 
+  @Input() service : Service;
   branches: Branch[];
 	errorText : string;
 	branchNameInput : string;
   branchNameSelected : string;
   branch : Branch;
   
-  constructor(public httpService: HttpService,private authService: AuthService) {
+  constructor(public serviceManager: ServiceManager,private authService: AuthService) {
     this.errorText = "";
     this.branchNameInput = "";
     this.branchNameSelected = "";
     this.branches = []; //to do uraditi zahtev za dobijanje...
-    this.httpService.getBranches(this.authService.currentUserToken()).subscribe(
+    this.serviceManager.getBranches(this.authService.currentUserToken()).subscribe(
       (res: any) => {
                
               for(let i=0; i<res.length; i++){
@@ -51,9 +54,9 @@ export class BranchControlComponent implements OnInit {
 		  this.errorText = "";
 	  }
     
-    this.branch = new Branch(this.branchNameInput,this.branch.Address,this.branch.Latitude, this.branch.Longitude);
+    this.branch = new Branch(0,this.branchNameInput,this.branch.Address,this.branch.Latitude, this.branch.Longitude,this.service.Id);
 
-    this.httpService.createBranch(this.branch,this.authService.currentUserToken()).subscribe(
+    this.serviceManager.createBranch(this.branch,this.authService.currentUserToken()).subscribe(
 			(res: any) => {
 
 
@@ -68,7 +71,7 @@ export class BranchControlComponent implements OnInit {
 			}
     )
     this.branches = [];
-    this.httpService.getbBranch(this.authService.currentUserToken()).subscribe(
+    this.serviceManager.getBranches(this.authService.currentUserToken()).subscribe(
       (res: any) => {
                
               for(let i=0; i<res.length; i++){
@@ -96,14 +99,15 @@ export class BranchControlComponent implements OnInit {
         
         if(this.branches[i].Name == this.branchNameSelected )
         {
-          this.httpService.putBranch(this.branches[i],this.branchNameInput,this.authService.currentUserToken()).subscribe(
+        
+          this.serviceManager.putBranch(this.branches[i],this.branch,this.authService.currentUserToken()).subscribe(
 
             (res: any) => {
                    
               alert('Successfully modify branch');
               this.branches = [];
               this.branchNameInput = '';
-              this.httpService.getBranch(this.authService.currentUserToken()).subscribe(
+              this.serviceManager.getBranches(this.authService.currentUserToken()).subscribe(
                 (res: any) => {
                         
                         for(let i=0; i<res.length; i++){
@@ -142,13 +146,13 @@ export class BranchControlComponent implements OnInit {
         
         if(this.branches[i].Name == this.branchNameSelected )
         {
-          this.httpService.deleteBranch(this.branches[i],this.authService.currentUserToken()).subscribe(
+          this.serviceManager.deleteBranch(this.branches[i],this.authService.currentUserToken()).subscribe(
 
             (res: any) => {
                    
               alert('Successfully deleted branch');
               this.branches = [];
-              this.httpService.getBranch(this.authService.currentUserToken()).subscribe(
+              this.serviceManager.getBranches(this.authService.currentUserToken()).subscribe(
                 (res: any) => {
                         
                         for(let i=0; i<res.length; i++){

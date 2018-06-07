@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../../Services/http-service.service';
 import { AuthService } from '../../../Services/auth.service';
-import { TypeOfVehicle } from '../../../Model/type-of-vehicle';  
+import { TypeOfVehicle } from '../../../Model/type-of-vehicle';
+import { Service } from '../../../Model/service';    
 
 @Component({
   selector: 'app-service-single',
@@ -15,6 +16,7 @@ export class ServiceSingleComponent implements OnInit {
   client : boolean;
   admin : boolean;
   types: TypeOfVehicle[];
+  service : Service;
   
 
   constructor(public httpService: HttpService,private authService: AuthService) { 
