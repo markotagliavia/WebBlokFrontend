@@ -1,3 +1,27 @@
-<p>
-  service-single works!
-</p>
+<app-navbar [title] = "'New service'"></app-navbar>
+<section class="model-area section-gap" id="new_car">
+	<div class="container" style="width:30em">
+      <app-branch-control *ngIf = "manager"></app-branch-control>
+      
+      <div class="row d-flex justify-content-center pb-40">
+          <div class="col-md-8 pb-40 header-text">
+            <h1 class="text-center pb-10">Choose your desired car model</h1>
+            <p class="text-center">
+              Hurry up before someone book your car right in front of your nose.
+            </p>
+          </div>
+        </div>
+        <div>
+            <p style="color:black">Types:</p>
+            <select size="3" style="width:10em" name="typeNameSel" [(ngModel)] ="typeNameSelected">
+              <option *ngFor = "let type of types" [value]="type.Name">{{type.Name}}</option>
+            </select>
+        </div>
+          <app-car-unit></app-car-unit>
+          <app-car-unit></app-car-unit>
+          <app-car-unit></app-car-unit>
+          <app-car-unit></app-car-unit>
+          
+    </div>
+</section>
+    
