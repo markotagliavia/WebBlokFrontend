@@ -41,7 +41,7 @@ export class HttpService {
         const opts: RequestOptions = new RequestOptions();
         opts.headers = headers;
         var url = `http://localhost:51432/api/Account/Logout/${id}`;
-        return this.http.post(url,null, opts).pipe(map((res: Response) => this.extractData(res)));
+        return this.http.post(url,null, opts);
     }
 	
 	register(user: IdentityUser) {
