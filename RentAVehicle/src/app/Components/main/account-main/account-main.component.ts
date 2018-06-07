@@ -164,7 +164,7 @@ export class AccountMainComponent implements OnInit {
                     this.http.uploadPicture(this.authService.currentUserId(),this.selectedFile,this.authService.currentUserToken()).subscribe
                     (
                           (res : any) => {
-                                  alert(res._body);
+                                  //alert(res._body);
                                   
                           },
                           error =>
