@@ -12,10 +12,9 @@
 									<div class="visit">Action</div>
 									<div class="visit">Service</div>
 								</div>
-								<div *ngFor="let user of users">
-									<app-table-row-user [user] = 'user'></app-table-row-user>>	
-								</div>
-								<div class="table-row">
+									<app-table-row-user [user] = 'user' *ngFor="let user of appUsers"></app-table-row-user>
+									<app-table-row-user [user] = 'manager' *ngFor="let manager of managers"></app-table-row-user>
+								<!--><div class="table-row">
 									<div class="visit">645032</div>
 									<div class="visit">645032</div>
 									<div class="visit">645032</div>
@@ -49,7 +48,7 @@
 									<div class="visit">Client</div>
 									<div class="visit"><a class="genric-btn primary">Manager</a></div>
 									<div class="visit"></div>
-								</div>
+								</div><!-->
 							</div>
 						</div>
 					</div>
