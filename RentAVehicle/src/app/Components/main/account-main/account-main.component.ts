@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../../Model/user';
-import { AppUser } from '../../../Model/app-user';
+import { IdentityUser } from '../../../Model/identity-user';
+import { HttpService } from '../../../Services/http-service.service'; 
+import {AuthService } from '../../../Services/auth.service'
 
 @Component({
   selector: 'app-account-main',
@@ -9,27 +11,24 @@ import { AppUser } from '../../../Model/app-user';
 })
 export class AccountMainComponent implements OnInit {
 
-  loginUser : User;
-  regUser : AppUser;
+  regUser : IdentityUser;
   errorTextLogin : string;
-  errorTextReg : string 
+  errorTextReg : string;
+  selectedFile: File; 
 
-  constructor() {
-    this.loginUser = {
-        'username' : 'Admin',
-        'password' : ''
-    }
+  constructor(private http: HttpService, private authService: AuthService) {
+    
 
     this.regUser = {
-      'Username' : '',
-      'Password' : '',
-      'Name' : '',
-      'Surname' : '',
-      'Birth' : '',
-      'Contact' : '',
-      'Email' : '',
-      'Odobren' : false,
-      'Role' : ''
+      'username' :  this.authService.currentUserName(),
+      'confirmPassword' : '',
+      'password' : '',
+      'name' : this.authService.currentUserName(),
+      'surname' : this.authService.currentUserSurname(),
+      'birth' : this.authService.currentUserBirth(),
+      'contact' : this.authService.currentUserContact(),
+      'email' : this.authService.currentUserEmail(),
+      'createService' : false
     }
 
     this.errorTextLogin = '';
@@ -41,43 +40,89 @@ export class AccountMainComponent implements OnInit {
 
   changeLogin()
   {
-    if(this.loginUser.password.length == 0){
+    if(this.regUser.password.length == 0 || this.regUser.confirmPassword.length == 0){
       this.errorTextLogin = "All fields are required";
       return false;
     }
     else
     {
-      this.errorTextLogin = "";
+      if(this.regUser.password.length < 5)
+      {
+        this.errorTextLogin = "Password must have minimum 6 characters";
+        return false;
+      }
+      else
+      {
+        if(this.regUser.confirmPassword != this.regUser.password)
+        {
+          this.errorTextLogin = "Password must be the same";
+          return false;
+        }
+
+        this.authService.changePassword(this.authService.currentUserPassword(),this.regUser.password,this.regUser.confirmPassword,this.authService.currentUserToken()).subscribe(
+            (res : any) =>
+            {
+              this.errorTextLogin = "";
+              alert("Successful change password");
+            },
+            error =>
+            {
+                this.errorTextLogin ="Sever internal error";
+            }
+            
+        )
+        
+      }
     }
+    return false;
+  }
+
+  onFileChanged(event) {
+    this.selectedFile = event.target.files[0]
   }
 
   changeReg()
   {
-    if(this.regUser.Name.length == 0 
-      || this.regUser.Surname.length == 0 || this.regUser.Birth.length == 0 || this.regUser.Contact.length == 0 || this.regUser.Email.length == 0){
+    
+
+
+    if(this.regUser.name.length == 0 
+      || this.regUser.surname.length == 0 || this.regUser.birth.length == 0 || this.regUser.contact.length == 0 || this.regUser.email.length == 0){
       this.errorTextReg = "All fields except document are required";
       return false;		
       }
     else
     {
-      if(this.regUser.Name.length < 2)
+      if(this.regUser.name.length < 2)
       {
         this.errorTextReg = "Name must have minimum 2 characters";
         return false;
       }
-      if(this.regUser.Surname.length < 2)
+      if(this.regUser.surname.length < 2)
       {
         this.errorTextReg = "Surname must have minimum 2 characters";
         return false;
       }
-      if(!this.regUser.Email.includes('@'))
+      if(!this.regUser.email.includes('@'))
       {
         this.errorTextReg = "Invalid email";
         return false;
       }
       this.errorTextReg = "";
     }
-      console.log(`Dobili smo: `, JSON.stringify(this.regUser));
+     // console.log(`Dobili smo: `, JSON.stringify(this.regUser));
+
+     this.http.uploadPicture(this.authService.currentUserId(),this.selectedFile,this.authService.currentUserToken()).subscribe
+     (
+           (res : any) => {
+                   alert(res._body);
+           },
+           error =>
+           {
+                   alert(error.json().Message);
+           }
+     )
+
       return false; 
   }
 

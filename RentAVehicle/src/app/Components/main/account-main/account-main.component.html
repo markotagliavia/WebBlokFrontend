@@ -12,9 +12,10 @@
 			<div class="col-lg-6 model-left">
 				<form class="form" role="form" autocomplete="off">					    
 					<div class="from-group">
-						<input class="form-control txt-field" type="text" name="username" placeholder="Your username" disabled [(ngModel)]="loginUser.password">
+						<input class="form-control txt-field" type="text" name="username" placeholder="Your username" disabled [(ngModel)]="regUser.username">
 						<br>
-						<input class="form-control txt-field" type="password" name="pass" placeholder="Your password" [(ngModel)]="loginUser.password">                      
+						<input class="form-control txt-field" type="password" name="pass" placeholder="Your password" [(ngModel)]="regUser.password">  
+						<input class="form-control txt-field" type="password" name="pass" placeholder="Repeat password" [(ngModel)]="regUser.confirmPassword">                     
 					</div>
 					<br>
 					<div class="form-group row">
@@ -46,7 +47,9 @@
 						</div>
 						<div class="col-md-6 wrap-right">
 							<br>
-							<button id="uploadButton">Upload</button>
+							<input 
+							type="file" (change)="onFileChanged($event)" 
+							#fileInput>
 						</div>
 					</div>
 					<div class="form-group row">
