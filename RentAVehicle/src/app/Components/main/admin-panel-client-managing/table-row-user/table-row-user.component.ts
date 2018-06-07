@@ -1,6 +1,8 @@
 import { Component, OnInit, Injectable, Input } from '@angular/core';
 import { AuthService } from '../../../../Services/auth.service';
+import { HttpService } from '../../../../Services/http-service.service';
 import { AppUser } from '../../../../Model/app-user';
+import { CurrentUser } from '../../../../Model/current-user';
 
 @Injectable()
 @Component({
@@ -14,31 +16,49 @@ export class TableRowUserComponent implements OnInit {
   client : boolean;
   manager : boolean;
   unverified : boolean;
+  currUserPom : CurrentUser;
 
-  constructor() {
+  constructor(private http: HttpService, private authService: AuthService) {
     this.client = false;
     this.manager = false;
     this.unverified = false;
    }
 
   ngOnInit() {
-            if(this.user.Role == "Client" && this.user.Odobren)
-            {
-              this.client = true;
-            }
-            else if(this.user.Role == "Client" && !this.user.Odobren)
-            {
-              this.unverified = true;
-            }
-            else if(this.user.Role == "Manager")
-            {
-              this.manager = true;
-            }
+    this.refresh();
+  }
+
+  refresh()
+  {
+    if(this.user.Role == "Client" && this.user.Odobren)
+    {
+      this.client = true;
+    }
+    else if(this.user.Role == "Client" && !this.user.Odobren)
+    {
+      this.unverified = true;
+    }
+    else if(this.user.Role == "Manager")
+    {
+      this.manager = true;
+    }
   }
 
   verifyUser()
   {
-    //to do
+   /* this.user.Odobren = true;
+    this.currUserPom = {
+      Id = this.user.Id;
+    };
+    this.http.putUser(this.user, this.authService.currentUserToken()).subscribe(
+      (res : any) => {
+
+    this.refresh();*/
+  }
+
+  viewDocument()
+  {
+    //todo
   }
 
   removeServiceCreationRight(checkboxElem)
