@@ -40,7 +40,7 @@ export class AddNewServiceComponent implements OnInit {
 
               if(this.selectedFile != undefined)
               {
-                this.serviceManager.uploadServicePicture(this.authService.currentUserId(),this.selectedFile,this.authService.currentUserToken()).subscribe
+                this.serviceManager.uploadServicePicture(res._body,this.selectedFile,this.authService.currentUserToken()).subscribe
                 (
                       (res : any) => {
                               //alert(res._body);
