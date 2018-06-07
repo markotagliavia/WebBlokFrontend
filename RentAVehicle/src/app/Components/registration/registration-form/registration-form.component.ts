@@ -31,7 +31,8 @@ export class RegistrationFormComponent implements OnInit {
 		'surname' : '',
 		'birth' : '',
 		'contact' : '',
-		'email' : ''
+		'email' : '',
+		'createService' : false
 	}
 	this.errorText = "";
   }
@@ -105,6 +106,18 @@ export class RegistrationFormComponent implements OnInit {
 			
 		
     return false; 
-  }
+	}
+	
+	createServiceChange(elem)
+	{
+		if(elem.checked)
+		{
+			this.user.createService = true;
+		}
+		else
+		{
+			this.user.createService = false;	
+		}
+	}
 
 }

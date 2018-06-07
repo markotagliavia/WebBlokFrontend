@@ -65,7 +65,8 @@ export class HttpService {
                 Password: user.password,
                 Contact: user.contact,
                 Birth: user.birth,
-                ConfirmPassword: user.confirmPassword
+                ConfirmPassword: user.confirmPassword,
+                CreateService : user.createService
             }), opts);
         
     }

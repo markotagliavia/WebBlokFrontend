@@ -7,6 +7,7 @@ export class IdentityUser {
         public contact: string,
         public birth : string,
         public email: string,
+        public createService : boolean,
         public confirmPassword: string
     ){}
 }
