@@ -1,20 +1,18 @@
 <div class="row align-items-center single-model item" style="padding-top:5em">
 	<div class="col-lg-6 model-left">
 		<div class="title justify-content-between d-flex">
-			<h4 class="mt-20">Audi 3000 msi</h4>
-			<h2>$149<span>/day</span></h2>
+			<h4 class="mt-20">{{car.Model}}</h4>
+			<h2>${{car.price}}<span>/day</span></h2>
 		</div>
 		<p>
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+			{{car.Description}}
 		</p>
 		<p>
-			Capacity         : 04 Person <br>
-			Doors            : 04 <br>
-			Air Condition    : Dual Zone <br>
-			Transmission     : Automatic
+			Manufacturer         : {{car.Manufacturer}} <br>
+			Year            : {{car.Year}} <br>
 		</p>
-		<a class="text-uppercase primary-btn" [routerLink]="['/reservation']" *ngIf = "client">Book This Vehicle Now</a>
-		<a class="text-uppercase info-btn" [routerLink]="['/editVehicle']" *ngIf = "manager">Edit Vehicle</a>
+		<a class="text-uppercase primary-btn" [routerLink]="['/reservation', car.id]" *ngIf = "client">Book This Vehicle Now</a>
+		<a class="text-uppercase info-btn" [routerLink]="['/car/edit', car.id]" *ngIf = "manager">Edit Vehicle</a>
 		<a class="text-uppercase danger-btn" (click)='deleteVehicle()' *ngIf = "manager">Delete Vehicle</a>
 	</div>
 	<div class="col-lg-6 model-right">

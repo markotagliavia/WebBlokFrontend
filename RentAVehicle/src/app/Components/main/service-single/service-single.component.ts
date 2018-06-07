@@ -1,29 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpService } from '../../../Services/http-service.service';
+import { ServiceManager } from '../../../Services/[services].service';
 import { AuthService } from '../../../Services/auth.service';
 import { TypeOfVehicle } from '../../../Model/type-of-vehicle';
-import { Service } from '../../../Model/service';    
+import { Car } from '../../../Model/car';
+import { Service } from '../../../Model/service';
+import { ActivatedRoute } from '@angular/router';    
 
 @Component({
   selector: 'app-service-single',
   templateUrl: './service-single.component.html',
   styleUrls: ['./service-single.component.css']
 })
-export class ServiceSingleComponent implements OnInit {
+export class ServiceSingleComponent implements OnInit, OnDestroy {
 
-
+  
   manager : boolean;
   client : boolean;
   admin : boolean;
   types: TypeOfVehicle[];
+  cars : Car[];
+  serviceId : number;
   service : Service;
+  private sub : any;
   
 
-  constructor(public httpService: HttpService,private authService: AuthService) { 
+  constructor(public httpService: HttpService,private authService: AuthService, private route: ActivatedRoute, private serviceManager : ServiceManager) { 
     this.client = false;
     this.manager = false;
     this.admin = false;
     this.types = []; //to do uraditi zahtev za dobijanje...
+    this.cars = [];
+    this.serviceId = -1;
     this.httpService.getTypeOfVehicle(this.authService.currentUserToken()).subscribe(
       (res: any) => {
                
@@ -32,10 +40,35 @@ export class ServiceSingleComponent implements OnInit {
             }     
       },
       error =>{
-  
-      }
-      
-    )
+         console.log(error);
+      });
+
+    this.sub = this.route.params.subscribe(params => {
+      this.serviceId = +params['id']; // (+) converts string 'id' to a number
+   });
+
+   this.serviceManager.getService(this.authService.currentUserToken(), this.serviceId).subscribe(
+    (res: any) => {
+             this.service = res;
+          },
+    error =>{
+       console.log(error);
+    });
+
+    this.serviceManager.getCars(this.authService.currentUserToken()).subscribe(
+      (res: any) => {
+               
+              for(let i=0; i<res.length; i++){
+                if(res[i].serviceId == this.serviceId)
+                {
+                  this.cars.push(res[i]); //use i instead of 0
+                }
+            }     
+      },
+      error =>{
+         console.log(error);
+      });
+
   }
 
   ngOnInit() {
@@ -59,6 +92,10 @@ export class ServiceSingleComponent implements OnInit {
             }
         }
     }
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
 }

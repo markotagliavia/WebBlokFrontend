@@ -13,12 +13,13 @@ export class AddNewCarComponent implements OnInit {
 
   constructor() {
     this.car = {
-      'manufacturer' : '',
-      'model' : '',
-      'year' : '',
-      'description' : '',
-      'type' : '',
-      'price' : ''
+      'Id':-1,
+      'Manufacturer' : '',
+      'Model' : '',
+      'Year' : '',
+      'Description' : '',
+      'Type' : '',
+      'Price' : ''
     }
     this.errorText = "";
    }
@@ -27,8 +28,8 @@ export class AddNewCarComponent implements OnInit {
   }
 
   newCar(){
-    if(this.car.manufacturer.length == 0 || this.car.model.length == 0 || this.car.year.length == 0 || this.car.description.length == 0
-        || this.car.type.length == 0 || this.car.price.length == 0)
+    if(this.car.Manufacturer.length == 0 || this.car.Model.length == 0 || this.car.Year.length == 0 || this.car.Description.length == 0
+        || this.car.Type.length == 0 || this.car.Price.length == 0)
     {
        this.errorText = "All fields except picture are requiered";
        return false;

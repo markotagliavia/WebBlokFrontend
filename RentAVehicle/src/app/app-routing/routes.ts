@@ -11,6 +11,8 @@ import { AddNewServiceComponent } from '../Components/main/add-new-service/add-n
 import { AddNewCarComponent } from '../Components/main/add-new-car/add-new-car.component';
 import { AddNewCarTypeComponent } from '../Components/main/add-new-car-type/add-new-car-type.component';
 import { ReservationComponent } from '../Components/main/reservation/reservation.component';
+import { ServiceSingleComponent } from '../Components/main/service-single/service-single.component';
+import { EditCarComponent } from '../Components/main/edit-car/edit-car.component';
 
 export const routes :Routes = [
 	{path: 'home/login', component: WelcomeScreenComponent},
@@ -21,8 +23,10 @@ export const routes :Routes = [
 	{path: 'account', component: AccountMainComponent},
 	{path: 'panel', component: AdminPanelMainComponent},
 	{path: 'services/new', component: AddNewServiceComponent},
+	{path: 'serviceSingle/:id', component: ServiceSingleComponent},
 	{path: 'cars/new', component: AddNewCarComponent},
+	{path: 'cars/edit/:id', component: EditCarComponent},
 	{path: 'types', component: AddNewCarTypeComponent},
-	{path: 'reservation', component: ReservationComponent},
+	{path: 'reservation/:id', component: ReservationComponent},
 	{path: '', redirectTo: '/home/login', pathMatch: 'full'}
 ];

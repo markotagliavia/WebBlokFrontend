@@ -17,11 +17,7 @@
               <option *ngFor = "let type of types" [value]="type.Name">{{type.Name}}</option>
             </select>
         </div>
-          <app-car-unit></app-car-unit>
-          <app-car-unit></app-car-unit>
-          <app-car-unit></app-car-unit>
-          <app-car-unit></app-car-unit>
-          
+          <app-car-unit *ngFor = "let carUnit of cars" *ngIf = "carUnit.type == typeNameSelected" [car] = "carUnit"></app-car-unit>      
     </div>
 </section>
     
