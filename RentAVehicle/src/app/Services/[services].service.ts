@@ -187,6 +187,27 @@ export class ServiceManager {
         `http://localhost:51432/api/Branches/DeleteService/${service.Id}`
         , opts);
   }
+
+  uploadServicePicture(serviceid: number, file : File, token: string):Observable<any>
+    {
+
+        const headers: Headers = new Headers();
+        //headers.append('Content-type', 'multipart/form-data');
+        let usertoken = `Bearer ${token}`;
+        headers.append('Authorization', usertoken);
+
+        const opts: RequestOptions = new RequestOptions();
+        opts.headers = headers;
+        let formData:FormData = new FormData();
+        formData.append('uploadFile', file, file.name);
+        
+        return this.http.post(
+            `http://localhost:51432/api/Upload/PostServiceImage/${serviceid}`,
+            formData, opts);
+       
+    }
+
+
     //end of service section ----------------------------------------------------------------------------
 
 
