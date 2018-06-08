@@ -293,7 +293,7 @@ export class ServiceManager {
 
     const opts: RequestOptions = new RequestOptions();
     opts.headers = headers;
-    var url = 'http://localhost:51432/api/Cars/GetAllVehicles';
+    var url = 'http://localhost:51432/api/Vehicles/GetAllVehicles';
     return this.http.get(url, opts).pipe(map((res: Response) => this.extractData(res)));
   }
 
