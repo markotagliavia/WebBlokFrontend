@@ -147,6 +147,21 @@ export class ServiceManager {
         }), opts);
   }
 
+  approveService(id : number, token: string) : Observable<any>
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+
+    return this.http.put(
+        `http://localhost:51432/api/Services/ApproveService/${id}`
+       , opts);
+  }
+
   getServices(token: string): Observable<any>
   {
     const headers: Headers = new Headers();

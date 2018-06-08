@@ -12,7 +12,7 @@
 									<div class="visit" *ngIf = "manager"><a class="genric-btn primary">Client</a></div>
 									<div class="visit" *ngIf = "manager">
 										<div class="confirm-switch">
-											<input type="checkbox" id="confirm-switch" checked [(ngModel)]="user.createService" name="swithc">
+											<input type="checkbox" id="confirm-switch" [(ngModel)]="user.createService" name="swithc" ng-change="checkedChange()">
 											<label for="confirm-switch"></label>
 										</div>
 									</div>

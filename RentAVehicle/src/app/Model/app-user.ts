@@ -10,6 +10,6 @@ export class AppUser {
 			public approved: boolean,
       public createService: boolean,
       public Path: string,
-			public Role : string
+			public Role : string 
   ){}
 }

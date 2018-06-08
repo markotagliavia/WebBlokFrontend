@@ -15,7 +15,8 @@ export class AdminPanelClientManagingComponent implements OnInit {
 
   constructor(public httpService: HttpService,private authService: AuthService) { 
     this.appUsers = [];
-    this.httpService.getAllUsers(this.authService.currentUserToken()).subscribe(
+    this.managers = [];
+    this.httpService.getAllAppUsers(this.authService.currentUserToken()).subscribe(
       (res: any) => {
                
               for(let i=0; i<res.length; i++){
@@ -27,8 +28,7 @@ export class AdminPanelClientManagingComponent implements OnInit {
           window.alert(error);
       });
 
-      //tijana to do
-      this.httpService.getAllUsers(this.authService.currentUserToken()).subscribe(
+      this.httpService.getAllManagers(this.authService.currentUserToken()).subscribe(
         (res: any) => {
                  
                 for(let i=0; i<res.length; i++){

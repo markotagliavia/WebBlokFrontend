@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Service } from '../../../Model/service';
+import { ServiceManager } from '../../../Services/[services].service'; 
+import { AuthService } from '../../../Services/auth.service';
 
 @Component({
   selector: 'app-admin-panel-service-managing',
@@ -7,9 +10,42 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminPanelServiceManagingComponent implements OnInit {
 
-  constructor() { }
+  services : Service[];
+
+  constructor(public serviceManager : ServiceManager, public authService : AuthService) { 
+    this.services = [];
+    this.serviceManager.getServices(this.authService.currentUserToken()).subscribe(
+      (res: any) => {
+               
+              for(let i=0; i<res.length; i++){
+                this.services.push(res[i]); //use i instead of 0
+            }     
+      },
+      error =>{
+          console.log(error);
+          window.alert(error);
+      });
+  }
 
   ngOnInit() {
+  }
+
+  verifyService(serviceId : number)
+  {
+    this.serviceManager.approveService(serviceId,this.authService.currentUserToken()).subscribe(
+      (res: any) => {
+               
+              for(let i=0; i<res.length; i++){
+                if(this.services[i].Id == serviceId)
+                {
+                  this.services[i].Approved = true;
+                }
+            }     
+      },
+      error =>{
+          console.log(error);
+          window.alert(error);
+      });
   }
 
 }

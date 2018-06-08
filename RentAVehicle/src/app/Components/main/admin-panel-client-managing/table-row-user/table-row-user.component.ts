@@ -62,12 +62,26 @@ export class TableRowUserComponent implements OnInit {
     //todo
   }
 
-  removeServiceCreationRight(checkboxElem)
+  checkedChange()
   {
-    if (checkboxElem.checked) {
-      alert ("hi");
+    if (this.user.createService == false) {
+      this.authService.ServiceCreationRight(this.user.Id, this.authService.currentUserToken(), false).subscribe(
+        (res : any) => { 
+            this.refresh();
+        },
+        error =>{
+            console.log(error);
+            window.alert(error);
+        });
     } else {
-      alert ("bye");
+      this.authService.ServiceCreationRight(this.user.Id, this.authService.currentUserToken(), true).subscribe(
+        (res : any) => { 
+            this.refresh();
+        },
+        error =>{
+            console.log(error);
+            window.alert(error);
+        });
     }
   }
 

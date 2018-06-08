@@ -228,5 +228,39 @@ export class HttpService {
 
     }
 
+    getAllAppUsers(token: string):Observable<any>
+    {
+
+        const headers: Headers = new Headers();
+        headers.append('Content-type', 'application/json');
+        let usertoken = `Bearer ${token}`;
+        headers.append('Authorization', usertoken);
+
+        const opts: RequestOptions = new RequestOptions();
+        opts.headers = headers;
+
+        return this.http.get(
+            `http://localhost:51432/api/AppUser/GetAllAppUsers`
+            , opts).pipe(map((res: Response) => this.extractData(res)));
+
+    }
+
+    getAllManagers(token: string):Observable<any>
+    {
+
+        const headers: Headers = new Headers();
+        headers.append('Content-type', 'application/json');
+        let usertoken = `Bearer ${token}`;
+        headers.append('Authorization', usertoken);
+
+        const opts: RequestOptions = new RequestOptions();
+        opts.headers = headers;
+
+        return this.http.get(
+            `http://localhost:51432/api/AppUser/GetAllManagers`
+            , opts).pipe(map((res: Response) => this.extractData(res)));
+
+    }
+
     
 }

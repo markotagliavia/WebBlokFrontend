@@ -1,6 +1,8 @@
 import { CurrentUser } from "../Model/current-user";
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { Injectable } from "@angular/core";
+import { AppUser } from '../Model/app-user';
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -223,5 +225,20 @@ export class AuthService {
              NewPassword: newPass,
              ConfirmPassword: confirmPass
          }), opts);
+    }
+
+    ServiceCreationRight(userId: number, token: string, sme : boolean) : Observable<any>
+    {
+      const headers: Headers = new Headers();
+      headers.append('Content-type', 'application/json');
+      let usertoken = `Bearer ${token}`;
+      headers.append('Authorization', usertoken);
+  
+      const opts: RequestOptions = new RequestOptions();
+      opts.headers = headers;
+  
+      return this.http.put(
+          `http://localhost:51432/api/AppUser/Promotion/${userId}`
+          ,sme, opts);
     }
 }
