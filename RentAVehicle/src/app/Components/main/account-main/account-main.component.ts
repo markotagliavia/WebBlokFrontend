@@ -170,6 +170,29 @@ export class AccountMainComponent implements OnInit {
                             (
                                   (res : any) => {
                                           //alert(res._body);
+                                          this.http.getUserOnSession(this.regUser.username,this.authService.currentUserToken()).subscribe(
+                                            res => {
+                                              // console.log(res);
+                                              let currentUser: CurrentUser;
+                                              
+                                              currentUser = new CurrentUser(res.LoggedIn,res.Username,res.Name,res.Surname,this.authService.currentUserRole(),this.authService.currentUserToken(),
+                                              res.Contact,res.BirthDate,this.regUser.email, this.regUser.password,res.Approved,
+                                              res.CreateService,res.Path,res.Id);
+                                              console.log(currentUser);
+                                              this.authService.logIn(currentUser);
+                                              //this.header.refreshView();
+                                              this.regUser = {
+                                                'username' :  this.authService.currentUserName(),
+                                                'confirmPassword' : '',
+                                                'password' : '',
+                                                'name' : this.authService.currentUserName(),
+                                                'surname' : this.authService.currentUserSurname(),
+                                                'birth' : this.authService.currentUserBirth(),
+                                                'contact' : this.authService.currentUserContact(),
+                                                'email' : this.authService.currentUserEmail(),
+                                                'createService' : false
+                                              }
+                                            })
                                           
                                   },
                                   error =>

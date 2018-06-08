@@ -5,7 +5,7 @@ import { AuthService } from '../../../Services/auth.service';
 import { TypeOfVehicle } from '../../../Model/type-of-vehicle';
 import { Car } from '../../../Model/car';
 import { Service } from '../../../Model/service';
-import { ActivatedRoute } from '@angular/router';    
+import { Router,ActivatedRoute } from '@angular/router';    
 
 @Component({
   selector: 'app-service-single',
@@ -14,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ServiceSingleComponent implements OnInit, OnDestroy {
 
-  
+  smeDaIzmeni: boolean;
   manager : boolean;
   client : boolean;
   admin : boolean;
@@ -25,7 +25,7 @@ export class ServiceSingleComponent implements OnInit, OnDestroy {
   private sub : any;
   
 
-  constructor(public httpService: HttpService,private authService: AuthService, private route: ActivatedRoute, private serviceManager : ServiceManager) { 
+  constructor(public httpService: HttpService,private authService: AuthService, private router: Router,private route: ActivatedRoute, private serviceManager : ServiceManager) { 
     this.client = false;
     this.manager = false;
     this.admin = false;
@@ -50,6 +50,14 @@ export class ServiceSingleComponent implements OnInit, OnDestroy {
    this.serviceManager.getService(this.authService.currentUserToken(), this.serviceId).subscribe(
     (res: any) => {
              this.service = res;
+             if(this.service.AppUserId == this.authService.currentUserId())
+             {
+                this.smeDaIzmeni = true;
+             }
+             else
+             {
+                this.smeDaIzmeni = false;
+             }
           },
     error =>{
        console.log(error);
@@ -96,6 +104,24 @@ export class ServiceSingleComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  delete()
+  {
+    
+    this.serviceManager.deleteService(this.service,this.authService.currentUserToken()).subscribe(
+        (res: any) =>
+        {
+          alert("Successfully deleted");
+          this.router.navigate(['../services']);
+        },
+        error =>
+        {
+          alert(error.json().Message);
+          this.router.navigate(['../services']);
+        }
+
+    )
   }
 
 }

@@ -121,7 +121,7 @@ export class ServiceManager {
         }), opts);
   }
 
-  putService(service: Service, serviceNovi : Service, id : number, token: string) : Observable<any>
+  putService(serviceNovi : Service, token: string) : Observable<any>
   {
     const headers: Headers = new Headers();
     headers.append('Content-type', 'application/json');
@@ -132,15 +132,15 @@ export class ServiceManager {
     opts.headers = headers;
 
     return this.http.put(
-        `http://localhost:51432/api/Services/PutService/${service.Id}`
+        `http://localhost:51432/api/Services/PutService/${serviceNovi.Id}`
         ,
         JSON.stringify({
-          Id: service.Id,
+          Id: serviceNovi.Id,
           Name: serviceNovi.Name, 
           Email: serviceNovi.Email,
           Description: serviceNovi.Description,
           Contact: serviceNovi.Contact,
-          AppUserId: id,
+          AppUserId: serviceNovi.AppUserId,
           Path: serviceNovi.Path,
           Approved: serviceNovi.Approved,
           AverageMark: serviceNovi.AverageMark
@@ -210,7 +210,7 @@ export class ServiceManager {
     opts.headers = headers;
 
     return this.http.delete(
-        `http://localhost:51432/api/Branches/DeleteService/${service.Id}`
+        `http://localhost:51432/api/Services/DeleteService/${service.Id}`
         , opts);
   }
 

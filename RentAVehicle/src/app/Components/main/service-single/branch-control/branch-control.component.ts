@@ -24,6 +24,14 @@ export class BranchControlComponent implements OnInit {
     this.errorText = "";
     this.branchNameInput = "";
     this.branchNameSelected = "";
+    this.branch = {
+      'Id' : -1,
+      'Name':'',
+      'Address' : '',
+      'Longitude': -1,
+      'Latitude' : -1,
+      'ServiceId' : -1
+    };
     this.branches = []; //to do uraditi zahtev za dobijanje...
     this.serviceManager.getBranches(this.authService.currentUserToken()).subscribe(
       (res: any) => {
