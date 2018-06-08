@@ -21,7 +21,7 @@ export class ServicesMainComponent implements OnInit {
     this.client = false;
     this.manager = false;
     this.admin = false;
-    this.smeDaKreira = true;
+    this.smeDaKreira = false;
     this.services = []; //to do uraditi zahtev za dobijanje...
     this.serviceManager.getServices(this.authService.currentUserToken()).subscribe(
       (res: any) => {
@@ -47,13 +47,13 @@ export class ServicesMainComponent implements OnInit {
               this.admin = true;
               this.client = true;
             }
-            else if(this.authService.isLoggedInRole('Manager'))
+            else if(this.authService.isLoggedInRole('Manager') && this.authService.currentUser().approved)
             {
               this.manager = true;
               this.client = true;
-              if(this.authService.currentUser().createService == false)
+              if(this.authService.currentUser().createService == true)
               {
-                this.smeDaKreira = false;
+                this.smeDaKreira = true;
               }
             }
             else if(this.authService.isLoggedInRole('AppUser'))

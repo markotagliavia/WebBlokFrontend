@@ -42,11 +42,17 @@ export class TableRowUserComponent implements OnInit {
       this.client = false;
       this.manager = false;
     }
-    else if(this.user.Role == "Manager")
+    else if(this.user.Role == "Manager" && this.user.Approved)
     {
       this.manager = true;
       this.client = false;
       this.unverified = false;
+    }
+    else if(this.user.Role == "Manager" && !this.user.Approved)
+    {
+      this.unverified = true;
+      this.client = false;
+      this.manager = false;
     }
   }
 
