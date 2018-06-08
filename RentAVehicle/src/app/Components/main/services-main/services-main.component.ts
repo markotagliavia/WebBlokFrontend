@@ -14,12 +14,14 @@ export class ServicesMainComponent implements OnInit {
   manager : boolean;
   client : boolean;
   admin : boolean;
+  smeDaKreira : boolean;
   services : Service[];
 
   constructor(public serviceManager: ServiceManager,private authService: AuthService) { 
     this.client = false;
     this.manager = false;
     this.admin = false;
+    this.smeDaKreira = true;
     this.services = []; //to do uraditi zahtev za dobijanje...
     this.serviceManager.getServices(this.authService.currentUserToken()).subscribe(
       (res: any) => {
@@ -49,6 +51,10 @@ export class ServicesMainComponent implements OnInit {
             {
               this.manager = true;
               this.client = true;
+              if(this.authService.currentUser().createService == false)
+              {
+                this.smeDaKreira = false;
+              }
             }
             else if(this.authService.isLoggedInRole('AppUser'))
             {
