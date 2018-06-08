@@ -3,19 +3,19 @@
 						<div class="progress-table-wrap">
 							<div class="progress-table">
 								<div class="table-head">
-									<div class="country">Services</div>
-									<div class="visit">Name</div>
-									<div class="visit">Descriptions</div>
-									<div class="visit">Emails</div>
+									<div class="visit">Service Logo</div>
+									<div class="visit">Service Name</div>
+									<div class="visit">Service Descriptions</div>
+									<div class="visit">Service Email</div>
 									<div class="visit">Approved</div>
 								</div>
 								<div class="table-row" *ngFor = "let service of services">
-									<div class="country"> <img src="assets/img/elements/f2.jpg" alt="flag">Service Logo</div>
+									<div class="visit"> <img src="assets/img/elements/f2.jpg" alt="flag"></div>
 									<div class="visit">{{service.Name}}</div>
 									<div class="visit">{{service.Description}}</div>
 									<div class="visit">{{service.Email}}</div>
 									<div class="visit" *ngIf = "service.Approved">Approved</div>
-									<div class="visit"><a class="genric-btn primary"  *ngIf = "!service.Approved" (click) = "verifyService(service.Id)">Approve</a></div>
+									<div class="visit" *ngIf = "!service.Approved"><a class="genric-btn primary"  (click) = "verifyService(service.Id)">Approve</a></div>
 								</div>
 							</div>
 						</div>
