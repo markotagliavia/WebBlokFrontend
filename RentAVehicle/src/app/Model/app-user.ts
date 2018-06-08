@@ -5,10 +5,11 @@ export class AppUser {
       public Surname: string,
 	  	public Username: string,
 	  	public Contact: string,
-	  	public Birth : string,
+	  	public BirthDate : string,
 			public Email: string,
-			public approved: boolean,
-      public createService: boolean,
+			public Approved: boolean,
+			public CreateService: boolean,
+			public LoggedIn: boolean,
       public Path: string,
 			public Role : string 
   ){}

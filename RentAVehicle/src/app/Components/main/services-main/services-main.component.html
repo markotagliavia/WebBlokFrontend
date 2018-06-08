@@ -11,7 +11,7 @@
 					</div>					
 					<div class="row">
 						<div class="col-lg-4 col-md-6" *ngFor = "let service of services">
-							<app-service-unit [service] = 'service'></app-service-unit>
+							<app-service-unit [service] = 'service' *ngIf = "service.Approved"></app-service-unit>
 						</div>
 						<br><br>					
 					</div>
