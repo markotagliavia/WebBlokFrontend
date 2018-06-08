@@ -43,8 +43,7 @@ export class AddNewServiceComponent implements OnInit {
                 this.serviceManager.uploadServicePicture(res._body,this.selectedFile,this.authService.currentUserToken()).subscribe
                 (
                       (res : any) => {
-                              //alert(res._body);
-                              
+                              //alert(res._body);                             
                       },
                       error =>
                       {
@@ -54,23 +53,14 @@ export class AddNewServiceComponent implements OnInit {
                 )
               }
               
-            alert("Successful added new service");  
-    
+            alert("Successful added new service");     
       },
       error =>
       {
               alert(error.json().Message);
               return false;
-      }
-
-
-  )
-
-
-
-
+      })
     }
-
   }
 
 

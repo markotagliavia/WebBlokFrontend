@@ -18,6 +18,7 @@ export class BranchControlComponent implements OnInit {
 	branchNameInput : string;
   branchNameSelected : string;
   branch : Branch;
+  selectedFile: File; 
   
   constructor(public serviceManager: ServiceManager,private authService: AuthService) {
     this.errorText = "";
@@ -47,6 +48,8 @@ export class BranchControlComponent implements OnInit {
 
   newBranch()
   {
+    //to do slika jos
+
 	  if(this.branchNameInput.length == 0)
 	  {
 		  this.errorText = "You must enter branch name";
@@ -93,6 +96,8 @@ export class BranchControlComponent implements OnInit {
   
   updateBranch()
   {
+    //slika jos
+
     if(this.branchNameInput.length == 0 || this.branchNameSelected.length == 0 ){
       this.errorText = "All fields are required";
       return false;		
@@ -181,6 +186,15 @@ export class BranchControlComponent implements OnInit {
       
       return false;
 	  
+  }
+
+  onFileChanged(event) {
+    this.selectedFile = event.target.files[0]
+  }
+
+  changeDataInForm()
+  {
+    //na selekciju popuniti podatke o postojecoj filijali u poljima
   }
 
 }

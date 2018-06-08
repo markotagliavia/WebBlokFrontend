@@ -10,21 +10,37 @@
 				<br>
 				<input class="form-control txt-field" type="number" name="long" placeholder="Longitude" [(ngModel)]="branch.longitude">                       
 			</div>
+			
+			<div class="form-group row">
+					<div class="col-md-6 wrap-left">
+						<br>
+						<p style="color:black">Logo</p>
+					</div>
+					<div class="col-md-6 wrap-right">
+						<br>
+						<input 
+						type="file" (change)="onFileChanged($event)" 
+						#fileInput>
+					</div>
+				</div>
 
 			<div class="form-group row">
 				<div class="col-md-12">
+					<br>
           <a class="genric-btn success btn-block text-center text-uppercase" (click) = 'newBranch()'>Submit</a>
           <a class="genric-btn info btn-block text-center text-uppercase" (click) = 'updateBranch()'>Update selected</a>
           <a class="genric-btn danger btn-block text-center text-uppercase" (click) = 'deleteBranch()'>Delete selected</a>
 					<br>
 					<p style="color:red">{{errorText}}</p>
 				</div>
-      </div>
+			</div>
+			
+
       
       <div class="form-group">
           <div>
             <p style="color:black">Branches:</p>
-            <select style="width:10em" name="branchNameSel" [(ngModel)] ="branchNameSelected">
+            <select style="width:10em" name="branchNameSel" [(ngModel)] ="branchNameSelected" (change) = 'changeDataInForm()'>
               <option *ngFor = "let branch of branches" [value]="branch.Name">{{branch.Name}}</option>
             </select>
           </div>
