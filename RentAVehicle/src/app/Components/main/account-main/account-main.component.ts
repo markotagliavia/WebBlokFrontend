@@ -4,6 +4,7 @@ import { IdentityUser } from '../../../Model/identity-user';
 import { CurrentUser} from '../../../Model/current-user';
 import { HttpService } from '../../../Services/http-service.service'; 
 import {AuthService } from '../../../Services/auth.service'
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-account-main',
@@ -156,62 +157,76 @@ export class AccountMainComponent implements OnInit {
 
 
     );
-     this.http.putUser(userpom,this.authService.currentUserToken()).subscribe(
-      (res : any) => {
-
-                  if(this.selectedFile != undefined)
-                  {
-                    this.http.uploadPicture(this.authService.currentUserId(),this.selectedFile,this.authService.currentUserToken()).subscribe
-                    (
-                          (res : any) => {
-                                  //alert(res._body);
-                                  
-                          },
-                          error =>
-                          {
-                                  alert(error.json().Message);
-                                  return false;
-                          }
-                    )
-                  }
-                  this.errorTextLogin = "";
-                alert("Successful change account");
-
-                this.http.getUserOnSession(this.regUser.username,this.authService.currentUserToken()).subscribe(
-                  res => {
-                    // console.log(res);
-                    let currentUser: CurrentUser;
-                    
-                    currentUser = new CurrentUser(res.LoggedIn,res.Username,res.Name,res.Surname,this.authService.currentUserRole(),this.authService.currentUserToken(),
-                    res.Contact,res.BirthDate,this.authService.currentUserEmail(), this.regUser.password,res.Approved,
-                    res.CreateService,res.Path,res.Id);
-                    console.log(currentUser);
-                    this.authService.logIn(currentUser);
-                    //this.header.refreshView();
-                    this.regUser = {
-                      'username' :  this.authService.currentUserName(),
-                      'confirmPassword' : '',
-                      'password' : '',
-                      'name' : this.authService.currentUserName(),
-                      'surname' : this.authService.currentUserSurname(),
-                      'birth' : this.authService.currentUserBirth(),
-                      'contact' : this.authService.currentUserContact(),
-                      'email' : this.authService.currentUserEmail(),
-                      'createService' : false
-                    }
-                  })
-                  
+    
+     this.http.changeEmail(userpom,this.authService.currentUserToken()).subscribe(
+       
+          (res:any)=>{
+            this.http.putUser(userpom,this.authService.currentUserToken()).subscribe(
+              (res : any) => {
         
+                          if(this.selectedFile != undefined)
+                          {
+                            this.http.uploadPicture(this.authService.currentUserId(),this.selectedFile,this.authService.currentUserToken()).subscribe
+                            (
+                                  (res : any) => {
+                                          //alert(res._body);
+                                          
+                                  },
+                                  error =>
+                                  {
+                                          alert(error.json().Message);
+                                          return false;
+                                  }
+                            )
+                          }
+                          this.errorTextLogin = "";
+                        alert("Successful change account");
+        
+                        this.http.getUserOnSession(this.regUser.username,this.authService.currentUserToken()).subscribe(
+                          res => {
+                            // console.log(res);
+                            let currentUser: CurrentUser;
+                            
+                            currentUser = new CurrentUser(res.LoggedIn,res.Username,res.Name,res.Surname,this.authService.currentUserRole(),this.authService.currentUserToken(),
+                            res.Contact,res.BirthDate,this.regUser.email, this.regUser.password,res.Approved,
+                            res.CreateService,res.Path,res.Id);
+                            console.log(currentUser);
+                            this.authService.logIn(currentUser);
+                            //this.header.refreshView();
+                            this.regUser = {
+                              'username' :  this.authService.currentUserName(),
+                              'confirmPassword' : '',
+                              'password' : '',
+                              'name' : this.authService.currentUserName(),
+                              'surname' : this.authService.currentUserSurname(),
+                              'birth' : this.authService.currentUserBirth(),
+                              'contact' : this.authService.currentUserContact(),
+                              'email' : this.authService.currentUserEmail(),
+                              'createService' : false
+                            }
+                          })
+                          
+                
+                  },
+                  error =>
+                  {
+                          alert(error.json().Message);
+                          return false;
+                  }
+            )
           },
-          error =>
-          {
-                  alert(error.json().Message);
-                  return false;
-          }
-    )
-     
+          error =>{
 
-      return false; 
-  }
+            alert("Email is already taken");
+
+          }
+
+     )
+             
+        
+                return false; 
+              }
+          
+     
 
 }

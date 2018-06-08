@@ -100,6 +100,25 @@ export class HttpService {
         
     }
 
+    changeEmail(user: CurrentUser, token: string)
+    {
+        const headers: Headers = new Headers();
+        headers.append('Content-type', 'application/json');
+        let usertoken = `Bearer ${token}`;
+        headers.append('Authorization', usertoken);
+
+        const opts: RequestOptions = new RequestOptions();
+        opts.headers = headers;
+
+        return this.http.put(
+            `http://localhost:51432/api/Account/ChangeEmail`
+            ,
+            JSON.stringify({
+             Username: user.username,
+             Email: user.email
+            }), opts);
+    }
+
     putUser(user: CurrentUser, token: string) : Observable<any>
     {
         const headers: Headers = new Headers();
