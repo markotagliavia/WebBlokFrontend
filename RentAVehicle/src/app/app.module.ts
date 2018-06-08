@@ -34,6 +34,7 @@ import { AdminPanelClientManagingComponent } from './Components/main/admin-panel
 import { AdminPanelServiceManagingComponent } from './Components/main/admin-panel-service-managing/admin-panel-service-managing.component';
 import { TableRowUserComponent } from './Components/main/admin-panel-client-managing/table-row-user/table-row-user.component';
 import { BranchControlComponent } from './Components/main/service-single/branch-control/branch-control.component';
+import { RatesControlComponent } from './Components/main/service-single/rates-control/rates-control.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,7 +64,8 @@ import { BranchControlComponent } from './Components/main/service-single/branch-
     AdminPanelClientManagingComponent,
     AdminPanelServiceManagingComponent,
     TableRowUserComponent,
-    BranchControlComponent
+    BranchControlComponent,
+    RatesControlComponent
 	
   ],
   imports: [
