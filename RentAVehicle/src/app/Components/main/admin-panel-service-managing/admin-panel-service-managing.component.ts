@@ -52,7 +52,7 @@ export class AdminPanelServiceManagingComponent implements OnInit {
 
           break;
       }
-
+    }
   }
 
 }
