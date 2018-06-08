@@ -20,7 +20,10 @@ export class AdminPanelClientManagingComponent implements OnInit {
       (res: any) => {
                
               for(let i=0; i<res.length; i++){
-                this.appUsers.push(res[i]); //use i instead of 0
+
+                let pomUser: AppUser = res[i];
+                pomUser.Role = "AppUser"
+                this.appUsers.push(pomUser); //use i instead of 0
             }     
       },
       error =>{
@@ -32,7 +35,9 @@ export class AdminPanelClientManagingComponent implements OnInit {
         (res: any) => {
                  
                 for(let i=0; i<res.length; i++){
-                  this.managers.push(res[i]); //use i instead of 0
+                  let pomUser: AppUser = res[i];
+                pomUser.Role = "Manager"
+                this.appUsers.push(pomUser); //use i instead of 0
               }     
         },
         error =>{

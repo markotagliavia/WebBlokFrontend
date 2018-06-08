@@ -227,7 +227,7 @@ export class AuthService {
          }), opts);
     }
 
-    ServiceCreationRight(userId: number, token: string, sme : boolean) : Observable<any>
+    ServiceCreationRight(user: AppUser, token: string, sme : boolean) : Observable<any>
     {
       const headers: Headers = new Headers();
       headers.append('Content-type', 'application/json');
@@ -238,7 +238,18 @@ export class AuthService {
       opts.headers = headers;
   
       return this.http.put(
-          `http://localhost:51432/api/AppUser/Promotion/${userId}`
-          ,sme, opts);
+          `http://localhost:51432/api/AppUser/Promotion/${user.Id}`
+          ,JSON.stringify({
+            Id: user.Id,
+            Name: user.Name,
+            Surname: user.Surname,
+            Contact: user.Contact,
+            Username: user.Username,
+            BirthDate: user.BirthDate,
+            Approved: user.Approved,
+            LoggedIn: user.LoggedIn,
+            CreateService: sme,
+            Path: user.Path
+           }), opts);
     }
 }

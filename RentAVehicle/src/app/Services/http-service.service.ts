@@ -72,7 +72,7 @@ export class HttpService {
         
     }
 
-    approveUser(idUser: number, token: string, approved: boolean)
+    approveUser(user : AppUser, token: string, app: boolean)
     {
         const headers: Headers = new Headers();
         headers.append('Content-type', 'application/json');
@@ -83,9 +83,21 @@ export class HttpService {
         opts.headers = headers;
 
         return this.http.put(
-            `http://localhost:51432/api/AppUser/ApproveUser/${idUser}`
-            ,approved
-            , opts);
+            `http://localhost:51432/api/AppUser/ApproveUser/${user.Id}`
+            ,
+            JSON.stringify({
+             Id: user.Id,
+             Name: user.Name,
+             Surname: user.Surname,
+             Contact: user.Contact,
+             Username: user.Username,
+             BirthDate: user.BirthDate,
+             Approved: true,
+             LoggedIn: user.LoggedIn,
+             CreateService: user.CreateService,
+             Path: user.Path
+            }), opts);
+        
     }
 
     putUser(user: CurrentUser, token: string) : Observable<any>

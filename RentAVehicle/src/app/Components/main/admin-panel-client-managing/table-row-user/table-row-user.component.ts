@@ -30,24 +30,30 @@ export class TableRowUserComponent implements OnInit {
 
   refresh()
   {
-    if(this.user.Role == "Client" && this.user.approved)
+    if(this.user.Role == "AppUser" && this.user.Approved)
     {
       this.client = true;
+      this.unverified = false;
+      this.manager = false;
     }
-    else if(this.user.Role == "Client" && !this.user.approved)
+    else if(this.user.Role == "AppUser" && !this.user.Approved)
     {
       this.unverified = true;
+      this.client = false;
+      this.manager = false;
     }
     else if(this.user.Role == "Manager")
     {
       this.manager = true;
+      this.client = false;
+      this.unverified = false;
     }
   }
 
   verifyUser()
   {
-    this.user.approved = true;
-    this.http.approveUser(this.user.Id, this.authService.currentUserToken(),true).subscribe(
+    this.user.Approved = true;
+    this.http.approveUser(this.user, this.authService.currentUserToken(),true).subscribe(
       (res : any) => { 
           this.refresh();
       },
@@ -64,8 +70,8 @@ export class TableRowUserComponent implements OnInit {
 
   checkedChange()
   {
-    if (this.user.createService == false) {
-      this.authService.ServiceCreationRight(this.user.Id, this.authService.currentUserToken(), false).subscribe(
+    if (this.user.CreateService == false) {
+      this.authService.ServiceCreationRight(this.user, this.authService.currentUserToken(), false).subscribe(
         (res : any) => { 
             this.refresh();
         },
@@ -74,7 +80,7 @@ export class TableRowUserComponent implements OnInit {
             window.alert(error);
         });
     } else {
-      this.authService.ServiceCreationRight(this.user.Id, this.authService.currentUserToken(), true).subscribe(
+      this.authService.ServiceCreationRight(this.user, this.authService.currentUserToken(), true).subscribe(
         (res : any) => { 
             this.refresh();
         },

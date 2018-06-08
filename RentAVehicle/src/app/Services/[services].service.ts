@@ -147,7 +147,7 @@ export class ServiceManager {
         }), opts);
   }
 
-  approveService(id : number, token: string) : Observable<any>
+  approveService(service : Service, token: string) : Observable<any>
   {
     const headers: Headers = new Headers();
     headers.append('Content-type', 'application/json');
@@ -158,7 +158,18 @@ export class ServiceManager {
     opts.headers = headers;
 
     return this.http.put(
-        `http://localhost:51432/api/Services/ApproveService/${id}`
+        `http://localhost:51432/api/Services/ApproveService/${service.Id}`,
+        JSON.stringify({
+          Id: service.Id,
+          Name: service.Name, 
+          Email: service.Email,
+          Description: service.Description,
+          Contact: service.Contact,
+          AppUserId: service.AppUserId,
+          Path: service.Path,
+          Approved: true,
+          AverageMark: service.AverageMark
+        })
        , opts);
   }
 

@@ -32,20 +32,27 @@ export class AdminPanelServiceManagingComponent implements OnInit {
 
   verifyService(serviceId : number)
   {
-    this.serviceManager.approveService(serviceId,this.authService.currentUserToken()).subscribe(
-      (res: any) => {
-               
-              for(let i=0; i<res.length; i++){
-                if(this.services[i].Id == serviceId)
-                {
-                  this.services[i].Approved = true;
-                }
-            }     
-      },
-      error =>{
-          console.log(error);
-          window.alert(error);
-      });
+    for(let j=0; j<this.services.length; j++){
+      if(this.services[j].Id == serviceId)
+      {
+        this.serviceManager.approveService(this.services[j],this.authService.currentUserToken()).subscribe(
+          (res: any) => {
+                   
+                  for(let i=0; i<res.length; i++){
+                    if(this.services[i].Id == serviceId)
+                    {
+                      this.services[i].Approved = true;
+                    }
+                }     
+          },
+          error =>{
+              console.log(error);
+              window.alert(error);
+          });
+
+          break;
+      }
+
   }
 
 }

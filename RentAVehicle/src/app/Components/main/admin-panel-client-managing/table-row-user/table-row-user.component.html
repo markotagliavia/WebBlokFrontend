@@ -1,8 +1,8 @@
 		<div class="table-row">
-			<div class="visit">645032</div>
-			<div class="visit">645032</div>
-			<div class="visit">645032</div>
-			<div class="visit">645032</div>
+			<div class="visit">{{user.Username}}</div>
+			<div class="visit">{{user.Name}}</div>
+			<div class="visit">{{user.Surname}}</div>
+			<div class="visit">{{user.BirthDate}}</div>
 			<div class="visit"><a class="genric-btn primary">View</a></div>
 			<div class="visit" *ngIf = "unverified">Unverified</div>
 			<div class="visit" *ngIf = "unverified"><a class="genric-btn primary" (click) = 'verifyUser()'>Verify</a></div>
@@ -12,7 +12,7 @@
 									<div class="visit" *ngIf = "manager"><a class="genric-btn primary">Client</a></div>
 									<div class="visit" *ngIf = "manager">
 										<div class="confirm-switch">
-											<input type="checkbox" id="confirm-switch" [(ngModel)]="user.createService" name="swithc" ng-change="checkedChange()">
+											<input type="checkbox" id="confirm-switch" [(ngModel)]="user.CreateService" name="swithc" (change)="checkedChange()">
 											<label for="confirm-switch"></label>
 										</div>
 									</div>
