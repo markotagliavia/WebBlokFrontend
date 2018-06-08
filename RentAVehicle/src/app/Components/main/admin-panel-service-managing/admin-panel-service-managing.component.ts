@@ -38,7 +38,7 @@ export class AdminPanelServiceManagingComponent implements OnInit {
         this.serviceManager.approveService(this.services[j],this.authService.currentUserToken()).subscribe(
           (res: any) => {
                    
-                  for(let i=0; i<res.length; i++){
+                  for(let i=0; i<this.services.length; i++){
                     if(this.services[i].Id == serviceId)
                     {
                       this.services[i].Approved = true;
