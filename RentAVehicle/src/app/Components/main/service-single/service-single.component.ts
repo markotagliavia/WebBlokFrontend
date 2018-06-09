@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { HttpService } from '../../../Services/http-service.service';
 import { ServiceManager } from '../../../Services/[services].service';
 import { AuthService } from '../../../Services/auth.service';
@@ -13,7 +13,7 @@ import { Router,ActivatedRoute } from '@angular/router';
   templateUrl: './service-single.component.html',
   styleUrls: ['./service-single.component.css']
 })
-export class ServiceSingleComponent implements OnInit, OnDestroy {
+export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
 
   smeDaIzmeni: boolean;
   smeDaOceni: boolean;
@@ -30,6 +30,7 @@ export class ServiceSingleComponent implements OnInit, OnDestroy {
   
 
   constructor(public httpService: HttpService,private authService: AuthService, private router: Router,private route: ActivatedRoute, private serviceManager : ServiceManager) { 
+
     this.komentar = '';
     this.smeDaOceni = true;
     this.client = false;
@@ -38,7 +39,47 @@ export class ServiceSingleComponent implements OnInit, OnDestroy {
     this.rates = [];
     this.types = []; //to do uraditi zahtev za dobijanje...
     this.cars = [];
+    this.service = new Service(-1,'','','','',-1,'',false,0);
     this.serviceId = -1;
+    
+
+      //zahtev za sve ocene pa filter po servisu
+
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if(changes['service'])
+    {
+
+      if(this.service != undefined)
+      {
+
+      }
+  
+    }
+  }
+
+  ngOnInit() {
+    if(this.authService.currentUserName() != undefined)
+    {
+        if(this.authService.currentUserName().length > 0)
+        {
+            if(this.authService.isLoggedInRole('Admin'))
+            {
+              this.admin = true;
+              this.client = true;
+            }
+            else if(this.authService.isLoggedInRole('Manager'))
+            {
+              this.manager = true;
+              this.client = true;
+            }
+            else if(this.authService.isLoggedInRole('AppUser'))
+            {
+              this.client = true;
+            }
+        }
+    }
     this.httpService.getTypeOfVehicle(this.authService.currentUserToken()).subscribe(
       (res: any) => {
                
@@ -83,32 +124,6 @@ export class ServiceSingleComponent implements OnInit, OnDestroy {
       error =>{
          console.log(error);
       });
-
-      //zahtev za sve ocene pa filter po servisu
-
-  }
-
-  ngOnInit() {
-    if(this.authService.currentUserName() != undefined)
-    {
-        if(this.authService.currentUserName().length > 0)
-        {
-            if(this.authService.isLoggedInRole('Admin'))
-            {
-              this.admin = true;
-              this.client = true;
-            }
-            else if(this.authService.isLoggedInRole('Manager'))
-            {
-              this.manager = true;
-              this.client = true;
-            }
-            else if(this.authService.isLoggedInRole('AppUser'))
-            {
-              this.client = true;
-            }
-        }
-    }
   }
 
   ngOnDestroy() {
