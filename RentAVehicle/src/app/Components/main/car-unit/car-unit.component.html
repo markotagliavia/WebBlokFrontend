@@ -11,9 +11,15 @@
 			Manufacturer         : {{car.Manufacturer}} <br>
 			Year            : {{car.Year}} <br>
 		</p>
+		<p *ngIf = "car.Available"><i>Available</i></p> 
+		<p *ngIf = "!car.Available"><i>Not Available</i></p>
 		<a class="text-uppercase primary-btn" [routerLink]="['/reservation', car.Id]" *ngIf = "client">Book This Vehicle Now</a>
 		<a class="text-uppercase primary-btn" [routerLink]="['/car/edit', car.Id]" *ngIf = "manager">Edit Vehicle</a>
 		<a class="text-uppercase primary-btn" (click)='deleteVehicle()' *ngIf = "manager">Delete Vehicle</a>
+		<div class="confirm-switch" *ngIf = "manager">
+			<input type="checkbox" id="confirm-switch" [(ngModel)]="car.Available" name="swithc" (change)="checkedChange()">
+			<label for="confirm-switch"></label>
+		</div>
 	</div>
 	<div class="col-lg-6 model-right">
 		<img class="img-fluid" src="assets/img/car.jpg" alt="">

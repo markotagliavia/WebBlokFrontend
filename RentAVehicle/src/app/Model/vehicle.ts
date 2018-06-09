@@ -9,9 +9,10 @@ export class Vehicle {
       public Model: string,
       public Year: string,
       public Description : string,
-      public Aveliable : boolean,
+      public Available : boolean,
       public TypeOfVehicleId: number,
       public ServiceId: number,
-      public Pics : Pic[]
+      public Pics : Pic[],
+      public Price : number
   ){}
 }

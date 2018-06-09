@@ -12,7 +12,7 @@ export class EditCarComponent implements OnInit {
   errorText : string;
 
   constructor() {
-  this.car = new Vehicle(-1,'','','','',false,-1,-1,[]);
+  this.car = new Vehicle(-1,'','','','',false,-1,-1,[], -1);
 
     this.errorText = "";
    }
