@@ -46,6 +46,29 @@ export class CarUnitComponent implements OnInit{
     }
   }
 
+  checkedChange()
+  {
+    if (this.car.Available == false) {
+     /* this.authService.ServiceCreationRight(this.user, this.authService.currentUserToken(), false).subscribe(
+        (res : any) => { 
+            this.refresh();
+        },
+        error =>{
+            console.log(error);
+            window.alert(error);
+        });*/
+    } else {
+      /*this.authService.ServiceCreationRight(this.user, this.authService.currentUserToken(), true).subscribe(
+        (res : any) => { 
+            this.refresh();
+        },
+        error =>{
+            console.log(error);
+            window.alert(error);
+        });*/
+    }
+  }
+
   deleteVehicle()
   {
     //to do

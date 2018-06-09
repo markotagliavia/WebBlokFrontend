@@ -29,7 +29,7 @@ export class AddNewCarComponent implements OnInit, OnDestroy {
     this.typeNameInput = "";
     this.typeNameSelected = "";
     this.types = [];
-    this.car = new Vehicle(-1,'','','','',false,-1,-1,[]);
+    this.car = new Vehicle(-1,'','','','',false,-1,-1,[],-1);
     this.service = new Service(0,'', '','','',-1,'',false,0);
     this.errorText = "";
       this.sub = this.route.params.subscribe(params => {
@@ -68,7 +68,32 @@ export class AddNewCarComponent implements OnInit, OnDestroy {
     else
     {
       this.errorText = "";
-      //dodaj kola
+      this.serviceManager.addNewCar(this.car,this.authService.currentUserId(),this.authService.currentUserToken()).subscribe(
+
+        (res : any) => {
+
+         /* if(this.selectedFile != undefined)
+          {
+            this.serviceManager.uploadServicePicture(res._body,this.selectedFile[0],this.authService.currentUserToken()).subscribe
+            (
+                  (res : any) => {
+                          //alert(res._body);                             
+                  },
+                  error =>
+                  {
+                          alert(error.json().Message);
+                          return false;
+                  }
+            )
+          }*/
+              
+            alert("Successfully added new service");     
+      },
+      error =>
+      {
+              alert(error.json().Message);
+              return false;
+      });
     }
   }
 

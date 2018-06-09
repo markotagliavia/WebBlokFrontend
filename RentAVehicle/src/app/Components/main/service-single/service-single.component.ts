@@ -3,7 +3,7 @@ import { HttpService } from '../../../Services/http-service.service';
 import { ServiceManager } from '../../../Services/[services].service';
 import { AuthService } from '../../../Services/auth.service';
 import { TypeOfVehicle } from '../../../Model/type-of-vehicle';
-import { Car } from '../../../Model/car';
+import { Vehicle } from '../../../Model/vehicle';
 import { Service } from '../../../Model/service';
 import { Rate } from '../../../Model/rate';
 import { Router,ActivatedRoute } from '@angular/router';    
@@ -23,7 +23,7 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
   client : boolean;
   admin : boolean;
   types: TypeOfVehicle[];
-  cars : Car[];
+  cars : Vehicle[];
   serviceId : number;
   service : Service;
   private sub : any;

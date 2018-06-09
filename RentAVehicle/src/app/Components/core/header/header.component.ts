@@ -44,6 +44,10 @@ export class HeaderComponent implements OnInit {
               this.manager = true;
               this.client = true;
             }
+            else if(this.authService.isLoggedInRole('Manager') && !this.authService.currentUser().approved)
+            {
+              this.client = true;
+            }
             else if(this.authService.isLoggedInRole('AppUser'))
             {
               this.client = true;

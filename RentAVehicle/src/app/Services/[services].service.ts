@@ -4,7 +4,7 @@ import { User } from '../Model/user';
 import { IdentityUser } from '../Model/identity-user';
 import { Service } from '../Model/service'
 import { Branch } from '../Model/branch'
-import { Car } from '../Model/car'
+import { Vehicle } from '../Model/vehicle'
 import { AppUser } from '../Model/app-user';
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
@@ -257,7 +257,7 @@ export class ServiceManager {
 
 
   //cars section ----------------------------------------------------------------------------
-  addNewCar(car : Car,id : number,  token : string):Observable<any>
+  addNewCar(car : Vehicle,id : number,  token : string):Observable<any>
   {
     const headers: Headers = new Headers();
     headers.append('Content-type', 'application/json');
@@ -270,16 +270,17 @@ export class ServiceManager {
         'http://localhost:51432/api/Vehicles/PostVehicle',
         JSON.stringify({
           Id: car.Id,
-          Manufacturer: car.Manufacturer, 
+          Mark: car.Mark,
+          Avaliable : car.Available,
           Model: car.Model,
           Description: car.Description,
           Year : car.Year,
-          Type : car.Type,
-          Price : car.Price
+          TypeOfVehicleId: car.TypeOfVehicleId,
+          ServiceId: car.ServiceId
         }), opts);
   }
 
-  putCar(car: Car, carNovi : Car, token: string) : Observable<any>
+  putCar(car: Vehicle, carNovi : Vehicle, token: string) : Observable<any>
   {
     const headers: Headers = new Headers();
     headers.append('Content-type', 'application/json');
@@ -294,12 +295,13 @@ export class ServiceManager {
         ,
         JSON.stringify({
           Id: car.Id,
-          Manufacturer: carNovi.Manufacturer, 
-          Model: carNovi.Model,
-          Description: carNovi.Description,
-          Year : carNovi.Year,
-          Type : carNovi.Type,
-          Price : carNovi.Price
+          Mark: car.Mark,
+          Avaliable : car.Available,
+          Model: car.Model,
+          Description: car.Description,
+          Year : car.Year,
+          TypeOfVehicleId: car.TypeOfVehicleId,
+          ServiceId: car.ServiceId
         }), opts);
   }
 
@@ -329,7 +331,7 @@ export class ServiceManager {
     return this.http.get(url, opts).pipe(map((res: Response) => this.extractData(res)));
   }
 
-  deleteCar(car : Car, token: string) : Observable<any>
+  deleteCar(car : Vehicle, token: string) : Observable<any>
   {
     const headers: Headers = new Headers();
     headers.append('Content-type', 'application/json');
