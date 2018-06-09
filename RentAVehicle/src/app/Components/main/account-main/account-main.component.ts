@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../../Model/user';
+import { Reservation } from '../../../Model/reservation';
 import { IdentityUser } from '../../../Model/identity-user';
 import { CurrentUser} from '../../../Model/current-user';
 import { HttpService } from '../../../Services/http-service.service'; 
 import {AuthService } from '../../../Services/auth.service'
 import { takeUntil } from 'rxjs/operators';
+import {
+  Router,
+  ActivatedRoute
+} from '@angular/router';
 
 @Component({
   selector: 'app-account-main',
@@ -16,11 +21,13 @@ export class AccountMainComponent implements OnInit {
   regUser : IdentityUser;
   errorTextLogin : string;
   errorTextReg : string;
-  selectedFile: File; 
+  selectedFile: File;
+  reservations : Reservation[]; 
 
 
-  constructor(private http: HttpService, private authService: AuthService) {
-    
+  constructor(private http: HttpService, private authService: AuthService, private router: Router) {
+    this.reservations = [];
+    //to do posalji zahtev za sve rez koje su vezane za ovog korisnika na sesiji
 
     this.regUser = {
       'username' :  this.authService.currentUser().username,
@@ -249,7 +256,17 @@ export class AccountMainComponent implements OnInit {
         
                 return false; 
               }
+
+
+    editReservation(id : number)
+    {
+      //to do proveri da li sme (24h pre rezervacije ne sme da je menja npr)
+      this.router.navigate(['[/editReservation, reservation.Id]', ]);     
+    }
           
-     
+     deleteReservation(id : number)
+     {
+        ////to do proveri da li sme (24h pre rezervacije ne sme da je brise npr)
+     }
 
 }

@@ -65,3 +65,36 @@
 		</div>			
 	</div>	
 </section>
+
+<section class="model-area section-gap" id="cars">
+	<div class="container">
+		<div class="row justify-content-center">
+				<div class="progress-table-wrap">
+						<div class="progress-table">
+							<div class="table-head">
+								<div class="visit">Car</div>
+								<div class="visit">Branch In</div>
+								<div class="visit">Branch Out</div>
+								<div class="visit">From</div>
+								<div class="visit">To</div>
+								<div class="visit">Prive overall</div>
+								<div class="visit">Action</div>
+							</div>
+							<div class="table-row" *ngFor = "let res of reservations">
+									<div class="visit">{{res.VehicleId}}</div>
+									<div class="visit">{{res.BranchReservations[0]}}</div>
+									<div class="visit">{{res.BranchReservations[1]}}</div>
+									<div class="visit">{{res.StartDate}}</div>
+									<div class="visit">{{res.EndDate}}</div>
+									<div class="visit">{{res.TotalPrice}}</div>
+									<div class="visit" *ngIf = "res.Expired">Time Expired</div>
+									<div class="visit" *ngIf = "!res.Expired">
+										<a class="genric-btn primary" (click) = 'editReservation(res.Id)'>Edit</a>
+										<a class="genric-btn danger" (click) = 'deleteReservation(res.Id)'>Delete</a>
+									</div>
+								</div>
+						</div>
+					</div>
+		</div>
+	</div>
+</section>
