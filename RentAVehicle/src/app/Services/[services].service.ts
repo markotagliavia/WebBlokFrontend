@@ -8,6 +8,7 @@ import { Vehicle } from '../Model/vehicle'
 import { AppUser } from '../Model/app-user';
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
+import { PriceList } from '../Model/pricelist';
 
 
 @Injectable({
@@ -278,6 +279,26 @@ export class ServiceManager {
           TypeOfVehicleId: car.TypeOfVehicleId,
           ServiceId: car.ServiceId
         }), opts);
+  }
+
+  addNewPrice(price : PriceList, token : string) : Observable<any>
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+    return this.http.post(
+      'http://localhost:51432/api/PriceLists/PostPriceList',
+      JSON.stringify({
+        Id: price.Id,
+        VehicleId: price.VehicleId,
+        StartDate : price.StartDate,
+        EndDate : price.EndDate,
+        Price : price.Price
+      }), opts); 
   }
 
   putCar(car: Vehicle, carNovi : Vehicle, token: string) : Observable<any>
