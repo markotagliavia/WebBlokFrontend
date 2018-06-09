@@ -1,17 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Car } from '../../../Model/car';
+import { Service } from '../../../Model/service';
+import { ServiceManager } from '../../../Services/[services].service';
+import { AuthService } from '../../../Services/auth.service';
+import { HttpService } from '../../../Services/http-service.service';
+import { ActivatedRoute } from '@angular/router'; 
+import { TypeOfVehicle } from '../../../Model/type-of-vehicle'; 
 
 @Component({
   selector: 'app-add-new-car',
   templateUrl: './add-new-car.component.html',
   styleUrls: ['./add-new-car.component.css']
 })
-export class AddNewCarComponent implements OnInit {
+export class AddNewCarComponent implements OnInit, OnDestroy {
 
+  types: TypeOfVehicle[];
+	errorText : string;
+	typeNameInput : string;
+  typeNameSelected : string;
+  typeOfVehicle : TypeOfVehicle;
   car : Car;
-  errorText : string;
+  selectedFile: File[]; 
+  serviceId : number;
+  service : Service;
+  private sub : any;
 
-  constructor() {
+  constructor(private route: ActivatedRoute,private serviceManager : ServiceManager, private authService : AuthService, public httpService: HttpService) {
+    this.typeNameInput = "";
+    this.typeNameSelected = "";
+    this.types = [];
     this.car = {
       'Id':-1,
       'Manufacturer' : '',
@@ -21,7 +38,29 @@ export class AddNewCarComponent implements OnInit {
       'Type' : '',
       'Price' : ''
     }
+    this.service = new Service(0,'', '','','',-1,'',false,0);
     this.errorText = "";
+      this.sub = this.route.params.subscribe(params => {
+        this.serviceId = +params['id']; // (+) converts string 'id' to a number
+    }); 
+    this.serviceManager.getService(this.authService.currentUserToken(), this.serviceId).subscribe(
+      (res: any) => {
+              this.service = res;
+            },
+      error =>{
+        console.log(error);
+      });
+
+      this.httpService.getTypeOfVehicle(this.authService.currentUserToken()).subscribe(
+        (res: any) => {
+                 
+                for(let i=0; i<res.length; i++){
+                  this.types.push(res[i]); //use i instead of 0
+              }     
+        },
+        error =>{
+    
+        });
    }
 
   ngOnInit() {
@@ -37,7 +76,16 @@ export class AddNewCarComponent implements OnInit {
     else
     {
       this.errorText = "";
+      //dodaj kola
     }
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
+
+  onFileChanged(event) {
+    this.selectedFile = event.target.files;
   }
 
 }

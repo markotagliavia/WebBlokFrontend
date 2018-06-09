@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit {
               this.admin = true;
               this.client = true;
             }
-            else if(this.authService.isLoggedInRole('Manager'))
+            else if(this.authService.isLoggedInRole('Manager') && this.authService.currentUser().approved)
             {
               this.manager = true;
               this.client = true;

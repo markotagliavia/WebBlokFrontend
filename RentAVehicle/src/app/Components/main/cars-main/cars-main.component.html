@@ -9,17 +9,16 @@
 				</p>
 			</div>
 		</div>
-			<div id="select">
-				<p style="color:black">Types:</p>
-				<select>
-					<option value="1">Tip1</option>
-					<option value="1">Tip2</option>
-					<option value="1">Tip3</option>
-				</select>
+		<form class="form" role="form" autocomplete="off">		
+			<div class="form-group">
+				<div>
+					<p style="color:black">Types:</p>
+					<select size="3" style="width:10em" name="typeNameSel" [(ngModel)] ="typeNameSelected">
+						<option *ngFor = "let type of types" [value]="type.Name">{{type.Name}}</option>
+					</select>
+				</div>
 			</div>
-			<app-car-unit></app-car-unit>
-			<app-car-unit></app-car-unit>
-			<app-car-unit></app-car-unit>
-			<app-car-unit></app-car-unit>
+		</form>
+			<app-car-unit *ngFor = "let car of cars" [car] = 'car'></app-car-unit>
 	</div>	
 </section>

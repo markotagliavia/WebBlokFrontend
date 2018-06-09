@@ -12,8 +12,8 @@
 			Year            : {{car.Year}} <br>
 		</p>
 		<a class="text-uppercase primary-btn" [routerLink]="['/reservation', car.Id]" *ngIf = "client">Book This Vehicle Now</a>
-		<a class="text-uppercase info-btn" [routerLink]="['/car/edit', car.Id]" *ngIf = "manager">Edit Vehicle</a>
-		<a class="text-uppercase danger-btn" (click)='deleteVehicle()' *ngIf = "manager">Delete Vehicle</a>
+		<a class="text-uppercase primary-btn" [routerLink]="['/car/edit', car.Id]" *ngIf = "manager">Edit Vehicle</a>
+		<a class="text-uppercase primary-btn" (click)='deleteVehicle()' *ngIf = "manager">Delete Vehicle</a>
 	</div>
 	<div class="col-lg-6 model-right">
 		<img class="img-fluid" src="assets/img/car.jpg" alt="">

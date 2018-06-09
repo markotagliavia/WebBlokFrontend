@@ -30,9 +30,7 @@ export class AddNewCarTypeComponent implements OnInit {
     },
     error =>{
 
-    }
-    
-  )
+    });
   
   }
 
@@ -58,31 +56,25 @@ export class AddNewCarTypeComponent implements OnInit {
 
     this.httpService.createTypeOfVehicle(this.typeOfVehicle,this.authService.currentUserToken()).subscribe(
 			(res: any) => {
-
-
-				alert("Successfully added new type " + this.typeNameInput);
-	
+          alert("Successfully added new type " + this.typeNameInput);
+          this.types = [];
+          this.httpService.getTypeOfVehicle(this.authService.currentUserToken()).subscribe(
+            (res: any) => {
+                     
+                    for(let i=0; i<res.length; i++){
+                      this.types.push(res[i]); //use i instead of 0
+                  }     
+            },
+            error =>{
+                console.log(error);
+            });
 				},
 			error => {
-		
 				alert(error.json().Message);
-
 				this.errorText = error.json().Message;
-			}
-    )
-    this.types = [];
-    this.httpService.getTypeOfVehicle(this.authService.currentUserToken()).subscribe(
-      (res: any) => {
-               
-              for(let i=0; i<res.length; i++){
-                this.types.push(res[i]); //use i instead of 0
-            }     
-      },
-      error =>{
-  
-      }
-      
-    )
+			});
+    
+
 
     this.typeNameInput = '';
     return false;

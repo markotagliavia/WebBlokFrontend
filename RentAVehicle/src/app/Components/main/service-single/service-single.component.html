@@ -1,8 +1,12 @@
 <app-navbar [title] = 'service.Name'></app-navbar>
-<div class="managerOnly">
+<div class="managerOnly" *ngIf="manager">
 <section class="model-area section-gap" >
 	<div class="container" style="width:40em">
-  
+    <div class="row d-flex justify-content-center pb-40">
+      <div class="col-md-8 pb-40 header-text">
+        <h3 class="text-center pb-10">Branch control</h3>
+      </div>
+    </div>
       <app-branch-control *ngIf = "smeDaIzmeni" [service] = 'service'></app-branch-control>
   </div>
   </section>
@@ -53,7 +57,7 @@
     </div>
   </section>
 
-  <div class="managerOnly">
+  <div class="managerOnly" *ngIf="manager">
   <section class="model-area section-gap" >
       <div class="container" style="width:40em">
 					<div class="row d-flex justify-content-center">

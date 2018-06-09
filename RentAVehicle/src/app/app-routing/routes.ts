@@ -7,6 +7,7 @@ import { ServicesMainComponent } from '../Components/main/services-main/services
 import { TeamMainComponent } from '../Components/main/team-main/team-main.component';
 import { AccountMainComponent } from '../Components/main/account-main/account-main.component';
 import { AdminPanelMainComponent } from '../Components/main/admin-panel-main/admin-panel-main.component';
+import { ManagerPanelMainComponent } from '../Components/main/manager-panel-main/manager-panel-main.component';
 import { AddNewServiceComponent } from '../Components/main/add-new-service/add-new-service.component';
 import { AddNewCarComponent } from '../Components/main/add-new-car/add-new-car.component';
 import { AddNewCarTypeComponent } from '../Components/main/add-new-car-type/add-new-car-type.component';
@@ -30,5 +31,6 @@ export const routes :Routes = [
 	{path: 'cars/edit/:id', component: EditCarComponent},
 	{path: 'types', component: AddNewCarTypeComponent},
 	{path: 'reservation/:id', component: ReservationComponent},
+	{path: 'managerPanel', component: ManagerPanelMainComponent},
 	{path: '', redirectTo: '/home/login', pathMatch: 'full'}
 ];

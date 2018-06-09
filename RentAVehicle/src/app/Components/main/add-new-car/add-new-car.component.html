@@ -3,33 +3,34 @@
 	<div class="container">
 		<div class="row d-flex justify-content-center pb-40">
 			<div class="col-md-8 pb-40 header-text">
-				<h4 class="text-center pb-10">Add new vehicle to service_name</h4>
+				<h4 class="text-center pb-10">Add new vehicle to {{service.Name}}</h4>
 			</div>
 		</div>
 		<div class="row align-items-center single-model item">
 			<div class="col-lg-6 model-left">
 				<form class="form" role="form" autocomplete="off" novalidate>					    
 					<div class="from-group">
-						<input class="form-control txt-field" type="text" name="manufacturer" placeholder="Manufacturer" [(ngModel)]="car.manufacturer" required>
+						<input class="form-control txt-field" type="text" name="manufacturer" placeholder="Manufacturer" [(ngModel)]="car.Manufacturer" required>
 						<br>
-						<input class="form-control txt-field" type="text" name="model" placeholder="Model" [(ngModel)]="car.model" required>
+						<input class="form-control txt-field" type="text" name="model" placeholder="Model" [(ngModel)]="car.Model" required>
 						<br>
-						<input class="form-control txt-field" type="email" name="year" placeholder="Year" [(ngModel)]="car.year" required>
+						<input class="form-control txt-field" type="email" name="year" placeholder="Year" [(ngModel)]="car.Year" required>
 						<br>
-						<div class="input-group-icon mt-10">
-							<div>
-								<select id="typeOfVehicle" [(ngModel)]="car.type" required>
-									<option value="1">Car</option>
-									<option value="1">Truck</option>
-									<option value="1">Motorcycle</option>
-								</select>
+						<form class="form" role="form" autocomplete="off">		
+							<div class="form-group">
+								<div>
+									<p style="color:black">Types:</p>
+									<select size="3" style="width:10em" name="typeNameSel" [(ngModel)] ="typeNameSelected">
+										<option *ngFor = "let type of types" [value]="type.Name">{{type.Name}}</option>
+									</select>
+								</div>
 							</div>
-						</div>
+						</form>
 						<br>
-						<input class="form-control txt-field" type="tel" name="price" placeholder="Price per hour" [(ngModel)]="car.price" required> 
+						<input class="form-control txt-field" type="tel" name="price" placeholder="Price per hour" [(ngModel)]="car.Price" required> 
 						<br>
 						<div class="mt-10">
-							<textarea class="single-textarea" placeholder="Description" [(ngModel)]="car.description" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Description'" style="border:solid; border-color:gray; border-width:1px" required></textarea>
+							<textarea class="single-textarea" name="descr" placeholder="Description" [(ngModel)]="car.Description" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Description'" style="border:solid; border-color:gray; border-width:1px" required></textarea>
 						</div>						
 					</div>
 					<div class="form-group row">
@@ -43,16 +44,18 @@
 				</form>
 			</div>
 			<div class="col-lg-6 model-right">
-					<div class="form-group row">
-						<div class="col-md-6 wrap-left">
-							<p style="color:black">Pictures of vehicle</p>
-						</div>
-						<div class="uploadedPictures">
-						</div>
-						<div class="col-md-6 wrap-right">
-							<button id="uploadButton">Upload</button>
-						</div>
+				<div class="form-group row">
+					<div class="col-md-6 wrap-left">
+						<br>
+						<p style="color:black">Logo</p>
 					</div>
+					<div class="col-md-6 wrap-right">
+						<br>
+						<input 
+						type="file" (change)="onFileChanged($event)" 
+						#fileInput>
+					</div>
+				</div>
 				<img class="img-fluid" src="assets/img/car.jpg" alt="">
 			</div>
 		</div>		
