@@ -123,6 +123,7 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
       },
       error =>{
          console.log(error);
+         
       });
   }
 
