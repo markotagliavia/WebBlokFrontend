@@ -12,7 +12,7 @@ import { Service } from '../../../../Model/service';
 })
 export class BranchControlComponent implements OnChanges {
 
-  @Input() service : Service; //a bude undefined service?da, nemoguce, evo ja radim front te stranice i dodao sam da u title ide service.Name i ispise ga lepo ne radi to ja sam obrisla da znas s bilo je
+  @Input() service : Service; 
   branches: Branch[];
 	errorText : string;
 	branchNameInput : string;

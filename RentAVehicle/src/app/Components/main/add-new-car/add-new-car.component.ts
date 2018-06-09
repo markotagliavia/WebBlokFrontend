@@ -29,7 +29,7 @@ export class AddNewCarComponent implements OnInit, OnDestroy {
     this.typeNameInput = "";
     this.typeNameSelected = "";
     this.types = [];
-    this.car = new Vehicle(-1,'','','','',false,-1,-1,[],-1);
+    this.car = new Vehicle(-1,'','','','',false,-1,-1,[],[],-1);
     this.service = new Service(0,'', '','','',-1,'',false,0);
     this.errorText = "";
       this.sub = this.route.params.subscribe(params => {
