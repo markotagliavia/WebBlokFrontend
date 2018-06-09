@@ -36,6 +36,7 @@ import { TableRowUserComponent } from './Components/main/admin-panel-client-mana
 import { BranchControlComponent } from './Components/main/service-single/branch-control/branch-control.component';
 import { RatesControlComponent } from './Components/main/service-single/rates-control/rates-control.component';
 import { RateUnitComponent } from './Components/main/service-single/rate-unit/rate-unit.component';
+import { EditReservationComponent } from './Components/main/edit-reservation/edit-reservation.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,7 +68,8 @@ import { RateUnitComponent } from './Components/main/service-single/rate-unit/ra
     TableRowUserComponent,
     BranchControlComponent,
     RatesControlComponent,
-    RateUnitComponent
+    RateUnitComponent,
+    EditReservationComponent
 	
   ],
   imports: [
