@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Car } from '../../../Model/car';
+import { Vehicle } from '../../../Model/vehicle';
 
 @Component({
   selector: 'app-edit-car',
@@ -8,19 +8,12 @@ import { Car } from '../../../Model/car';
 })
 export class EditCarComponent implements OnInit {
 
-  car : Car;
+  car : Vehicle;
   errorText : string;
 
   constructor() {
-    this.car = {
-      'Id':-1,
-      'Manufacturer' : '',
-      'Model' : '',
-      'Year' : '',
-      'Description' : '',
-      'Type' : '',
-      'Price' : ''
-    }
+  this.car = new Vehicle(-1,'','','','',false,-1,-1,[]);
+
     this.errorText = "";
    }
 
@@ -28,8 +21,8 @@ export class EditCarComponent implements OnInit {
   }
 
   newCar(){
-    if(this.car.Manufacturer.length == 0 || this.car.Model.length == 0 || this.car.Year.length == 0 || this.car.Description.length == 0
-      || this.car.Type.length == 0 || this.car.Price.length == 0)
+    //izmeni ovde
+    if(this.car.Mark.length == 0 || this.car.Model.length == 0 || this.car.Year.length == 0 || this.car.Description.length == 0)
     {
        this.errorText = "All fields except picture are requiered";
        return false;

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Injectable, Input } from '@angular/core';
 import { HttpService } from '../../../Services/http-service.service';
 import { AuthService } from '../../../Services/auth.service';
 import { ServiceManager } from '../../../Services/[services].service';  
-import { Car } from '../../../Model/car';
+import { Vehicle } from '../../../Model/vehicle';
 
 @Injectable()
 @Component({
@@ -12,7 +12,7 @@ import { Car } from '../../../Model/car';
 })
 export class CarUnitComponent implements OnInit{
 
-  @Input() car : Car;
+  @Input() car : Vehicle;
   client : boolean;
   manager : boolean;
   admin : boolean;

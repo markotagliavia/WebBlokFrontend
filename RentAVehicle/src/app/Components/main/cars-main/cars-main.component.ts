@@ -3,7 +3,7 @@ import { HttpService } from '../../../Services/http-service.service';
 import { AuthService } from '../../../Services/auth.service'; 
 import { TypeOfVehicle } from '../../../Model/type-of-vehicle'; 
 import { Service } from '../../../Model/service';
-import { Car } from '../../../Model/car';
+import { Vehicle } from '../../../Model/vehicle';
 import { ServiceManager } from '../../../Services/[services].service';
 
 @Component({
@@ -13,7 +13,7 @@ import { ServiceManager } from '../../../Services/[services].service';
 })
 export class CarsMainComponent implements OnInit {
 
-  cars: Car[];
+  cars: Vehicle[];
   types: TypeOfVehicle[];
 	typeNameInput : string;
   typeNameSelected : string;

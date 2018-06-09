@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Car } from '../../../Model/car';
+import { Vehicle } from '../../../Model/vehicle';
 import { Service } from '../../../Model/service';
 import { ServiceManager } from '../../../Services/[services].service';
 import { AuthService } from '../../../Services/auth.service';
@@ -19,7 +19,7 @@ export class AddNewCarComponent implements OnInit, OnDestroy {
 	typeNameInput : string;
   typeNameSelected : string;
   typeOfVehicle : TypeOfVehicle;
-  car : Car;
+  car : Vehicle;
   selectedFile: File[]; 
   serviceId : number;
   service : Service;
@@ -29,15 +29,7 @@ export class AddNewCarComponent implements OnInit, OnDestroy {
     this.typeNameInput = "";
     this.typeNameSelected = "";
     this.types = [];
-    this.car = {
-      'Id':-1,
-      'Manufacturer' : '',
-      'Model' : '',
-      'Year' : '',
-      'Description' : '',
-      'Type' : '',
-      'Price' : ''
-    }
+    this.car = new Vehicle(-1,'','','','',false,-1,-1,[]);
     this.service = new Service(0,'', '','','',-1,'',false,0);
     this.errorText = "";
       this.sub = this.route.params.subscribe(params => {
@@ -67,8 +59,8 @@ export class AddNewCarComponent implements OnInit, OnDestroy {
   }
 
   newCar(){
-    if(this.car.Manufacturer.length == 0 || this.car.Model.length == 0 || this.car.Year.length == 0 || this.car.Description.length == 0
-        || this.car.Type.length == 0 || this.car.Price.length == 0)
+    //ispravi ovo
+    if(this.car.Mark.length == 0 || this.car.Model.length == 0 || this.car.Year.length == 0 || this.car.Description.length == 0)
     {
        this.errorText = "All fields except picture are requiered";
        return false;
