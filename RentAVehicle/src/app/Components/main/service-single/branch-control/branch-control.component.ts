@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable, Input } from '@angular/core';
+import { Component, OnInit, Injectable, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ServiceManager } from '../../../../Services/[services].service';
 import { AuthService } from '../../../../Services/auth.service'; 
 import { Branch } from '../../../../Model/branch'; 
@@ -10,9 +10,9 @@ import { Service } from '../../../../Model/service';
   templateUrl: './branch-control.component.html',
   styleUrls: ['./branch-control.component.css']
 })
-export class BranchControlComponent implements OnInit {
+export class BranchControlComponent implements OnChanges {
 
-  @Input() service : Service;
+  @Input() service : Service; //a bude undefined service?da, nemoguce, evo ja radim front te stranice i dodao sam da u title ide service.Name i ispise ga lepo ne radi to ja sam obrisla da znas s bilo je
   branches: Branch[];
 	errorText : string;
 	branchNameInput : string;
@@ -22,7 +22,7 @@ export class BranchControlComponent implements OnInit {
   
   constructor(public serviceManager: ServiceManager,private authService: AuthService) {
     this.errorText = "";
-    this.branchNameInput = "";
+    //this.branchNameInput = "";
     this.branchNameSelected = "";
     this.branch = {
       'Id' : -1,
@@ -30,37 +30,46 @@ export class BranchControlComponent implements OnInit {
       'Address' : '',
       'Longitude': -1,
       'Latitude' : -1,
-      'ServiceId' : -1
+      'ServiceId' : -1,
     };
     this.branches = []; //to do uraditi zahtev za dobijanje...
-    this.serviceManager.getBranches(this.authService.currentUserToken()).subscribe(
-      (res: any) => {
-               
-              for(let i=0; i<res.length; i++){
-               if(this.service.Id == res[i].serviceId) 
-               {
-                 this.branches.push(res[i]); //use i instead of 0
-               }
-            }     
-      },
-      error =>{
-        console.log(error);
-      }
-      
-    )
+    
     
     }
 
-  ngOnInit() {
+  ngOnChanges(changes: SimpleChanges) {
+    if(changes['service'])
+    {
+      if(this.service != undefined)
+      {
+        this.serviceManager.getBranches(this.authService.currentUserToken()).subscribe(
+          (res: any) => {
+                   
+                  for(let i=0; i<res.length; i++){
+                   if(this.service.Id == res[i].ServiceId) 
+                   {
+                     this.branches.push(res[i]); //use i instead of 0
+                   }
+                }     
+          },
+          error =>{
+            console.log(error);
+          }
+          
+        )
+      }
+      
+    }
+    
   }
 
   newBranch()
   {
     //to do slika jos
 
-	  if(this.branchNameInput.length == 0)
+	  if(this.branch.Name.length == 0 || this.branch.Address.length == 0)
 	  {
-		  this.errorText = "You must enter branch name";
+		  this.errorText = "You must enter branch name and address";
 		  return false;
 	  }
 	  else
@@ -68,13 +77,57 @@ export class BranchControlComponent implements OnInit {
 		  this.errorText = "";
 	  }
     
-    this.branch = new Branch(0,this.branchNameInput,this.branch.Address,this.branch.Latitude, this.branch.Longitude,this.service.Id);
+    this.branch = new Branch(0,this.branch.Name,this.branch.Address,this.branch.Latitude, this.branch.Longitude,this.service.Id);
 
     this.serviceManager.createBranch(this.branch,this.authService.currentUserToken()).subscribe(
 			(res: any) => {
 
+        //alert(res.json().Id);
+        if(this.selectedFile != undefined)
+        {
+          this.serviceManager.uploadBranchPicture(res.json().Id,this.selectedFile,this.authService.currentUserToken()).subscribe
+          (
+            (res : any) => {
+              this.branches = [];
+              this.serviceManager.getBranches(this.authService.currentUserToken()).subscribe(
+              (res: any) => {
+                      
+                      for(let i=0; i<res.length; i++){
+                      if(this.service.Id == res[i].ServiceId) 
+                      {
+                        this.branches.push(res[i]); //use i instead of 0
+                      }
+                    }     
+              },
+              error =>{
+                console.log(error);
+              }
+          
+        )
+            },
+            error =>
+            {
 
-				alert("Successfully added new branch " + this.branchNameInput);
+            }
+          )
+        }
+        alert("Successfully added new branch " + this.branch.Name);
+        this.branches = [];
+        this.serviceManager.getBranches(this.authService.currentUserToken()).subscribe(
+          (res: any) => {
+                  
+                  for(let i=0; i<res.length; i++){
+                  if(this.service.Id == res[i].ServiceId) 
+                  {
+                    this.branches.push(res[i]); //use i instead of 0
+                  }
+                }     
+          },
+          error =>{
+            console.log(error);
+          }
+          
+        )
 	
 				},
 			error => {
@@ -84,19 +137,7 @@ export class BranchControlComponent implements OnInit {
 				this.errorText = error.json().Message;
 			}
     )
-    this.branches = [];
-    this.serviceManager.getBranches(this.authService.currentUserToken()).subscribe(
-      (res: any) => {
-               
-              for(let i=0; i<res.length; i++){
-                this.branches.push(res[i]); //use i instead of 0
-            }     
-      },
-      error =>{
-  
-      }
-      
-    )
+    
 
     this.branchNameInput = '';
     return false;
