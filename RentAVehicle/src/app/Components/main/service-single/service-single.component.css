@@ -5,3 +5,7 @@ textarea.ng-untouched.ng-pristine.ng-valid{
 textarea.ng-pristine.ng-valid.ng-touched{
     width:30em;
 }
+
+.managerOnly{
+    background-color: darkseagreen;
+}

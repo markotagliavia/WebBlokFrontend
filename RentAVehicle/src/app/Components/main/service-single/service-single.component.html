@@ -1,10 +1,15 @@
 <app-navbar [title] = 'service.Name'></app-navbar>
+<div class="managerOnly">
 <section class="model-area section-gap" >
 	<div class="container" style="width:40em">
+  
       <app-branch-control *ngIf = "manager" [service] = 'service'></app-branch-control>
-      <br>
-      <hr>
+  </div>
+  </section>
+</div>
 
+  <section class="model-area section-gap" >
+    <div class="container" style="width:40em">
       <div class="row d-flex justify-content-center pb-40">
           <div class="col-md-8 pb-40 header-text">
             <h1 class="text-center pb-10">Choose your desired car model</h1>
@@ -45,9 +50,12 @@
           </div>
             
             
-          <br>
-          <hr>
-          <br>
+    </div>
+  </section>
+
+  <div class="managerOnly">
+  <section class="model-area section-gap" >
+      <div class="container" style="width:40em">
 					<div class="row d-flex justify-content-center">
               <br>
               <a class="genric-btn success btn-block text-center text-uppercase" *ngIf= "smeDaIzmeni" [routerLink]="['../../services/edit/', service.Id]">Edit Service</a>
@@ -57,5 +65,5 @@
 
           </div>
     </div>
-</section>
-    
+  </section>
+  </div>
