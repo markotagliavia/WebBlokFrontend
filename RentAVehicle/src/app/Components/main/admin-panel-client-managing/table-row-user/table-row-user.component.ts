@@ -3,7 +3,7 @@ import { AuthService } from '../../../../Services/auth.service';
 import { HttpService } from '../../../../Services/http-service.service';
 import { AppUser } from '../../../../Model/app-user';
 import { CurrentUser } from '../../../../Model/current-user';
-
+import {SafeUrl,DomSanitizer} from '@angular/platform-browser/';
 @Injectable()
 @Component({
   selector: 'app-table-row-user',
@@ -18,7 +18,7 @@ export class TableRowUserComponent implements OnInit {
   unverified : boolean;
   currUserPom : CurrentUser;
 
-  constructor(private http: HttpService, private authService: AuthService) {
+  constructor(private http: HttpService, private authService: AuthService,private _DomSanitizationService: DomSanitizer) {
     this.client = false;
     this.manager = false;
     this.unverified = false;
