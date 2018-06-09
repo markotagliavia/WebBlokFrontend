@@ -244,6 +244,7 @@ export class BranchControlComponent implements OnChanges {
   changeDataInForm()
   {
     //na selekciju popuniti podatke o postojecoj filijali u poljima
+    
   }
 
 }

@@ -3,13 +3,13 @@
 <section class="model-area section-gap" >
 	<div class="container" style="width:40em">
   
-      <app-branch-control *ngIf = "manager" [service] = 'service'></app-branch-control>
+      <app-branch-control *ngIf = "smeDaIzmeni" [service] = 'service'></app-branch-control>
   </div>
   </section>
 </div>
 
   <section class="model-area section-gap" >
-    <div class="container" style="width:40em">
+    <div class="container" style="width:50em">
       <div class="row d-flex justify-content-center pb-40">
           <div class="col-md-8 pb-40 header-text">
             <h1 class="text-center pb-10">Choose your desired car model</h1>
@@ -57,12 +57,12 @@
   <section class="model-area section-gap" >
       <div class="container" style="width:40em">
 					<div class="row d-flex justify-content-center">
+              <a class="genric-btn success btn-block text-center text-uppercase" *ngIf= "smeDaIzmeni" [routerLink]="['../../cars/new/', service.Id]">Add new Car</a>
               <br>
               <a class="genric-btn success btn-block text-center text-uppercase" *ngIf= "smeDaIzmeni" [routerLink]="['../../services/edit/', service.Id]">Edit Service</a>
               <br>
-              <br>
               <a class="genric-btn danger btn-block text-center text-uppercase" *ngIf= "smeDaIzmeni"  (click) = 'delete()' >Delete Service</a>
-
+              
           </div>
     </div>
   </section>

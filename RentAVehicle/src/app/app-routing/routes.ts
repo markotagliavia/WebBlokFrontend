@@ -26,7 +26,7 @@ export const routes :Routes = [
 	{path: 'services/new', component: AddNewServiceComponent},
 	{path: 'services/edit/:id', component: EditServiceComponent},
 	{path: 'serviceSingle/:id', component: ServiceSingleComponent},
-	{path: 'cars/new', component: AddNewCarComponent},
+	{path: 'cars/new/:id', component: AddNewCarComponent},
 	{path: 'cars/edit/:id', component: EditCarComponent},
 	{path: 'types', component: AddNewCarTypeComponent},
 	{path: 'reservation/:id', component: ReservationComponent},
