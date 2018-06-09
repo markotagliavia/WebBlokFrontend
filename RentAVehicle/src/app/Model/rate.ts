@@ -1,4 +1,4 @@
-export class Grade {
+export class Rate {
     constructor(
       public username: string,
       public gradeVal: string,

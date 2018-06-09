@@ -1,8 +1,10 @@
-<app-navbar [title] = "'New service'"></app-navbar>
-<section class="model-area section-gap" id="new_car">
-	<div class="container" style="width:30em">
+<app-navbar [title] = 'service.Name'></app-navbar>
+<section class="model-area section-gap" >
+	<div class="container" style="width:40em">
       <app-branch-control *ngIf = "manager" [service] = 'service'></app-branch-control>
       <br>
+      <hr>
+
       <div class="row d-flex justify-content-center pb-40">
           <div class="col-md-8 pb-40 header-text">
             <h1 class="text-center pb-10">Choose your desired car model</h1>
@@ -10,15 +12,41 @@
               Hurry up before someone book your car right in front of your nose.
             </p>
           </div>
-        </div>
-        <div>
+      </div>
+
+      <div class="row d-flex justify-content-center">
             <p style="color:black">Types:</p>
-            <select size="3" style="width:10em" name="typeNameSel" [(ngModel)] ="typeNameSelected">
+            <select size="1" style="width:10em" name="typeNameSel" [(ngModel)] ="typeNameSelected">
               <option *ngFor = "let type of types" [value]="type.Name">{{type.Name}}</option>
             </select>
-        </div>
           <app-car-unit *ngFor = "let carUnit of cars" [car] = "carUnit"></app-car-unit>
+      </div>
+          <hr>
           <br>
+
+              <app-rate-unit *ngFor = "let rate of rates" [rate] = 'rate'></app-rate-unit>
+              <br>
+              <hr>
+              <br>
+          <div class="row d-flex justify-content-center">
+            <div class="single-review">  
+              <div class="star">
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                </div>
+                <br>
+              <textarea name="commField" [(ngModel)] = 'komentar'></textarea>
+              <br>
+              <a class="genric-btn primary btn-block text-center text-uppercase" *ngIf= "smeDaOceni"  (click) = 'oceni()' >Add rate</a>  
+            </div>
+          </div>
+            
+            
+          <br>
+          <hr>
           <br>
 					<div class="row d-flex justify-content-center">
               <br>
@@ -27,7 +55,7 @@
               <br>
               <a class="genric-btn danger btn-block text-center text-uppercase" *ngIf= "smeDaIzmeni"  (click) = 'delete()' >Delete Service</a>
 
-            </div>
+          </div>
     </div>
 </section>
     

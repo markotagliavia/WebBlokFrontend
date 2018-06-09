@@ -5,6 +5,7 @@ import { AuthService } from '../../../Services/auth.service';
 import { TypeOfVehicle } from '../../../Model/type-of-vehicle';
 import { Car } from '../../../Model/car';
 import { Service } from '../../../Model/service';
+import { Rate } from '../../../Model/rate';
 import { Router,ActivatedRoute } from '@angular/router';    
 
 @Component({
@@ -15,6 +16,9 @@ import { Router,ActivatedRoute } from '@angular/router';
 export class ServiceSingleComponent implements OnInit, OnDestroy {
 
   smeDaIzmeni: boolean;
+  smeDaOceni: boolean;
+  komentar: string;
+  rates : Rate[];
   manager : boolean;
   client : boolean;
   admin : boolean;
@@ -26,9 +30,12 @@ export class ServiceSingleComponent implements OnInit, OnDestroy {
   
 
   constructor(public httpService: HttpService,private authService: AuthService, private router: Router,private route: ActivatedRoute, private serviceManager : ServiceManager) { 
+    this.komentar = '';
+    this.smeDaOceni = true;
     this.client = false;
     this.manager = false;
     this.admin = false;
+    this.rates = [];
     this.types = []; //to do uraditi zahtev za dobijanje...
     this.cars = [];
     this.serviceId = -1;
@@ -77,6 +84,8 @@ export class ServiceSingleComponent implements OnInit, OnDestroy {
          console.log(error);
       });
 
+      //zahtev za sve ocene pa filter po servisu
+
   }
 
   ngOnInit() {
@@ -122,6 +131,11 @@ export class ServiceSingleComponent implements OnInit, OnDestroy {
         }
 
     )
+  }
+
+  oceni()
+  {
+    //to do
   }
 
 }

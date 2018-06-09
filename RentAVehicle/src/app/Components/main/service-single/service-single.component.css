@@ -1,0 +1,7 @@
+textarea.ng-untouched.ng-pristine.ng-valid{
+    width:30em;
+}
+
+textarea.ng-pristine.ng-valid.ng-touched{
+    width:30em;
+}
