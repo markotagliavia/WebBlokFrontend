@@ -1,12 +1,14 @@
+import { BranchReservation} from './branch-reservation'
+
 export class Reservation {
     constructor(
-      public serviceName: string,
-      public filijalaIn: string,
-	  public filijalaOut: string,
-	  public vremeIn: string,
-	  public vremeOut: string,
-	  public adresaIn: string,
-	  public adresaOut: string,
-	  public ukupnaCena: string,
+			public Id : number,
+			public Expired : boolean,
+			public StartDate : string,
+			public EndDate : string,
+			public TotalPrice : number,
+			public AppUserId : number,
+			public VehicleId : number, 
+			public BranchReservations : BranchReservation[]  
   ){}
 }
