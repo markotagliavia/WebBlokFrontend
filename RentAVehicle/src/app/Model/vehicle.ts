@@ -1,4 +1,5 @@
 import { TypeOfVehicle } from "./type-of-vehicle";
+import { PriceList} from './pricelist'
 import { Service } from "./service"
 import {Pic } from "./pic"
 export class Vehicle {
@@ -13,6 +14,7 @@ export class Vehicle {
       public TypeOfVehicleId: number,
       public ServiceId: number,
       public Pics : Pic[],
+      public PriceLists : PriceList[],
       public Price : number
   ){}
 }
