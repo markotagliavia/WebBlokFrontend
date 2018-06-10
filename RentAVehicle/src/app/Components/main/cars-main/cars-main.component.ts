@@ -15,17 +15,28 @@ import { CarUnitComponent } from '../car-unit/car-unit.component'
 export class CarsMainComponent implements OnInit {
 
   cars: Vehicle[];
+  carsForPrikaz: Vehicle[];
   types: TypeOfVehicle[];
-	typeNameInput : string;
   typeNameSelected : string;
   typeOfVehicle : TypeOfVehicle;
+
+  manuNameInput : string;
+  modelNameInput : string;
+  yearInput : string;
+  fromPriceInput : number;
+  toPriceInput : number;
  
 
   constructor(public httpService: HttpService,private authService: AuthService, private serviceManager : ServiceManager) { 
     this.cars = [];
-    this.typeNameInput = "";
-    this.typeNameSelected = "";
-    this.types = []; 
+    this.carsForPrikaz = [];
+    this.typeNameSelected = "All";
+    this.types = [];
+    this.manuNameInput = "";
+    this.modelNameInput = "";
+    this.yearInput = "";
+    this.fromPriceInput = 0;
+    this.toPriceInput = 9999999; 
     this.httpService.getTypeOfVehicle(this.authService.currentUserToken()).subscribe(
       (res: any) => {
                
@@ -62,6 +73,39 @@ export class CarsMainComponent implements OnInit {
 
   ngOnInit() {
     
+  }
+
+  /*promenaTipa()
+  {
+    this.carsForPrikaz = [];
+    if(this.typeNameSelected == "All")
+    {
+      this.carsForPrikaz = this.cars;
+    }
+    else
+    {
+      var typeId = -1;
+      for(let j = 0; j < this.types.length; j++)
+      {
+        if(this.types[j].Name == this.typeNameSelected)
+        {
+          typeId = this.types[j].Id;
+        }
+      }
+
+      for(let i = 0; i < this.cars.length; i++)
+      {
+        if(this.cars[i].TypeOfVehicleId == typeId)
+        {
+          this.carsForPrikaz.push(this.cars[i]);
+        }
+      }
+    }
+  }*/
+
+  filter()
+  {
+    //to do
   }
 
 }
