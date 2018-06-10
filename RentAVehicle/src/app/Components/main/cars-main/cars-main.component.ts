@@ -14,6 +14,7 @@ import { CarUnitComponent } from '../car-unit/car-unit.component'
 })
 export class CarsMainComponent implements OnInit {
 
+
   cars: Vehicle[];
   carsForPrikaz: Vehicle[];
   types: TypeOfVehicle[];
@@ -25,6 +26,11 @@ export class CarsMainComponent implements OnInit {
   yearInput : string;
   fromPriceInput : number;
   toPriceInput : number;
+
+  pageNumber: number = 1;
+  totalNumber: number = 0;
+  totalPages: number = 1;
+  pageNumbers: number[] = [];
  
 
   constructor(public httpService: HttpService,private authService: AuthService, private serviceManager : ServiceManager) { 
@@ -37,6 +43,23 @@ export class CarsMainComponent implements OnInit {
     this.yearInput = "";
     this.fromPriceInput = 0;
     this.toPriceInput = 9999999; 
+  }
+
+  receiveMessage($event) {
+    this.cars = [];
+    this.serviceManager.getCars(this.authService.currentUserToken()).subscribe(
+      (res: any) => {
+               
+              for(let i=0; i<res.length; i++){
+                this.cars.push(res[i]);
+            }     
+      },
+      error =>{ 
+      });
+  }
+
+  ngOnInit() {
+
     this.httpService.getTypeOfVehicle(this.authService.currentUserToken()).subscribe(
       (res: any) => {
                
@@ -56,22 +79,26 @@ export class CarsMainComponent implements OnInit {
         },
         error =>{ 
         });
-  }
 
-  receiveMessage($event) {
-    this.cars = [];
-    this.serviceManager.getCars(this.authService.currentUserToken()).subscribe(
+        this.totalNumber = this.cars.length;
+        this.totalPages = this.totalNumber / 3;
+        for (var index = 1; index < (this.totalPages + 1); index++) {
+          this.pageNumbers.push(index);
+        }
+
+    this.serviceManager.getCarsPaginig(this.authService.currentUserToken(), this.pageNumber, 3).subscribe(
       (res: any) => {
-               
-              for(let i=0; i<res.length; i++){
-                this.cars.push(res[i]);
-            }     
-      },
-      error =>{ 
-      });
-  }
+        for(let i=0; i<res.length; i++){
+          this.carsForPrikaz.push(res[i]);
+        }
+        /*temp.forEach(element => {
+          if (element.ServiceId == this.serviceId) {
+            this.carsForPrikaz.push(element);
+          }*/
 
-  ngOnInit() {
+        },
+        error =>{ 
+        });
     
   }
 
@@ -103,7 +130,7 @@ export class CarsMainComponent implements OnInit {
     }
   }*/
 
-  filter()
+  doPaginacija(num : number)
   {
     //to do
   }

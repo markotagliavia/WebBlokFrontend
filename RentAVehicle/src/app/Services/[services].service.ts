@@ -340,6 +340,19 @@ export class ServiceManager {
     return this.http.get(url, opts).pipe(map((res: Response) => this.extractData(res)));
   }
 
+  getCarsPaginig(token: string, pageNumber : number, pageSize : number): Observable<any>
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+    var url = `http://localhost:51432/api/Vehicles/Pagination/${pageNumber}/${pageSize}`;
+    return this.http.get(url, opts).pipe(map((res: Response) => this.extractData(res)));
+  }
+
   getPrice(token: string, carId : number) : Observable<any>
   {
     const headers: Headers = new Headers();

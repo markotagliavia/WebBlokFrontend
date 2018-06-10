@@ -35,6 +35,11 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
   fromPriceInput : number;
   toPriceInput : number;
   typeNameSelected : string;
+
+  pageNumber: number = 1;
+  totalNumber: number = 0;
+  totalPages: number = 1;
+  pageNumbers: number[] = [];
   
 
   constructor(public httpService: HttpService,private authService: AuthService, private router: Router,private route: ActivatedRoute, private serviceManager : ServiceManager) { 
@@ -140,6 +145,28 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
          console.log(error);
          
       });
+
+      this.totalNumber = this.cars.length;
+      this.totalPages = this.totalNumber / 3;
+      for (var index = 1; index < (this.totalPages + 1); index++) {
+        this.pageNumbers.push(index);
+      }
+
+      this.serviceManager.getCarsPaginig(this.authService.currentUserToken(), this.pageNumber, 3).subscribe(
+        (res: any) => {
+          var temp : Vehicle[];
+          for(let i=0; i<res.length; i++){
+            temp.push(res[i]);
+          }
+            temp.forEach(element => {
+            if (element.ServiceId == this.serviceId) {
+              this.carsForPrikaz.push(element);
+            }
+            });
+  
+          },
+          error =>{ 
+          });
   }
 
   ngOnDestroy() {
@@ -169,7 +196,7 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
     //to do
   }
 
-  filter()
+  doPagination(num : number)
   {
     //to do
   }
