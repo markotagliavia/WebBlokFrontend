@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy, Injectable, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Injectable, Input, OnChanges, SimpleChanges, Output,EventEmitter } from '@angular/core';
 import { HttpService } from '../../../Services/http-service.service';
 import { AuthService } from '../../../Services/auth.service';
 import { ServiceManager } from '../../../Services/[services].service';  
 import { Vehicle } from '../../../Model/vehicle';
+
 
 @Injectable()
 @Component({
@@ -10,18 +11,42 @@ import { Vehicle } from '../../../Model/vehicle';
   templateUrl: './car-unit.component.html',
   styleUrls: ['./car-unit.component.css']
 })
-export class CarUnitComponent implements OnInit{
+export class CarUnitComponent implements OnInit , OnChanges{
 
   @Input() car : Vehicle;
   client : boolean;
   manager : boolean;
   admin : boolean;
+  @Output() messageEvent = new EventEmitter<string>();
+
+  
 
   constructor(private authService: AuthService, private httpService: HttpService, private serviceManager : ServiceManager) {
     this.client = false;
     this.manager = false;
     this.admin = false;
    }
+
+   ngOnChanges(changes: SimpleChanges) {
+    if(changes['car'])
+    {
+      if(this.car != undefined)
+      {
+        this.serviceManager.getPrice(this.authService.currentUserToken(),this.car.Id).subscribe(
+          (res: any) => {
+            this.car.Price = res.Price;
+          },
+          error => 
+          {
+
+          }
+        )
+        
+      }
+      
+    }
+    
+  }
 
   ngOnInit() {
     if(this.authService.currentUserName() != undefined)
@@ -71,7 +96,18 @@ export class CarUnitComponent implements OnInit{
 
   deleteVehicle()
   {
-    //to do
+    this.serviceManager.deleteCar(this.car,this.authService.currentUserToken()).subscribe(
+
+      (res: any) =>
+      {
+        this.messageEvent.emit('ok');
+      },
+      error =>
+      {
+
+      }
+      
+    )
   }
 
 }

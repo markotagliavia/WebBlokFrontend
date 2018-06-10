@@ -20,6 +20,6 @@
 				</div>
 			</div>
 		</form>
-			<app-car-unit *ngFor = "let car of cars" [car] = 'car'></app-car-unit>
+			<app-car-unit *ngFor = "let car of cars" [car] = 'car' (messageEvent)="receiveMessage($event)" ></app-car-unit>
 	</div>	
 </section>

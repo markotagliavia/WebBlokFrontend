@@ -111,6 +111,14 @@ export class BranchControlComponent implements OnChanges {
             }
           )
         }
+        this.branch = {
+          'Id' : -1,
+          'Name':'',
+          'Address' : '',
+          'Longitude': -1,
+          'Latitude' : -1,
+          'ServiceId' : -1,
+        };
         alert("Successfully added new branch " + this.branch.Name);
         this.branches = [];
         this.serviceManager.getBranches(this.authService.currentUserToken()).subscribe(
@@ -147,10 +155,15 @@ export class BranchControlComponent implements OnChanges {
   {
     //slika jos
 
-    if(this.branchNameInput.length == 0 || this.branchNameSelected.length == 0 ){
+    if(this.branch.Name.length == 0 || this.branchNameSelected.length == 0 || this.branch.Address.length == 0 ){
       this.errorText = "All fields are required";
       return false;		
       }
+      else
+      {
+        this.errorText = "";
+      }
+      
 
       for(let i=0; i<this.branches.length; i++){
         
@@ -160,6 +173,14 @@ export class BranchControlComponent implements OnChanges {
           this.serviceManager.putBranch(this.branches[i],this.branch,this.authService.currentUserToken()).subscribe(
 
             (res: any) => {
+              this.branch = {
+                'Id' : -1,
+                'Name':'',
+                'Address' : '',
+                'Longitude': -1,
+                'Latitude' : -1,
+                'ServiceId' : -1,
+              };
                    
               alert('Successfully modify branch');
               this.branches = [];
@@ -206,6 +227,15 @@ export class BranchControlComponent implements OnChanges {
           this.serviceManager.deleteBranch(this.branches[i],this.authService.currentUserToken()).subscribe(
 
             (res: any) => {
+
+              this.branch = {
+                'Id' : -1,
+                'Name':'',
+                'Address' : '',
+                'Longitude': -1,
+                'Latitude' : -1,
+                'ServiceId' : -1,
+              };
                    
               alert('Successfully deleted branch');
               this.branches = [];
@@ -244,6 +274,13 @@ export class BranchControlComponent implements OnChanges {
   changeDataInForm()
   {
     //na selekciju popuniti podatke o postojecoj filijali u poljima
+    for(let i=0; i<this.branches.length; i++){
+        
+      if(this.branches[i].Name == this.branchNameSelected )
+      {
+        this.branch = this.branches[i];
+      }
+    }
     
   }
 
