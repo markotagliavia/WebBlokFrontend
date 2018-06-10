@@ -12,12 +12,14 @@
     client : boolean;
     manager : boolean;
     admin : boolean;
+    parentMessage : string;
     @Output() messageEvent = new EventEmitter<string>();
 
     constructor(private authService: AuthService) {
       this.client = false;
       this.manager = false;
       this.admin = false;
+      this.parentMessage = 'empty';
     }
 
     ngOnInit() {
@@ -26,6 +28,9 @@
 
     refreshUI()
     {
+      this.client = false;
+      this.manager = false;
+      this.admin = false;
       if(this.authService.currentUserName() != undefined)
       {
           if(this.authService.currentUserName().length > 0)
@@ -47,6 +52,18 @@
           }
       }
 
+    }
+
+    receiveMessage($event) {
+      //treba i ovde
+      this.refreshUI();
+      this.parentMessage = 'ok';
+    }
+
+    receiveRefresh($event) {
+      //treba i ovde
+      this.refreshUI();
+    
     }
     
     

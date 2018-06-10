@@ -66,6 +66,7 @@ export class LoginFormComponent implements OnInit {
                   console.log(currentUser);
                   this.authService.logIn(currentUser);
                   this.notifService.RegisterForNotifications();
+                  this.messageEvent.emit("ok");
                   //this.header.refreshView();
                   //window.location.reload();
                   // this.notifService.GetNotification();
