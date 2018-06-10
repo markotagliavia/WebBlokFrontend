@@ -34,7 +34,7 @@ export class AccountMainComponent implements OnInit {
       'username' :  this.authService.currentUser().username,
       'confirmPassword' : '',
       'password' : '',
-      'name' : this.authService.currentUserName(),
+      'name' : this.authService.currentUserFirstName(),
       'surname' : this.authService.currentUserSurname(),
       'birth' : this.authService.currentUserBirth(),
       'contact' : this.authService.currentUserContact(),
@@ -106,7 +106,7 @@ export class AccountMainComponent implements OnInit {
                     'username' :  this.authService.currentUserName(),
                     'confirmPassword' : '',
                     'password' : '',
-                    'name' : this.authService.currentUserName(),
+                    'name' : this.authService.currentUserFirstName(),
                     'surname' : this.authService.currentUserSurname(),
                     'birth' : this.authService.currentUserBirth(),
                     'contact' : this.authService.currentUserContact(),
@@ -208,7 +208,7 @@ export class AccountMainComponent implements OnInit {
                                                 'username' :  this.authService.currentUserName(),
                                                 'confirmPassword' : '',
                                                 'password' : '',
-                                                'name' : this.authService.currentUserName(),
+                                                'name' : this.authService.currentUserFirstName(),
                                                 'surname' : this.authService.currentUserSurname(),
                                                 'birth' : this.authService.currentUserBirth(),
                                                 'contact' : this.authService.currentUserContact(),
@@ -243,7 +243,7 @@ export class AccountMainComponent implements OnInit {
                               'username' :  this.authService.currentUserName(),
                               'confirmPassword' : '',
                               'password' : '',
-                              'name' : this.authService.currentUserName(),
+                              'name' : this.authService.currentUserFirstName(),
                               'surname' : this.authService.currentUserSurname(),
                               'birth' : this.authService.currentUserBirth(),
                               'contact' : this.authService.currentUserContact(),
@@ -277,12 +277,53 @@ export class AccountMainComponent implements OnInit {
     editReservation(id : number)
     {
       //to do proveri da li sme (24h pre rezervacije ne sme da je menja npr)
-      this.router.navigate(['[/editReservation, reservation.Id]', ]);     
+      this.router.navigate(['editReservation/', id]);     
     }
           
      deleteReservation(id : number)
      {
         ////to do proveri da li sme (24h pre rezervacije ne sme da je brise npr)
+        this.serviceManager.deleteReservation(id,this.authService.currentUserToken()).subscribe
+        (
+          (res:any) =>
+          {
+                alert("Successfully deleted");
+                this.reservations = [];
+                this.serviceManager.getReservationsUser(this.authService.currentUserId(),this.authService.currentUserToken()).subscribe(
+
+                  (res: any) =>
+                  {
+                          res.forEach(element => {
+                            this.reservations.push(element);
+                          });
+                  },
+                  error=>
+                  {
+                    if(error.json().Message == '24')
+                    {
+                        alert("Less than 24 untill reservation, change is not available");
+                    }
+                    else
+                    {
+                      alert("Car is not available");
+                    }
+                  }
+          
+              )
+          },
+          error =>
+          {
+            if(error.json().Message == '24')
+            {
+                alert("Less than 24 untill reservation, change is not available");
+            }
+            else
+            {
+              alert("Car is not available");
+            }
+                      
+          }
+        )
      }
 
 }

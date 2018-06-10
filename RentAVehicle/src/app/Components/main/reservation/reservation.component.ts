@@ -94,8 +94,8 @@ export class ReservationComponent implements OnInit{
         }
       
     });
-    this.reservation.BranchReservations.push(new BranchReservation(branch1.Id,-1,true));
-    this.reservation.BranchReservations.push(new BranchReservation(branch2.Id,-1,false));
+    this.reservation.BranchReservations.push(new BranchReservation(branch1.Id,-1,true,-1));
+    this.reservation.BranchReservations.push(new BranchReservation(branch2.Id,-1,false,-1));
     if(this.branchfrom.length == 0 || this.branchto.length  == 0 || this.reservation.StartDate.length == 0 || this.reservation.EndDate.length == 0)
     {
       this.errorText = "All fields are requiered";
@@ -116,7 +116,7 @@ export class ReservationComponent implements OnInit{
       (
             (res: any) =>
             {
-                        alert("Reserved");
+                        alert("Reserved for price " + res.json().TotalPrice);
                         this.addressPickup = "";
                         this.addressRelease = "";
                         this.price = 0;

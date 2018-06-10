@@ -5,40 +5,36 @@
 		<h4 class="row d-flex pb-30 justify-content-center" style="color:black">Edit reservation</h4>
 							<form class="form" role="form" autocomplete="off" novalidate>
 							    <div class="form-group">
-							       	<div class="default-select" id="default-select">
-										<select name="filijalaIn" [(ngModel)]="reservation.filijalaIn" required>
-											<option value="" disabled selected hidden>Pickup branch</option>
-											<option value="1">Filijala1</option>
-											<option value="1">Filijala2</option>
-											<option value="1">Filijala3</option>
-										</select>
-									</div>
-									<input id="datetime" name="pickupT" type="datetime-local" placeholder="Pickup date and time" [(ngModel)]="reservation.vremeIn" required>
+										<div class="default-select" id="default-select">
+												<select style="width:10em" name="branchNameSel" [(ngModel)] ="branchfrom" (change)='changeSelectionPickup()' >
+													<option *ngFor = "let branch of branches" [value]="branch.Name" >{{branch.Name}}</option>
+												</select>
+											</div>
+											<input id="datetime" name="pickupT" type="datetime-local" placeholder="Pickup date and time" [(ngModel)]="reservation.StartDate" required>
 							    </div>
 							    <br><hr><br>
 								<div class="form-group">
-							       	<div class="default-select" id="default-select">
-										<select name="filijalaOut" [(ngModel)]="reservation.filijalaOut" required>
-											<option value="" disabled selected hidden>Release branch</option>
-											<option value="1">Filijala1</option>
-											<option value="1">Filijala2</option>
-											<option value="1">Filijala3</option>
-										</select>
-									</div>
-									<input id="datetime" name="releaseT" type="datetime-local" placeholder="Release date and time" [(ngModel)]="reservation.vremeOut" required>
+										<div class="default-select" id="default-select">
+												<select style="width:10em" name="branchName" [(ngModel)] ="branchto" (change)='changeSelectionRelease()' >
+													<option *ngFor = "let branch of branches" [value]="branch.Name" >{{branch.Name}}</option>
+												</select>
+											</div>
+											<input id="datetime" name="releaseT" type="datetime-local" placeholder="Release date and time" [(ngModel)]="reservation.EndDate" required>
 							    </div>
 								<br><hr><br>							    
-							    <div class="from-group">
-									<br>
-							    	<input class="form-control txt-field" type="text" name="pickup" placeholder="pickup address" disabled [(ngModel)]="reservation.filijalaIn">
-									<br>
-							    	<input class="form-control txt-field" type="text" name="release" placeholder="release address" disabled [(ngModel)]="reservation.vremeOut">
-									<br>
-							    	<input class="form-control txt-field" type="tel" name="priceOverall" placeholder="price overral" disabled [(ngModel)]="reservation.ukupnaCena">
+								<div class="from-group">
+										<br>
+										<input class="form-control txt-field" type="text" name="pickup" placeholder="pickup address" disabled [(ngModel)]="addressPickup">
+										<br>
+										<input class="form-control txt-field" type="text" name="release" placeholder="release address" disabled [(ngModel)]="addressRelease">
+										<br>
+							    	<input class="form-control txt-field" type="number" name="priceOverall" placeholder="price overral" disabled [(ngModel)]="price">
 									<br>
 							    </div>
 								<div class="form-group row">
 									<div class="col-md-12">
+										<a class="text-uppercase primary-btn btn-block text-center text-uppercase" (click) = 'checkRes()'>Check availability</a>
+										<br>
 										<a class="text-uppercase primary-btn btn-block text-center text-uppercase" (click) = 'editRes()'>Submit</a>
 										<br>
 										<p style="color:red">{{errorText}}</p>
