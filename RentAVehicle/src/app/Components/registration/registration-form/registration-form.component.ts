@@ -2,6 +2,7 @@ import { Component, OnInit,Injectable,NgZone } from '@angular/core';
 import { CurrentUser } from '../../../Model/current-user';
 import { IdentityUser } from '../../../Model/identity-user';
 import { HttpService } from '../../../Services/http-service.service'; 
+import { AuthService } from '../../../Services/auth.service'; 
 import {
   Router,
   ActivatedRoute
@@ -21,7 +22,7 @@ export class RegistrationFormComponent implements OnInit {
   user: IdentityUser
   errorText : string
 	
-  constructor(public httpService: HttpService,private router: Router) { 
+  constructor(public httpService: HttpService,private router: Router, private authService : AuthService) { 
 	this.ngZone = new NgZone({enableLongStackTrace: false});
 	this.user = {
 		'username' : '',

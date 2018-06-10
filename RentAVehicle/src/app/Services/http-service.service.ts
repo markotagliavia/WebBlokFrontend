@@ -292,6 +292,4 @@ export class HttpService {
             , opts).pipe(map((res: Response) => this.extractData(res)));
 
     }
-
-    
 }

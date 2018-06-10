@@ -1,6 +1,7 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { AuthService } from '../../../Services/auth.service';
 import { HttpService } from '../../../Services/http-service.service';
+import { NotificationService } from '../../../Services/notification.service';
 import {
   Router,
   ActivatedRoute
@@ -18,7 +19,7 @@ export class HeaderComponent implements OnInit {
   manager : boolean;
   admin : boolean;
 
-  constructor(private authService: AuthService, private router: Router, private httpService: HttpService) {
+  constructor(private authService: AuthService, private router: Router, private httpService: HttpService,private notifService : NotificationService) {
     this.client = false;
     this.manager = false;
     this.admin = false;
@@ -30,6 +31,9 @@ export class HeaderComponent implements OnInit {
 
   refreshView()
   {
+    this.client = false;
+    this.manager = false;
+    this.admin = false;
     if(this.authService.currentUserName() != undefined)
     {
         if(this.authService.currentUserName().length > 0)
@@ -37,7 +41,7 @@ export class HeaderComponent implements OnInit {
             if(this.authService.isLoggedInRole('Admin'))
             {
               this.admin = true;
-              this.client = true;
+              this.client = true;                              
             }
             else if(this.authService.isLoggedInRole('Manager') && this.authService.currentUser().approved)
             {
@@ -64,11 +68,12 @@ export class HeaderComponent implements OnInit {
              
             this.authService.logOut();
             this.router.navigate(['home/login']);
-            window.location.reload();
+            this.notifService.UnsubscribeForNotifications();
+            this.refreshView();
           },
           error =>{
 
-            alert(error.json().Message);
+            alert(error.json().Message); 
                 
         }
       
@@ -76,5 +81,7 @@ export class HeaderComponent implements OnInit {
       )
     
   }
+
+  
 
 }

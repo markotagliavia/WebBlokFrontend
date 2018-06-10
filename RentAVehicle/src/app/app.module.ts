@@ -28,6 +28,7 @@ import { EditServiceComponent } from './Components/main/edit-service/edit-servic
 import { EditCarComponent } from './Components/main/edit-car/edit-car.component';
 import { WelcomeScreenRegComponent } from './Components/main/welcome-screen-reg/welcome-screen-reg.component';
 import { HttpService } from './Services/http-service.service'; 
+import { NotificationService } from './Services/notification.service'; 
 import { AuthService } from "./Services/auth.service";
 import { FormsModule } from '@angular/forms';
 import { AdminPanelClientManagingComponent } from './Components/main/admin-panel-client-managing/admin-panel-client-managing.component';
@@ -37,6 +38,7 @@ import { BranchControlComponent } from './Components/main/service-single/branch-
 import { RatesControlComponent } from './Components/main/service-single/rates-control/rates-control.component';
 import { RateUnitComponent } from './Components/main/service-single/rate-unit/rate-unit.component';
 import { EditReservationComponent } from './Components/main/edit-reservation/edit-reservation.component';
+import { NotificationsComponent } from './Components/main/notifications/notifications.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,7 +71,8 @@ import { EditReservationComponent } from './Components/main/edit-reservation/edi
     BranchControlComponent,
     RatesControlComponent,
     RateUnitComponent,
-    EditReservationComponent
+    EditReservationComponent,
+    NotificationsComponent
 	
   ],
   imports: [
@@ -79,7 +82,7 @@ import { EditReservationComponent } from './Components/main/edit-reservation/edi
 	HttpModule,
 	FormsModule
   ],
-  providers: [HttpService, AuthService],
+  providers: [HttpService, AuthService, NotificationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

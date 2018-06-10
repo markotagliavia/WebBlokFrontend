@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Service } from '../../../Model/service';
 import { ServiceManager} from '../../../Services/[services].service';
 import { AuthService } from '../../../Services/auth.service'
+import { HttpService } from '../../../Services/http-service.service'
 
 @Component({
   selector: 'app-add-new-service',
@@ -14,7 +15,7 @@ export class AddNewServiceComponent implements OnInit {
   errorText : string;
   selectedFile: File; 
 
-  constructor(private serviceManager: ServiceManager, private authService: AuthService) { 
+  constructor(private serviceManager: ServiceManager, private authService: AuthService, private httpService : HttpService) { 
     this.errorText = '';
     this.service = new Service(0,'', '','','',this.authService.currentUserId(),'',false,0);
   }
@@ -53,7 +54,7 @@ export class AddNewServiceComponent implements OnInit {
                 )
               }
               
-            alert("Successful added new service");     
+            alert("Successful added new service"); 
       },
       error =>
       {

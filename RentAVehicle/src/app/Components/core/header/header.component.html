@@ -15,7 +15,8 @@
 			<li *ngIf = "manager"><a [routerLink]="['/managerPanel']">Manager panel</a></li>
 		  <li *ngIf = "client"><a (click) = 'logOut()' [routerLink]="['/home/login']">Log out</a></li>		  
 		</ul>
-	  </nav><!-- #nav-menu-container -->		    		
+	  </nav><!-- #nav-menu-container-->		    		
 	</div>
 </div>
 </header><!-- #header -->
+<app-notifications></app-notifications>
