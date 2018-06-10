@@ -12,14 +12,43 @@
 		</div>
 		<form class="form" role="form" autocomplete="off">		
 			<div class="form-group">
-				<div>
-					<p style="color:black">Types:</p>
-					<select size="3" style="width:10em" name="typeNameSel" [(ngModel)] ="typeNameSelected">
-						<option *ngFor = "let type of types" [value]="type.Name">{{type.Name}}</option>
-					</select>
+				<div class="row d-flex justify-content-center pb-40">
+					<div>
+						<p style="color:black">Types:</p>
+						<select style="width:10em" name="typeNameSel" [(ngModel)] ="typeNameSelected" (change) = "promenaTipa()">
+							<option>All</option>
+							<option *ngFor = "let type of types" [value]="type.Name">{{type.Name}}</option>
+						</select>
+					</div>
+
+					<div>
+							<p style="color:black">Manufacturer:</p>
+							<input class="form-control txt-field" type="text" name="manuName" placeholder="Manufacturer" [(ngModel)]="manuNameInput">
+					</div>
+
+					<div>
+							<p style="color:black">Model:</p>
+							<input class="form-control txt-field" type="text" name="modelName" placeholder="Model" [(ngModel)]="modelNameInput">
+					</div>
+
+					<div>
+							<p style="color:black">Year:</p>
+							<input class="form-control txt-field" type="text" name="year" placeholder="Year" [(ngModel)]="yearInput">
+					</div>
+
+					<div>
+							<p style="color:black">Price:</p>
+							<input class="form-control txt-field" type="number" name="fromPrice" placeholder="From" [(ngModel)]="fromPriceInput">
+							to
+							<input class="form-control txt-field" type="number" name="toPrice" placeholder="To" [(ngModel)]="toPriceInput">
+					</div>
 				</div>
 			</div>
 		</form>
-			<app-car-unit *ngFor = "let car of cars" [car] = 'car' (messageEvent)="receiveMessage($event)" ></app-car-unit>
+			<app-car-unit *ngFor = "let car of carsForPrikaz" [car] = 'car' (messageEvent)="receiveMessage($event)" ></app-car-unit>
+
+			<div class="row d-flex justify-content-center pb-40" *ngFor="let number of pageNumbers">
+					<div style="padding-right:1em"><a class="genric-btn primary text-center" (click)="doPaginacija(number)" >{{number}}</a></div>
+			</div>
 	</div>	
 </section>

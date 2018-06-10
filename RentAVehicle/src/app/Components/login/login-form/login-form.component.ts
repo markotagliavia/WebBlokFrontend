@@ -67,6 +67,10 @@ export class LoginFormComponent implements OnInit {
                   this.authService.logIn(currentUser);
                   this.notifService.RegisterForNotifications();
                   this.messageEvent.emit("ok");
+                  if(role == "Admin")
+                  {
+                    this.notifService.GetNotification();
+                  }
                   //this.header.refreshView();
                   //window.location.reload();
                   // this.notifService.GetNotification();
