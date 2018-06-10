@@ -1,3 +1,4 @@
+<app-header #header></app-header>
 <app-navbar [title] = "'New car'"></app-navbar>
 <section class="model-area section-gap" id="new_car">
 	<div class="container">
@@ -14,7 +15,7 @@
 						<br>
 						<input class="form-control txt-field" type="text" name="model" placeholder="Model" [(ngModel)]="car.Model" required>
 						<br>
-						<input class="form-control txt-field" type="email" name="year" placeholder="Year" [(ngModel)]="car.Year" required>
+						<input class="form-control txt-field" type="number" name="year" placeholder="Year" [(ngModel)]="car.Year" required>
 						<br>
 						<form class="form" role="form" autocomplete="off">		
 							<div class="form-group">
@@ -27,7 +28,7 @@
 							</div>
 						</form>
 						<br>
-						<input class="form-control txt-field" type="tel" name="price" placeholder="Price per hour" [(ngModel)]="car.Price" required> 
+						<input class="form-control txt-field" type="number" name="price" placeholder="Price per hour" [(ngModel)]="car.Price" required> 
 						<br>
 						<div class="mt-10">
 							<textarea class="single-textarea" name="descr" placeholder="Description" [(ngModel)]="car.Description" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Description'" style="border:solid; border-color:gray; border-width:1px" required></textarea>

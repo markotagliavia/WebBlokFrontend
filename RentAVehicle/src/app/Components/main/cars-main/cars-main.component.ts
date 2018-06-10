@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpService } from '../../../Services/http-service.service';
 import { AuthService } from '../../../Services/auth.service'; 
 import { TypeOfVehicle } from '../../../Model/type-of-vehicle'; 
 import { Service } from '../../../Model/service';
 import { Vehicle } from '../../../Model/vehicle';
 import { ServiceManager } from '../../../Services/[services].service';
+import { CarUnitComponent } from '../car-unit/car-unit.component'
 
 @Component({
   selector: 'app-cars-main',
@@ -18,6 +19,7 @@ export class CarsMainComponent implements OnInit {
 	typeNameInput : string;
   typeNameSelected : string;
   typeOfVehicle : TypeOfVehicle;
+ 
 
   constructor(public httpService: HttpService,private authService: AuthService, private serviceManager : ServiceManager) { 
     this.cars = [];
@@ -45,7 +47,21 @@ export class CarsMainComponent implements OnInit {
         });
   }
 
+  receiveMessage($event) {
+    this.cars = [];
+    this.serviceManager.getCars(this.authService.currentUserToken()).subscribe(
+      (res: any) => {
+               
+              for(let i=0; i<res.length; i++){
+                this.cars.push(res[i]);
+            }     
+      },
+      error =>{ 
+      });
+  }
+
   ngOnInit() {
+    
   }
 
 }

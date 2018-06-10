@@ -1,3 +1,4 @@
+<app-header #header></app-header>
 <app-navbar [title] = "'Cars'"></app-navbar>
 <section class="model-area section-gap" id="cars">
 	<div class="container">
@@ -19,6 +20,6 @@
 				</div>
 			</div>
 		</form>
-			<app-car-unit *ngFor = "let car of cars" [car] = 'car'></app-car-unit>
+			<app-car-unit *ngFor = "let car of cars" [car] = 'car' (messageEvent)="receiveMessage($event)" ></app-car-unit>
 	</div>	
 </section>

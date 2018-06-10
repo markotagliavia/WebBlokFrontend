@@ -63,7 +63,7 @@ export class AddNewCarComponent implements OnInit, OnDestroy {
   }
 
   newCar(){
-    //ispravi ovo
+    
     if(this.car.Mark.length == 0 || this.car.Model.length == 0 || this.car.Year.length == 0 || this.car.Description.length == 0 || this.typeNameSelected.length == 0)
     {
        this.errorText = "All fields except picture are requiered";

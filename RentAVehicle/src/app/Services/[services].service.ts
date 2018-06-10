@@ -9,6 +9,7 @@ import { AppUser } from '../Model/app-user';
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
 import { PriceList } from '../Model/pricelist';
+import { Reservation } from '../Model/reservation';
 
 
 @Injectable({
@@ -301,7 +302,7 @@ export class ServiceManager {
       }), opts); 
   }
 
-  putCar(car: Vehicle, carNovi : Vehicle, token: string) : Observable<any>
+  putCar(car: Vehicle, token: string) : Observable<any>
   {
     const headers: Headers = new Headers();
     headers.append('Content-type', 'application/json');
@@ -339,6 +340,21 @@ export class ServiceManager {
     return this.http.get(url, opts).pipe(map((res: Response) => this.extractData(res)));
   }
 
+  getPrice(token: string, carId : number) : Observable<any>
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+    var url = `http://localhost:51432/api/Vehicles/GetPrice/${carId}`;
+    return this.http.get(url, opts).pipe(map((res: Response) => this.extractData(res)));
+  }
+
+  
+
   getCar(token: string, carId : number) : any
   {
     const headers: Headers = new Headers();
@@ -367,4 +383,53 @@ export class ServiceManager {
         , opts);
   }
     //end of cars section ----------------------------------------------------------------------------
+    //reservation section ----------------------------------------------------------------------------
+  checkReservation(reservation : Reservation, token: string)
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+
+    return this.http.post(
+      `http://localhost:51432/api/Reservations/CheckReservation`
+      ,
+      JSON.stringify({
+        Id: reservation.Id,
+        VehicleId : reservation.VehicleId,
+        StartDate : reservation.StartDate,
+        EndDate : reservation.EndDate,
+        AppUserId : reservation.AppUserId,
+        TotalPrice : reservation.TotalPrice,
+        Expired : reservation.Expired
+      }), opts);
+  }
+  addReservation(reservation : Reservation, token: string)
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+
+    return this.http.post(
+      `http://localhost:51432/api/Reservations/PostReservation`
+      ,
+      JSON.stringify({
+        Id: reservation.Id,
+        VehicleId : reservation.VehicleId,
+        StartDate : reservation.StartDate,
+        EndDate : reservation.EndDate,
+        AppUserId : reservation.AppUserId,
+        TotalPrice : reservation.TotalPrice,
+        Expired : reservation.Expired,
+        BranchReservations : reservation.BranchReservations,
+      }), opts);
+  }
+    //end of reservation section ----------------------------------------------------------------------------
 }
