@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable, Input, OnChanges, SimpleChanges, Output,EventEmitter } from '@angular/core';
 import { AuthService } from '../../../Services/auth.service';
 import { HttpService } from '../../../Services/http-service.service';
 import { NotificationService } from '../../../Services/notification.service';
@@ -13,11 +13,14 @@ import {
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit,OnChanges {
 
+  @Input() childMessage: string;
+  @Output() messageEvent = new EventEmitter<string>();
   client : boolean;
   manager : boolean;
   admin : boolean;
+  PA
 
   constructor(private authService: AuthService, private router: Router, private httpService: HttpService,private notifService : NotificationService) {
     this.client = false;
@@ -28,6 +31,22 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.refreshView();
   }
+
+ 
+  ngOnChanges(changes: SimpleChanges) {
+      if(changes['childMessage'])
+      {
+        if(this.childMessage != 'empty')
+        {
+          //alert("RADIIIIIIII");
+         this.refreshView();
+         //this.childMessage = 'empty';
+        }
+      }
+  }
+
+
+
 
   refreshView()
   {
@@ -66,10 +85,11 @@ export class HeaderComponent implements OnInit {
     (
           (res: any) => {
              
-            this.authService.logOut();
+            this.authService.logOut();//heade
             this.router.navigate(['home/login']);
             this.notifService.UnsubscribeForNotifications();
             this.refreshView();
+            window.location.reload();
           },
           error =>{
 

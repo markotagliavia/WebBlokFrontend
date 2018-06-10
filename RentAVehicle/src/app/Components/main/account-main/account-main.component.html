@@ -1,4 +1,4 @@
-<app-header #header></app-header>
+<app-header (messageEvent)="receiveRefresh($event)"></app-header>
 <app-navbar [title] = "'Account'"></app-navbar>
 <section class="model-area section-gap" id="cars">
 	<div class="container">
