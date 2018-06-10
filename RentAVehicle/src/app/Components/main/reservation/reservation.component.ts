@@ -117,6 +117,14 @@ export class ReservationComponent implements OnInit{
             (res: any) =>
             {
                         alert("Reserved");
+                        this.addressPickup = "";
+                        this.addressRelease = "";
+                        this.price = 0;
+
+                        this.branchfrom = '';
+                        this.branchto = '';
+    
+                        this.reservation = new Reservation(-1,false,'','',0,this.authService.currentUserId(),-1,[]);
             },
             error =>
             {

@@ -120,6 +120,8 @@ export class BranchControlComponent implements OnChanges {
           'ServiceId' : -1,
         };
         alert("Successfully added new branch " + this.branch.Name);
+        this.branchNameInput = '';
+        this.branchNameSelected= '';
         this.branches = [];
         this.serviceManager.getBranches(this.authService.currentUserToken()).subscribe(
           (res: any) => {
@@ -185,6 +187,7 @@ export class BranchControlComponent implements OnChanges {
               alert('Successfully modify branch');
               this.branches = [];
               this.branchNameInput = '';
+              this.branchNameSelected= '';
               this.serviceManager.getBranches(this.authService.currentUserToken()).subscribe(
                 (res: any) => {
                         
@@ -238,6 +241,8 @@ export class BranchControlComponent implements OnChanges {
               };
                    
               alert('Successfully deleted branch');
+              this.branchNameInput = '';
+              this.branchNameSelected= '';
               this.branches = [];
               this.serviceManager.getBranches(this.authService.currentUserToken()).subscribe(
                 (res: any) => {

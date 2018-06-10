@@ -5,6 +5,7 @@ import { IdentityUser } from '../../../Model/identity-user';
 import { CurrentUser} from '../../../Model/current-user';
 import { HttpService } from '../../../Services/http-service.service'; 
 import {AuthService } from '../../../Services/auth.service'
+import { ServiceManager} from '../../../Services/[services].service'
 import { takeUntil } from 'rxjs/operators';
 import {
   Router,
@@ -25,7 +26,7 @@ export class AccountMainComponent implements OnInit {
   reservations : Reservation[]; 
 
 
-  constructor(private http: HttpService, private authService: AuthService, private router: Router) {
+  constructor(private http: HttpService, private authService: AuthService, private router: Router, private serviceManager : ServiceManager) {
     this.reservations = [];
     //to do posalji zahtev za sve rez koje su vezane za ovog korisnika na sesiji
 
@@ -40,6 +41,21 @@ export class AccountMainComponent implements OnInit {
       'email' : this.authService.currentUserEmail(),
       'createService' : false
     }
+
+    this.serviceManager.getReservationsUser(this.authService.currentUserId(),this.authService.currentUserToken()).subscribe(
+
+        (res: any) =>
+        {
+                res.forEach(element => {
+                  this.reservations.push(element);
+                });
+        },
+        error=>
+        {
+
+        }
+
+    )
 
     this.errorTextLogin = '';
     this.errorTextReg = '';

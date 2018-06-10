@@ -431,5 +431,21 @@ export class ServiceManager {
         BranchReservations : reservation.BranchReservations,
       }), opts);
   }
+
+  getReservationsUser(id : number, token : string)
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+
+    return this.http.get(
+      `http://localhost:51432/api/Reservations/GetUserReservation${id}`
+      ,opts
+    ).pipe(map((res: Response) => this.extractData(res)));
+  }
     //end of reservation section ----------------------------------------------------------------------------
 }
