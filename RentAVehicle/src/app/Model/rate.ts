@@ -1,8 +1,9 @@
 export class Rate {
     constructor(
-      public username: string,
-      public gradeVal: string,
-	  public comment : string,
-	  public serviceName : string
+    public Id : number,
+    public Point : number,
+    public Comment : string,
+    public AppUserId : number,
+    public ServiceId : number
   ){}
 }

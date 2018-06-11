@@ -44,7 +44,8 @@ export class AddNewServiceComponent implements OnInit {
                 this.serviceManager.uploadServicePicture(res._body,this.selectedFile,this.authService.currentUserToken()).subscribe
                 (
                       (res : any) => {
-                              //alert(res._body);                             
+                              //alert(res._body);   
+                              this.service = new Service(0,'', '','','',this.authService.currentUserId(),'',false,0);                          
                       },
                       error =>
                       {
@@ -55,6 +56,7 @@ export class AddNewServiceComponent implements OnInit {
               }
               
             alert("Successful added new service"); 
+            this.service = new Service(0,'', '','','',this.authService.currentUserId(),'',false,0);
       },
       error =>
       {
