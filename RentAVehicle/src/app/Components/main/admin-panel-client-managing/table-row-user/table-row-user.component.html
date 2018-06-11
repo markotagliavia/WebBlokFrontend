@@ -3,7 +3,7 @@
 			<div class="visit">{{user.Name}}</div>
 			<div class="visit">{{user.Surname}}</div>
 			<div class="visit">{{user.BirthDate}}</div>
-			<div class="visit"><img src="{{user.Path}}"></div>
+			<div class="visit"><img src="{{user.Path}}" style="height:60px; width:60px"></div>
 			<div class="visit" *ngIf = "unverified">Unverified</div>
 			<div class="visit" *ngIf = "unverified"><a class="genric-btn primary" (click) = 'verifyUser()'>Verify</a></div>
 			<div class="visit" *ngIf = "unverified"></div>

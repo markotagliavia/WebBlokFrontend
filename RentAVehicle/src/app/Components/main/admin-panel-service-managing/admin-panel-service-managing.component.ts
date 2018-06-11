@@ -19,7 +19,6 @@ export class AdminPanelServiceManagingComponent implements OnInit {
       (res: any) => {
                
               for(let i=0; i<res.length; i++){
-                res[i].Path = sanitizer.bypassSecurityTrustUrl(res[i].Path);
                 this.services.push(res[i]); //use i instead of 0
             }     
       },
