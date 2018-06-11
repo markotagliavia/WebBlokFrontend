@@ -9,3 +9,12 @@ textarea.ng-pristine.ng-valid.ng-touched{
 .managerOnly{
     background-color: darkseagreen;
 }
+
+textarea{
+    width:30em;
+}
+
+agm-map {
+    height: 30em;
+    width: 80em;
+  }

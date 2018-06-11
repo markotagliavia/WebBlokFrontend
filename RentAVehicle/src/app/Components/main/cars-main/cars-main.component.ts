@@ -14,8 +14,8 @@ import { CarUnitComponent } from '../car-unit/car-unit.component'
 })
 export class CarsMainComponent implements OnInit {
 
-
-  cars: Vehicle[];
+  numberOfCarsPerPage = 3;
+  numberOfCars : number;
   carsForPrikaz: Vehicle[];
   types: TypeOfVehicle[];
   typeNameSelected : string;
@@ -34,7 +34,6 @@ export class CarsMainComponent implements OnInit {
  
 
   constructor(public httpService: HttpService,private authService: AuthService, private serviceManager : ServiceManager) { 
-    this.cars = [];
     this.carsForPrikaz = [];
     this.typeNameSelected = "All";
     this.types = [];
@@ -43,28 +42,58 @@ export class CarsMainComponent implements OnInit {
     this.yearInput = "";
     this.fromPriceInput = 0;
     this.toPriceInput = 9999999; 
+
+    this.serviceManager.getPaginationWithFilterCount(this.authService.currentUserToken(), 1, this.numberOfCarsPerPage, "*", "*", "*", 0, 999999, "All", -1).subscribe(
+      (res: any) => {
+               this.numberOfCars = res;
+               this.totalNumber = this.numberOfCars;
+               this.totalPages = this.totalNumber / this.numberOfCarsPerPage;
+               for (var index = 1; index <= (this.totalPages + 1); index++) {
+                 this.pageNumbers.push(index);
+               }
+               
+               this.serviceManager.getCarsPaginigWithFilter(this.authService.currentUserToken(), 1, this.numberOfCarsPerPage, "*", "*", "*", 0, 999999, "All", -1).subscribe(
+                (res: any) => {
+                  for(let i=0; i<res.length; i++){
+                      this.carsForPrikaz.push(res[i]);
+                  }
+          
+                  },
+                  error =>{ 
+                  });
+      },
+      error =>{
+         console.log(error);
+         
+      });
   }
 
   receiveMessage($event) {
-    this.cars = [];
     this.carsForPrikaz = [];
-    this.serviceManager.getCars(this.authService.currentUserToken()).subscribe(
+    this.pageNumbers = [];
+    this.serviceManager.getPaginationWithFilterCount(this.authService.currentUserToken(), 1, this.numberOfCarsPerPage, "*", "*", "*", 0, 999999, "All", -1).subscribe(
       (res: any) => {
+               this.numberOfCars = res;
+               this.totalNumber = this.numberOfCars;
+               this.totalPages = this.totalNumber / this.numberOfCarsPerPage;
+               for (var index = 1; index <= (this.totalPages + 1); index++) {
+                 this.pageNumbers.push(index);
+               }
                
-              for(let i=0; i<res.length; i++){
-                this.cars.push(res[i]);
-            }     
+               this.serviceManager.getCarsPaginigWithFilter(this.authService.currentUserToken(), 1, this.numberOfCarsPerPage, "*", "*", "*", 0, 999999, "All", -1).subscribe(
+                (res: any) => {
+                  for(let i=0; i<res.length; i++){
+                      this.carsForPrikaz.push(res[i]);
+                  }
+          
+                  },
+                  error =>{ 
+                  });
       },
-      error =>{ 
+      error =>{
+         console.log(error);
+         
       });
-
-      this.totalNumber = this.cars.length;
-      this.totalPages = this.totalNumber / 3;
-      for (var index = 1; index < (this.totalPages + 1); index++) {
-        this.pageNumbers.push(index);
-      }
-
-      this.doPaginacija(1);
   }
 
   ngOnInit() {
@@ -78,83 +107,63 @@ export class CarsMainComponent implements OnInit {
       },
       error =>{ 
       });
-
-      this.serviceManager.getCars(this.authService.currentUserToken()).subscribe(
-        (res: any) => {
-                 
-                for(let i=0; i<res.length; i++){
-                  this.cars.push(res[i]);
-              }     
-        },
-        error =>{ 
-        });
-
-        this.totalNumber = this.cars.length;
-        this.totalPages = this.totalNumber / 3;
-        for (var index = 1; index < (this.totalPages + 1); index++) {
-          this.pageNumbers.push(index);
-        }
-
-    this.serviceManager.getCarsPaginig(this.authService.currentUserToken(), this.pageNumber, 3).subscribe(
-      (res: any) => {
-        for(let i=0; i<res.length; i++){
-          this.carsForPrikaz.push(res[i]);
-        }
-        /*temp.forEach(element => {
-          if (element.ServiceId == this.serviceId) {
-            this.carsForPrikaz.push(element);
-          }*/
-
-        },
-        error =>{ 
-        });
     
   }
 
-  /*promenaTipa()
-  {
-    this.carsForPrikaz = [];
-    if(this.typeNameSelected == "All")
-    {
-      this.carsForPrikaz = this.cars;
-    }
-    else
-    {
-      var typeId = -1;
-      for(let j = 0; j < this.types.length; j++)
-      {
-        if(this.types[j].Name == this.typeNameSelected)
-        {
-          typeId = this.types[j].Id;
-        }
-      }
-
-      for(let i = 0; i < this.cars.length; i++)
-      {
-        if(this.cars[i].TypeOfVehicleId == typeId)
-        {
-          this.carsForPrikaz.push(this.cars[i]);
-        }
-      }
-    }
-  }*/
-
   doPaginacija(num : number)
   {
-    this.carsForPrikaz = [];
-      this.serviceManager.getCarsPaginigWithFilter(this.authService.currentUserToken(), this.pageNumber, 3, this.manuNameInput, this.modelNameInput, this.yearInput, this.fromPriceInput, this.toPriceInput, this.typeNameSelected).subscribe(
-      (res: any) => {
-        for(let i=0; i<res.length; i++){
-          this.carsForPrikaz.push(res[i]);
-        }
-        /*temp.forEach(element => {
-          if (element.ServiceId == this.serviceId) {
-            this.carsForPrikaz.push(element);
-          }*/
+    var yearParam = "";
+    var modelParam = "";
+    var manuParam = "";
+    if(this.manuNameInput == "")
+    {
+      manuParam = "*";
+    }
+    else 
+    {
+      manuParam = this.manuNameInput;
+    }
+    if(this.modelNameInput == "")
+    {
+      modelParam = "*";
+    }
+    else 
+    {
+      modelParam = this.modelNameInput;
+    }
+    if(this.yearInput == "")
+    {
+      yearParam = "*";
+    }
+    else 
+    {
+      yearParam = this.yearInput;
+    }
 
+      this.carsForPrikaz = [];
+      this.pageNumbers = [];
+      this.serviceManager.getPaginationWithFilterCount(this.authService.currentUserToken(), num, this.numberOfCarsPerPage, manuParam, modelParam, yearParam, this.fromPriceInput, this.toPriceInput, this.typeNameSelected, -1).subscribe(
+        (res: any) => {
+                 this.numberOfCars = res;
+                 this.totalNumber = this.numberOfCars;
+                 this.totalPages = this.totalNumber / this.numberOfCarsPerPage;
+                 for (var index = 1; index <= (this.totalPages + 1); index++) {
+                   this.pageNumbers.push(index);
+                 }
+                 
+                 this.serviceManager.getCarsPaginigWithFilter(this.authService.currentUserToken(), num, this.numberOfCarsPerPage, manuParam, modelParam, yearParam, this.fromPriceInput, this.toPriceInput, this.typeNameSelected, -1).subscribe(
+                  (res: any) => {
+                    for(let i=0; i<res.length; i++){
+                        this.carsForPrikaz.push(res[i]);
+                    }
+            
+                    },
+                    error =>{ 
+                    });
         },
-        error =>{ 
-          console.log(error);
+        error =>{
+           console.log(error);
+           
         });
   }
 

@@ -13,6 +13,18 @@
   </section>
 </div>
 
+<section class="model-area section-gap" >
+	<div class="container">
+    <div class="row d-flex justify-content-center pb-40">
+<agm-map [latitude]=45.25024259251935  [longitude]=19.835199103219566 [zoom] = "11" (mapClick)="mapClicked($event)">
+  <agm-marker *ngFor="let koordinata of koordinates" [latitude]="koordinata.Latitude" [longitude]="koordinata.Longitude">
+      <agm-info-window>{{koordinata.info}}</agm-info-window>
+  </agm-marker>
+</agm-map>
+</div>
+</div>
+</section>
+
   <section class="model-area section-gap" >
     <div class="container" style="width:50em">
       <div class="row d-flex justify-content-center pb-40">
@@ -61,31 +73,35 @@
           </div>
         </form>
         <app-car-unit *ngFor = "let car of carsForPrikaz" [car] = 'car' (messageEvent)="receiveMessage($event)" ></app-car-unit>
-        <div class="row d-flex justify-content-center pb-40" *ngFor="let number of pageNumbers">
-            <div style="padding-right:1em"><a class="genric-btn primary text-center" (click)="doPaginacija(number)" >{{number}}</a></div>
+        <div class="row d-flex justify-content-center pb-40" >
+            <div style="padding-left:1em"><a class="genric-btn primary text-center" *ngFor="let number of pageNumbers" (click)="doPaginacija(number)" >{{number}}</a></div>
         </div>
           <hr>
           <br>
 
-              <app-rate-unit *ngFor = "let rate of rates" [rate] = 'rate'></app-rate-unit>
-              <br>
-              <hr>
-              <br>
-          <div class="row d-flex justify-content-center">
-            <div class="single-review">  
-              <div class="star">
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star"></span>
-                  <span class="fa fa-star"></span>
-                </div>
-                <br>
-              <textarea name="commField" [(ngModel)] = 'komentar'></textarea>
-              <br>
-              <a class="genric-btn primary btn-block text-center text-uppercase" *ngIf= "smeDaOceni"  (click) = 'oceni()' >Add rate</a>  
-            </div>
+          <app-rate-unit *ngFor = "let rate of rates" [rate] = 'rate' (messageEvent)="receiveDelete($event)"></app-rate-unit>
+          <br>
+          <hr>
+          <br>
+      <div class="row d-flex justify-content-center" *ngIf= "smeDaOceni" >
+        <div class="single-review">  
+          <div class="star">
+            <span class="fa fa-star checked" *ngIf = "rate.Point >= 1" (click)='ocena(1)'></span>
+            <span class="fa fa-star" *ngIf = "rate.Point < 1" (click)='ocena(1)'></span>
+            <span class="fa fa-star checked" *ngIf = "rate.Point >= 2" (click)='ocena(2)'></span>
+            <span class="fa fa-star" *ngIf = "rate.Point < 2" (click)='ocena(2)'></span>
+            <span class="fa fa-star checked" *ngIf = "rate.Point >= 3" (click)='ocena(3)'></span>
+            <span class="fa fa-star" *ngIf = "rate.Point < 3" (click)='ocena(3)'></span>
+            <span class="fa fa-star checked" *ngIf = "rate.Point >= 4" (click)='ocena(4)'></span>
+            <span class="fa fa-star" *ngIf = "rate.Point < 4" (click)='ocena(4)'></span>
+            <span class="fa fa-star checked" *ngIf = "rate.Point >= 5" (click)='ocena(5)'></span>
+            <span class="fa fa-star" *ngIf = "rate.Point < 5" (click)='ocena(5)'></span>
           </div>
+          <textarea [(ngModel)]="rate.Comment"></textarea>
+          <br>
+          <a class="genric-btn primary btn-block text-center text-uppercase" (click) = 'oceni()' >Add rate</a>  
+        </div>
+      </div>
             
             
     </div>
