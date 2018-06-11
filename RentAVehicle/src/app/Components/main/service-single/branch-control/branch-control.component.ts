@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Injectable, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { ServiceManager } from '../../../../Services/[services].service';
 import { AuthService } from '../../../../Services/auth.service'; 
 import { Branch } from '../../../../Model/branch'; 
@@ -19,6 +19,7 @@ export class BranchControlComponent implements OnChanges {
   branchNameSelected : string;
   branch : Branch;
   selectedFile: File; 
+  @Output() messageEvent = new EventEmitter<string>();
   
   constructor(public serviceManager: ServiceManager,private authService: AuthService) {
     this.errorText = "";
@@ -120,6 +121,7 @@ export class BranchControlComponent implements OnChanges {
           'ServiceId' : -1,
         };
         alert("Successfully added new branch " + this.branch.Name);
+        this.messageEvent.emit("ok");
         this.branchNameInput = '';
         this.branchNameSelected= '';
         this.branches = [];
@@ -185,6 +187,7 @@ export class BranchControlComponent implements OnChanges {
               };
                    
               alert('Successfully modify branch');
+              this.messageEvent.emit("ok");
               this.branches = [];
               this.branchNameInput = '';
               this.branchNameSelected= '';
@@ -192,12 +195,15 @@ export class BranchControlComponent implements OnChanges {
                 (res: any) => {
                         
                         for(let i=0; i<res.length; i++){
+                        if(this.service.Id == res[i].ServiceId) 
+                        {
                           this.branches.push(res[i]); //use i instead of 0
+                        }
                       }     
                 },
                 error =>{
-                  alert(error.json().Message);
-                })
+                  console.log(error);
+                });
                  
             },
             error =>{
@@ -241,6 +247,7 @@ export class BranchControlComponent implements OnChanges {
               };
                    
               alert('Successfully deleted branch');
+              this.messageEvent.emit("ok");
               this.branchNameInput = '';
               this.branchNameSelected= '';
               this.branches = [];
@@ -248,11 +255,14 @@ export class BranchControlComponent implements OnChanges {
                 (res: any) => {
                         
                         for(let i=0; i<res.length; i++){
+                        if(this.service.Id == res[i].ServiceId) 
+                        {
                           this.branches.push(res[i]); //use i instead of 0
+                        }
                       }     
                 },
                 error =>{
-                  alert(error.json().Message);
+                  console.log(error);
                 })
                  
             },

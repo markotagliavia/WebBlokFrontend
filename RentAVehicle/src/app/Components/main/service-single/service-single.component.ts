@@ -346,7 +346,7 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
   }
 
   receiveDelete($event){
-
+    this.smeDaOceni = true;
     this.rates = [];
     this.serviceManager.allRatesService(this.service.Id,this.authService.currentUserToken()).subscribe
         (
@@ -366,6 +366,12 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
   
   receiveMessage($event) {
     this.doPaginacija(1);
+  }
+
+  receiveMessageBranches($event)
+  {
+    //to do ovde ja? cekaj da testiram
+    alert("MARKOOOOO");
   }
 
 }

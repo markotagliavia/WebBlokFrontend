@@ -8,7 +8,7 @@
         <h3 class="text-center pb-10">Branch control</h3>
       </div>
     </div>
-      <app-branch-control *ngIf = "smeDaIzmeni" [service] = 'service'></app-branch-control>
+      <app-branch-control *ngIf = "smeDaIzmeni" [service] = 'service' (messageEvent)="receiveMessageBranches($event)"></app-branch-control>
   </div>
   </section>
 </div>
