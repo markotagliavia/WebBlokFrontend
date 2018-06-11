@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing/app-routing.module'
 import { HttpModule } from '@angular/http';
 import {HttpClientModule, HttpClient} from '@angular/common/http';
+import { AgmCoreModule } from '@agm/core';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './Components/core/header/header.component';
 import { LoginFormComponent } from './Components/login/login-form/login-form.component';
@@ -80,7 +81,10 @@ import { NotificationsComponent } from './Components/main/notifications/notifica
 	AppRoutingModule,
 	HttpClientModule,
 	HttpModule,
-	FormsModule
+  FormsModule,
+  AgmCoreModule.forRoot({
+    apiKey: 'AIzaSyCbacKCVoG5Oplis1L0IOvOy5Dwm3i3ICU'
+  })
   ],
   providers: [HttpService, AuthService, NotificationService],
   bootstrap: [AppComponent]

@@ -37,21 +37,24 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
   toPriceInput : number;
   typeNameSelected : string;
 
+  numberOfCarsPerPage = 3;
   pageNumber: number = 1;
   totalNumber: number = 0;
   totalPages: number = 1;
   pageNumbers: number[] = [];
+  numberOfCars : number;
+  model: any={};
+  koordinates: any[];
   
 
   constructor(public httpService: HttpService,private authService: AuthService, private router: Router,private route: ActivatedRoute, private serviceManager : ServiceManager) { 
-
+    this.koordinates = [];
     this.komentar = '';
-    this.smeDaOceni = false;
+    this.smeDaOceni = true;
     this.client = false;
     this.manager = false;
     this.admin = false;
     this.rates = [];
-    this.cars = [];
     this.carsForPrikaz = [];
     this.typeNameSelected = "All";
     this.types = [];
@@ -61,11 +64,7 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
     this.fromPriceInput = 0;
     this.toPriceInput = 9999999; 
     this.service = new Service(-1,'','','','',-1,'',false,0);
-    this.serviceId = -1;
     this.rate = new Rate(-1,0,'',-1,-1,null);
-    
-
-      //zahtev za sve ocene pa filter po servisu
 
   }
 
@@ -73,18 +72,17 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
     if(changes['service'])
     {
 
-      
+      if(this.service != undefined)
+      {
+
+      }
   
     }
   }
 
   ngOnInit() {
-
-    
-
     if(this.authService.currentUserName() != undefined)
     {
-       
         if(this.authService.currentUserName().length > 0)
         {
             if(this.authService.isLoggedInRole('Admin'))
@@ -103,6 +101,11 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
             }
         }
     }
+
+    this.sub = this.route.params.subscribe(params => {
+      this.serviceId = +params['id']; // (+) converts string 'id' to a number
+   });
+
     this.httpService.getTypeOfVehicle(this.authService.currentUserToken()).subscribe(
       (res: any) => {
                
@@ -113,10 +116,6 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
       error =>{
          console.log(error);
       });
-
-    this.sub = this.route.params.subscribe(params => {
-      this.serviceId = +params['id']; // (+) converts string 'id' to a number
-   });
 
    this.serviceManager.getService(this.authService.currentUserToken(), this.serviceId).subscribe(
     (res: any) => {
@@ -129,76 +128,86 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
              {
                 this.smeDaIzmeni = false;
              }
-        this.serviceManager.allRatesService(this.service.Id,this.authService.currentUserToken()).subscribe
-        (
-          (res : any) =>
-          {
-                  res.forEach(element => {
-                    this.rates.push(element);
-                  });
-          },
-          error =>
-          {
-    
-          }
-          
-        )
-        if(this.authService.currentUserName() != undefined)
-        {
-            this.serviceManager.canLeaveComment(this.authService.currentUserId(),this.service.Id,this.authService.currentUserToken()).subscribe
-            (
-                (res:any) =>
+             this.serviceManager.allRatesService(this.service.Id,this.authService.currentUserToken()).subscribe
+             (
+               (res : any) =>
+               {
+                       res.forEach(element => {
+                         this.rates.push(element);
+                       });
+               },
+               error =>
+               {
+         
+               }
+               
+             )
+             if(this.authService.currentUserName() != undefined)
+             {
+                 this.serviceManager.canLeaveComment(this.authService.currentUserId(),this.service.Id,this.authService.currentUserToken()).subscribe
+                 (
+                     (res:any) =>
+                     {
+                               this.smeDaOceni = true;
+                               
+                     },
+                     error =>
+                     {
+                              this.smeDaOceni = false;
+                     }
+     
+                     
+                 )
+               }
+             this.serviceManager.getBranches(this.authService.currentUserToken()).subscribe(
+              (res: any) => {
+                for(var f1 = 0; f1 < res.length; f1++)
                 {
-                          this.smeDaOceni = true;
-                          
-                },
-                error =>
-                {
-                         this.smeDaOceni = false;
+                  if(res[f1].ServiceId == this.service.Id)
+                  {
+                    var djesTijana = 
+                    {
+                      Latitude: res[f1].Latitude,
+                      Longitude: res[f1].Longitude,
+                      info : res[f1].Name + " (" + res[f1].Address + ")"
+                    }
+                    this.koordinates.push(djesTijana);
+                  }
                 }
+              },
+              error =>{
+                console.log(error);
+              }
+             );
 
-                
-            )
-          }
-      
+             this.serviceManager.getPaginationWithFilterCount(this.authService.currentUserToken(), 1, this.numberOfCarsPerPage, "*", "*", "*", 0, 999999, "All", this.service.Id).subscribe(
+              (res: any) => {
+                       this.numberOfCars = res;
+                       this.totalNumber = this.numberOfCars;
+                       this.totalPages = this.totalNumber / this.numberOfCarsPerPage;
+                       for (var index = 1; index <= (this.totalPages + 1); index++) {
+                         this.pageNumbers.push(index);
+                       }
+                       
+                       this.serviceManager.getCarsPaginigWithFilter(this.authService.currentUserToken(), 1, this.numberOfCarsPerPage, "*", "*", "*", 0, 999999, "All", this.service.Id).subscribe(
+                        (res: any) => {
+                          for(let i=0; i<res.length; i++){
+                              this.carsForPrikaz.push(res[i]);
+                          }
+                  
+                          },
+                          error =>{ 
+                          });
+              },
+              error =>{
+                 console.log(error);
+                 
+              });
           },
     error =>{
        console.log(error);
     });
 
-    this.serviceManager.getCars(this.authService.currentUserToken()).subscribe(
-      (res: any) => {
-               
-              for(let i=0; i<res.length; i++){
-                if(res[i].serviceId == this.serviceId)
-                {
-                  this.cars.push(res[i]); //use i instead of 0
-                }
-            }     
-      },
-      error =>{
-         console.log(error);
-         
-      });
-
-      this.totalNumber = this.cars.length;
-      this.totalPages = this.totalNumber / 3;
-      for (var index = 1; index < (this.totalPages + 1); index++) {
-        this.pageNumbers.push(index);
-      }
-
-      this.serviceManager.getCarsPaginig(this.authService.currentUserToken(), this.pageNumber, 3).subscribe(
-        (res: any) => {
-          for(let i=0; i<res.length; i++){
-            if(res[i].ServiceId == this.serviceId)
-            {
-              this.carsForPrikaz.push(res[i]);
-            }
-          }
-  
-          },
-          error =>{ 
-          });
   }
 
   ngOnDestroy() {
@@ -299,19 +308,41 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
     }
 
     this.carsForPrikaz = [];
-    this.serviceManager.getCarsPaginigWithFilter(this.authService.currentUserToken(), this.pageNumber, 3, manuParam, modelParam, yearParam, this.fromPriceInput, this.toPriceInput, this.typeNameSelected).subscribe(
-    (res: any) => {
-      for(let i=0; i<res.length; i++){
-        if(res[i].ServiceId == this.serviceId)
-        {
-          this.carsForPrikaz.push(res[i]);
-        }
-      }
-
+    this.pageNumbers = [];
+    this.serviceManager.getPaginationWithFilterCount(this.authService.currentUserToken(), num, this.numberOfCarsPerPage, manuParam, modelParam, yearParam, this.fromPriceInput, this.toPriceInput, this.typeNameSelected, this.serviceId).subscribe(
+      (res: any) => {
+               this.numberOfCars = res;
+               this.totalNumber = this.numberOfCars;
+               this.totalPages = this.totalNumber / this.numberOfCarsPerPage;
+               for (var index = 1; index <= (this.totalPages + 1); index++) {
+                 this.pageNumbers.push(index);
+               }
+               
+               this.serviceManager.getCarsPaginigWithFilter(this.authService.currentUserToken(), num, this.numberOfCarsPerPage, manuParam, modelParam, yearParam, this.fromPriceInput, this.toPriceInput, this.typeNameSelected, this.serviceId).subscribe(
+                (res: any) => {
+                  for(let i=0; i<res.length; i++){
+                      this.carsForPrikaz.push(res[i]);
+                  }
+          
+                  },
+                  error =>{ 
+                  });
       },
-      error =>{ 
-        console.log(error);
+      error =>{
+         console.log(error);
+         
       });
+  }
+
+  mapClicked($event: any)
+  {
+    this.model = 
+    {
+      Latitude: $event.coords.lat,
+      Longitude: $event.coords.lng
+    }
+
+    alert(this.model.Latitude + " " + this.model.Longitude);
   }
 
   receiveDelete($event){
@@ -332,26 +363,9 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
 
   }
 
+  
   receiveMessage($event) {
-    this.cars = [];
-    this.carsForPrikaz = [];
-    this.serviceManager.getCars(this.authService.currentUserToken()).subscribe(
-      (res: any) => {
-               
-              for(let i=0; i<res.length; i++){
-                this.cars.push(res[i]);
-            }     
-      },
-      error =>{ 
-      });
-
-      this.totalNumber = this.cars.length;
-      this.totalPages = this.totalNumber / 3;
-      for (var index = 1; index < (this.totalPages + 1); index++) {
-        this.pageNumbers.push(index);
-      }
-
-      this.doPaginacija(1);
+    this.doPaginacija(1);
   }
 
 }
