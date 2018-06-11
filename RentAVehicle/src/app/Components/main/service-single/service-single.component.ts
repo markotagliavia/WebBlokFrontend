@@ -154,15 +154,12 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
 
       this.serviceManager.getCarsPaginig(this.authService.currentUserToken(), this.pageNumber, 3).subscribe(
         (res: any) => {
-          var temp : Vehicle[];
           for(let i=0; i<res.length; i++){
-            temp.push(res[i]);
-          }
-            temp.forEach(element => {
-            if (element.ServiceId == this.serviceId) {
-              this.carsForPrikaz.push(element);
+            if(res[i].ServiceId == this.serviceId)
+            {
+              this.carsForPrikaz.push(res[i]);
             }
-            });
+          }
   
           },
           error =>{ 
@@ -198,7 +195,20 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
 
   doPagination(num : number)
   {
-    //to do
+    this.carsForPrikaz = [];
+    this.serviceManager.getCarsPaginigWithFilter(this.authService.currentUserToken(), this.pageNumber, 3, this.manuNameInput, this.modelNameInput, this.yearInput, this.fromPriceInput, this.toPriceInput, this.typeNameSelected).subscribe(
+    (res: any) => {
+      for(let i=0; i<res.length; i++){
+        if(res[i].ServiceId == this.serviceId)
+        {
+          this.carsForPrikaz.push(res[i]);
+        }
+      }
+
+      },
+      error =>{ 
+        console.log(error);
+      });
   }
 
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Service } from '../../../Model/service';
 import { ServiceManager } from '../../../Services/[services].service'; 
 import { AuthService } from '../../../Services/auth.service';
-
+import {DomSanitizer } from '@angular/platform-browser'
 @Component({
   selector: 'app-admin-panel-service-managing',
   templateUrl: './admin-panel-service-managing.component.html',
@@ -11,13 +11,15 @@ import { AuthService } from '../../../Services/auth.service';
 export class AdminPanelServiceManagingComponent implements OnInit {
 
   services : Service[];
+  safeURL : string;
 
-  constructor(public serviceManager : ServiceManager, public authService : AuthService) { 
+  constructor(public serviceManager : ServiceManager, public authService : AuthService, private sanitizer: DomSanitizer) { 
     this.services = [];
     this.serviceManager.getServices(this.authService.currentUserToken()).subscribe(
       (res: any) => {
                
               for(let i=0; i<res.length; i++){
+                res[i].Path = sanitizer.bypassSecurityTrustUrl(res[i].Path);
                 this.services.push(res[i]); //use i instead of 0
             }     
       },
