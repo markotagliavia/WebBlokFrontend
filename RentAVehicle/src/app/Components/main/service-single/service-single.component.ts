@@ -193,10 +193,38 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
     //to do
   }
 
-  doPagination(num : number)
+  doPaginacija(num : number)
   {
+    var yearParam = "";
+    var modelParam = "";
+    var manuParam = "";
+    if(this.manuNameInput == "")
+    {
+      manuParam = "*";
+    }
+    else 
+    {
+      manuParam = this.manuNameInput;
+    }
+    if(this.modelNameInput == "")
+    {
+      modelParam = "*";
+    }
+    else 
+    {
+      modelParam = this.modelNameInput;
+    }
+    if(this.yearInput == "")
+    {
+      yearParam = "*";
+    }
+    else 
+    {
+      yearParam = this.yearInput;
+    }
+
     this.carsForPrikaz = [];
-    this.serviceManager.getCarsPaginigWithFilter(this.authService.currentUserToken(), this.pageNumber, 3, this.manuNameInput, this.modelNameInput, this.yearInput, this.fromPriceInput, this.toPriceInput, this.typeNameSelected).subscribe(
+    this.serviceManager.getCarsPaginigWithFilter(this.authService.currentUserToken(), this.pageNumber, 3, manuParam, modelParam, yearParam, this.fromPriceInput, this.toPriceInput, this.typeNameSelected).subscribe(
     (res: any) => {
       for(let i=0; i<res.length; i++){
         if(res[i].ServiceId == this.serviceId)

@@ -357,13 +357,23 @@ export class ServiceManager {
   ,manuName : string,modelName : string, year : string, fromPrice : number, toPrice : number, type : string): Observable<any>
   {
     const headers: Headers = new Headers();
-    headers.append('Content-type', 'application/json');
+    headers.append('Content-type', 'application/x-www-form-urlencoded');
     let usertoken = `Bearer ${token}`;
     headers.append('Authorization', usertoken);
 
     const opts: RequestOptions = new RequestOptions();
     opts.headers = headers;
-    var url = `http://localhost:51432/api/Vehicles/PaginationWithFilter/${pageNumber}/${pageSize}/${manuName}/${modelName}/${year}/${fromPrice}/${toPrice}/${type}`;
+    var url = `http://localhost:51432/api/Vehicles/PaginationWithFilter?pageNumber=${pageNumber}&pageSize=${pageSize}&manuName=${manuName}&modelName=${modelName}&year=${year}&fromPrice=${fromPrice}&toPrice=${toPrice}&type=${type}`;
+   /* JSON.stringify({
+      pageNumber: car.Id,
+      pageSize: car.Mark,
+      manuName : car.Available,
+      modelName: car.Model,
+      year: car.Description,
+      Year : car.Year,
+      TypeOfVehicleId: car.TypeOfVehicleId,
+      ServiceId: car.ServiceId
+    })*/
     return this.http.get(url, opts).pipe(map((res: Response) => this.extractData(res)));
   }
 
