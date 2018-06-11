@@ -160,6 +160,17 @@ export class AuthService {
         }
     }
 
+    currentUserFirstName(): string {
+        let currentUser = localStorage.getItem("currentUser");
+        if (currentUser !== null) {
+            let user: CurrentUser = JSON.parse(currentUser);
+            return user.name;
+        }
+        else {
+            return null;
+        }
+    }
+
 
     currentUserName(): string {
         let currentUser = localStorage.getItem("currentUser");

@@ -434,6 +434,31 @@ export class ServiceManager {
         Expired : reservation.Expired
       }), opts);
   }
+
+  checkReservationEdit(reservation : Reservation, token: string)
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+
+    return this.http.post(
+      `http://localhost:51432/api/Reservations/CheckReservationEdit`
+      ,
+      JSON.stringify({
+        Id: reservation.Id,
+        VehicleId : reservation.VehicleId,
+        StartDate : reservation.StartDate,
+        EndDate : reservation.EndDate,
+        AppUserId : reservation.AppUserId,
+        TotalPrice : reservation.TotalPrice,
+        Expired : reservation.Expired
+      }), opts);
+  }
+
   addReservation(reservation : Reservation, token: string)
   {
     const headers: Headers = new Headers();
@@ -459,6 +484,32 @@ export class ServiceManager {
       }), opts);
   }
 
+
+  editReservation(reservation : Reservation, token: string)
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+
+    return this.http.put(
+      `http://localhost:51432/api/Reservations/PutReservation/${reservation.Id}`
+      ,
+      JSON.stringify({
+        Id: reservation.Id,
+        VehicleId : reservation.VehicleId,
+        StartDate : reservation.StartDate,
+        EndDate : reservation.EndDate,
+        AppUserId : reservation.AppUserId,
+        TotalPrice : reservation.TotalPrice,
+        Expired : reservation.Expired,
+        BranchReservations : reservation.BranchReservations,
+      }), opts);
+  }
+
   getReservationsUser(id : number, token : string)
   {
     const headers: Headers = new Headers();
@@ -470,7 +521,37 @@ export class ServiceManager {
     opts.headers = headers;
 
     return this.http.get(
-      `http://localhost:51432/api/Reservations/GetUserReservation${id}`
+      `http://localhost:51432/api/Reservations/GetUserReservation/${id}`
+      ,opts
+    ).pipe(map((res: Response) => this.extractData(res)));
+  }
+
+  getReservation(id : number, token : string)
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+    return this.http.get(
+      `http://localhost:51432/api/Reservations/GetReservation/${id}`
+      ,opts
+    ).pipe(map((res: Response) => this.extractData(res)));
+  }
+
+  deleteReservation(id: number, token:string)
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+    return this.http.delete(
+      `http://localhost:51432/api/Reservations/DeleteReservation/${id}`
       ,opts
     ).pipe(map((res: Response) => this.extractData(res)));
   }

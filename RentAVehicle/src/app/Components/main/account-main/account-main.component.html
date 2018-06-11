@@ -82,9 +82,9 @@
 								<div class="visit">Action</div>
 							</div>
 							<div class="table-row" *ngFor = "let res of reservations">
-									<div class="visit">{{res.VehicleId}}</div>
-									<div class="visit">{{res.BranchReservations[0]}}</div>
-									<div class="visit">{{res.BranchReservations[1]}}</div>
+									<div class="visit">{{res.Vehicle.Model}}</div>
+									<div class="visit">{{res.BranchReservations[0].Branch.Name}}</div>
+									<div class="visit">{{res.BranchReservations[1].Branch.Name}}</div>
 									<div class="visit">{{res.StartDate}}</div>
 									<div class="visit">{{res.EndDate}}</div>
 									<div class="visit">{{res.TotalPrice}}</div>
