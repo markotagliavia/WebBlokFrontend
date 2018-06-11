@@ -43,6 +43,7 @@ export class BranchControlComponent implements OnChanges {
     {
       if(this.service != undefined)
       {
+        this.branches = [];
         this.serviceManager.getBranches(this.authService.currentUserToken()).subscribe(
           (res: any) => {
                    

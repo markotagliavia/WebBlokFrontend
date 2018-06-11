@@ -100,6 +100,22 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
               this.client = true;
             }
         }
+        else
+        {
+          this.smeDaOceni = false;
+          this.smeDaIzmeni = false;
+          this.client = false;
+          this.manager = false;
+          this.admin = false;
+        }
+    }
+    else
+    {
+      this.smeDaOceni = false;
+      this.smeDaIzmeni = false;
+      this.client = false;
+      this.manager = false;
+      this.admin = false;
     }
 
     this.sub = this.route.params.subscribe(params => {
@@ -266,7 +282,7 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
           },
           error =>
           {
-    
+              console.log(error);
           })
 
       },
@@ -326,6 +342,7 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
           
                   },
                   error =>{ 
+                    console.log(error);
                   });
       },
       error =>{
@@ -358,7 +375,7 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
           },
           error =>
           {
-    
+            console.log(error);
           })
 
   }
@@ -370,8 +387,27 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
 
   receiveMessageBranches($event)
   {
-    //to do ovde ja? cekaj da testiram
-    alert("MARKOOOOO");
+    this.koordinates = [];
+    this.serviceManager.getBranches(this.authService.currentUserToken()).subscribe(
+      (res: any) => {
+        for(var f1 = 0; f1 < res.length; f1++)
+        {
+          if(res[f1].ServiceId == this.service.Id)
+          {
+            var djesTijana = 
+            {
+              Latitude: res[f1].Latitude,
+              Longitude: res[f1].Longitude,
+              info : res[f1].Name + " (" + res[f1].Address + ")"
+            }
+            this.koordinates.push(djesTijana);
+          }
+        }
+      },
+      error =>{
+        console.log(error);
+      }
+     );
   }
 
 }
