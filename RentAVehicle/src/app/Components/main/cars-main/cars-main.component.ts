@@ -47,6 +47,7 @@ export class CarsMainComponent implements OnInit {
 
   receiveMessage($event) {
     this.cars = [];
+    this.carsForPrikaz = [];
     this.serviceManager.getCars(this.authService.currentUserToken()).subscribe(
       (res: any) => {
                
@@ -56,6 +57,14 @@ export class CarsMainComponent implements OnInit {
       },
       error =>{ 
       });
+
+      this.totalNumber = this.cars.length;
+      this.totalPages = this.totalNumber / 3;
+      for (var index = 1; index < (this.totalPages + 1); index++) {
+        this.pageNumbers.push(index);
+      }
+
+      this.doPaginacija(1);
   }
 
   ngOnInit() {
@@ -132,7 +141,21 @@ export class CarsMainComponent implements OnInit {
 
   doPaginacija(num : number)
   {
-    //to do
+    this.carsForPrikaz = [];
+      this.serviceManager.getCarsPaginigWithFilter(this.authService.currentUserToken(), this.pageNumber, 3, this.manuNameInput, this.modelNameInput, this.yearInput, this.fromPriceInput, this.toPriceInput, this.typeNameSelected).subscribe(
+      (res: any) => {
+        for(let i=0; i<res.length; i++){
+          this.carsForPrikaz.push(res[i]);
+        }
+        /*temp.forEach(element => {
+          if (element.ServiceId == this.serviceId) {
+            this.carsForPrikaz.push(element);
+          }*/
+
+        },
+        error =>{ 
+          console.log(error);
+        });
   }
 
 }

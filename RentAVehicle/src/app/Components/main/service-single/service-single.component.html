@@ -29,7 +29,7 @@
             <div class="row d-flex justify-content-center pb-40">
               <div>
                 <p style="color:black">Types:</p>
-                <select style="width:10em" name="typeNameSel" [(ngModel)] ="typeNameSelected" (change) = "promenaTipa()">
+                <select style="width:10em" name="typeNameSel" [(ngModel)] ="typeNameSelected" (change) = 'doPaginacija(1)'>
                   <option>All</option>
                   <option *ngFor = "let type of types" [value]="type.Name">{{type.Name}}</option>
                 </select>
@@ -37,24 +37,24 @@
     
               <div>
                   <p style="color:black">Manufacturer:</p>
-                  <input class="form-control txt-field" type="text" name="manuName" placeholder="Manufacturer" [(ngModel)]="manuNameInput">
+                  <input class="form-control txt-field" type="text" name="manuName" placeholder="Manufacturer" [(ngModel)]="manuNameInput" (change) = 'doPaginacija(1)'>
               </div>
     
               <div>
                   <p style="color:black">Model:</p>
-                  <input class="form-control txt-field" type="text" name="modelName" placeholder="Model" [(ngModel)]="modelNameInput">
+                  <input class="form-control txt-field" type="text" name="modelName" placeholder="Model" [(ngModel)]="modelNameInput" (change) = 'doPaginacija(1)'>
               </div>
     
               <div>
                   <p style="color:black">Year:</p>
-                  <input class="form-control txt-field" type="text" name="year" placeholder="Year" [(ngModel)]="yearInput">
+                  <input class="form-control txt-field" type="text" name="year" placeholder="Year" [(ngModel)]="yearInput" (change) = 'doPaginacija(1)'>
               </div>
     
               <div>
                   <p style="color:black">Price:</p>
-                  <input class="form-control txt-field" type="number" name="fromPrice" placeholder="From" [(ngModel)]="fromPriceInput">
+                  <input class="form-control txt-field" type="number" name="fromPrice" placeholder="From" [(ngModel)]="fromPriceInput" (change) = 'doPaginacija(1)'>
                   to
-                  <input class="form-control txt-field" type="number" name="toPrice" placeholder="To" [(ngModel)]="toPriceInput">
+                  <input class="form-control txt-field" type="number" name="toPrice" placeholder="To" [(ngModel)]="toPriceInput" (change) = 'doPaginacija(1)'>
               </div>
             </div>
   
