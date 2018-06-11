@@ -6,6 +6,10 @@ textarea.ng-pristine.ng-valid.ng-touched{
     width:30em;
 }
 
+textarea{
+    width:30em;
+}
+
 .managerOnly{
     background-color: darkseagreen;
 }

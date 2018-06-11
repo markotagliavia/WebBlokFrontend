@@ -67,23 +67,27 @@
           <hr>
           <br>
 
-              <app-rate-unit *ngFor = "let rate of rates" [rate] = 'rate'></app-rate-unit>
+              <app-rate-unit *ngFor = "let rate of rates" [rate] = 'rate' (messageEvent)="receiveDelete($event)"></app-rate-unit>
               <br>
               <hr>
               <br>
-          <div class="row d-flex justify-content-center">
+          <div class="row d-flex justify-content-center" *ngIf= "smeDaOceni" >
             <div class="single-review">  
               <div class="star">
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star"></span>
-                  <span class="fa fa-star"></span>
-                </div>
-                <br>
-              <textarea name="commField" [(ngModel)] = 'komentar'></textarea>
+                <span class="fa fa-star checked" *ngIf = "rate.Point >= 1" (click)='ocena(1)'></span>
+                <span class="fa fa-star" *ngIf = "rate.Point < 1" (click)='ocena(1)'></span>
+                <span class="fa fa-star checked" *ngIf = "rate.Point >= 2" (click)='ocena(2)'></span>
+                <span class="fa fa-star" *ngIf = "rate.Point < 2" (click)='ocena(2)'></span>
+                <span class="fa fa-star checked" *ngIf = "rate.Point >= 3" (click)='ocena(3)'></span>
+                <span class="fa fa-star" *ngIf = "rate.Point < 3" (click)='ocena(3)'></span>
+                <span class="fa fa-star checked" *ngIf = "rate.Point >= 4" (click)='ocena(4)'></span>
+                <span class="fa fa-star" *ngIf = "rate.Point < 4" (click)='ocena(4)'></span>
+                <span class="fa fa-star checked" *ngIf = "rate.Point >= 5" (click)='ocena(5)'></span>
+                <span class="fa fa-star" *ngIf = "rate.Point < 5" (click)='ocena(5)'></span>
+              </div>
+              <textarea [(ngModel)]="rate.Comment"></textarea>
               <br>
-              <a class="genric-btn primary btn-block text-center text-uppercase" *ngIf= "smeDaOceni"  (click) = 'oceni()' >Add rate</a>  
+              <a class="genric-btn primary btn-block text-center text-uppercase" (click) = 'oceni()' >Add rate</a>  
             </div>
           </div>
             

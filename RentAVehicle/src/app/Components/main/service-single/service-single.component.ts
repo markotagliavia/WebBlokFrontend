@@ -18,6 +18,7 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
   smeDaIzmeni: boolean;
   smeDaOceni: boolean;
   komentar: string;
+  rate : Rate;
   rates : Rate[];
   manager : boolean;
   client : boolean;
@@ -45,7 +46,7 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
   constructor(public httpService: HttpService,private authService: AuthService, private router: Router,private route: ActivatedRoute, private serviceManager : ServiceManager) { 
 
     this.komentar = '';
-    this.smeDaOceni = true;
+    this.smeDaOceni = false;
     this.client = false;
     this.manager = false;
     this.admin = false;
@@ -61,6 +62,7 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
     this.toPriceInput = 9999999; 
     this.service = new Service(-1,'','','','',-1,'',false,0);
     this.serviceId = -1;
+    this.rate = new Rate(-1,0,'',-1,-1,null);
     
 
       //zahtev za sve ocene pa filter po servisu
@@ -71,17 +73,18 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
     if(changes['service'])
     {
 
-      if(this.service != undefined)
-      {
-
-      }
+      
   
     }
   }
 
   ngOnInit() {
+
+    
+
     if(this.authService.currentUserName() != undefined)
     {
+       
         if(this.authService.currentUserName().length > 0)
         {
             if(this.authService.isLoggedInRole('Admin'))
@@ -126,6 +129,38 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
              {
                 this.smeDaIzmeni = false;
              }
+        this.serviceManager.allRatesService(this.service.Id,this.authService.currentUserToken()).subscribe
+        (
+          (res : any) =>
+          {
+                  res.forEach(element => {
+                    this.rates.push(element);
+                  });
+          },
+          error =>
+          {
+    
+          }
+          
+        )
+        if(this.authService.currentUserName() != undefined)
+        {
+            this.serviceManager.canLeaveComment(this.authService.currentUserId(),this.service.Id,this.authService.currentUserToken()).subscribe
+            (
+                (res:any) =>
+                {
+                          this.smeDaOceni = true;
+                          
+                },
+                error =>
+                {
+                         this.smeDaOceni = false;
+                }
+
+                
+            )
+          }
+      
           },
     error =>{
        console.log(error);
@@ -188,9 +223,49 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
     )
   }
 
+  ocena(star:number)
+  {
+      this.rate.Point = star;
+  }
+
   oceni()
   {
     //to do
+    if(this.rate.Comment.length == 0)
+    {
+      alert('Comment is required');
+      return false;
+    }
+    this.rate.AppUserId = this.authService.currentUserId();
+    this.rate.ServiceId = this.service.Id;
+    this.serviceManager.addNewRate(this.rate,this.authService.currentUserToken()).subscribe(
+
+      (res: any) =>
+      {
+
+        alert('Successfully add comment');
+        this.smeDaOceni = false;
+        this.rate = new Rate(-1,0,'',-1,-1,null);
+        this.rates = []; 
+        this.serviceManager.allRatesService(this.service.Id,this.authService.currentUserToken()).subscribe
+        (
+          (res : any) =>
+          {
+                  res.forEach(element => {
+                    this.rates.push(element);
+                  });
+          },
+          error =>
+          {
+    
+          })
+
+      },
+      error =>
+      {
+        alert('Do not have permission to leave a comment');
+      }
+    )
   }
 
   doPaginacija(num : number)
@@ -237,6 +312,46 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
       error =>{ 
         console.log(error);
       });
+  }
+
+  receiveDelete($event){
+
+    this.rates = [];
+    this.serviceManager.allRatesService(this.service.Id,this.authService.currentUserToken()).subscribe
+        (
+          (res : any) =>
+          {
+                  res.forEach(element => {
+                    this.rates.push(element);
+                  });
+          },
+          error =>
+          {
+    
+          })
+
+  }
+
+  receiveMessage($event) {
+    this.cars = [];
+    this.carsForPrikaz = [];
+    this.serviceManager.getCars(this.authService.currentUserToken()).subscribe(
+      (res: any) => {
+               
+              for(let i=0; i<res.length; i++){
+                this.cars.push(res[i]);
+            }     
+      },
+      error =>{ 
+      });
+
+      this.totalNumber = this.cars.length;
+      this.totalPages = this.totalNumber / 3;
+      for (var index = 1; index < (this.totalPages + 1); index++) {
+        this.pageNumbers.push(index);
+      }
+
+      this.doPaginacija(1);
   }
 
 }

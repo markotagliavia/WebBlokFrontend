@@ -10,6 +10,7 @@ import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
 import { PriceList } from '../Model/pricelist';
 import { Reservation } from '../Model/reservation';
+import { Rate } from '../Model/rate';
 
 
 @Injectable({
@@ -566,7 +567,100 @@ export class ServiceManager {
     ).pipe(map((res: Response) => this.extractData(res)));
   }
     //end of reservation section ----------------------------------------------------------------------------
-}
-//comments section ----------------------------------------------------------------------------
+    //comments section ----------------------------------------------------------------------------
+  addNewRate(rate: Rate, token: string)
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
 
-//end of comments section ----------------------------------------------------------------------------
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+
+    return this.http.post(
+      `http://localhost:51432/api/Rates/PostRate`
+      ,
+      JSON.stringify({
+        Id: rate.Id,
+        Point : rate.Point,
+        Comment : rate.Comment,
+        ServiceId : rate.ServiceId,
+        AppUserId : rate.AppUserId
+      }), opts);
+
+  }
+
+  allRatesService(serviceId :number, token : string )
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+
+    return this.http.get(
+      `http://localhost:51432/api/Rates/GetAllRatesService/${serviceId}`
+      ,opts
+    ).pipe(map((res: Response) => this.extractData(res)));
+  }
+
+  canLeaveComment(userId: number,serviceId :number, token : string )
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+
+    return this.http.get(
+      `http://localhost:51432/api/Rates/CanLeaveComment?id=${userId}&serviceId=${serviceId}`
+      ,opts
+    );
+  }
+
+  editRate(rate : Rate, token: string)
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+
+    return this.http.put(
+      `http://localhost:51432/api/Rates/PutRate/${rate.Id}`
+      ,
+      JSON.stringify({
+        Id: rate.Id,
+        Point : rate.Point,
+        Comment : rate.Comment,
+        ServiceId : rate.ServiceId,
+        AppUserId : rate.AppUserId
+      }), opts);
+  }
+
+  deleteRate(rate : Rate, token: string)
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+
+    return this.http.delete(
+      `http://localhost:51432/api/Rates/DeleteRate/${rate.Id}`
+      ,opts
+    );
+  }
+
+  //end of comments section ----------------------------------------------------------------------------
+}
+

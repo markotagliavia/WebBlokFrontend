@@ -1,17 +1,23 @@
-<div style="border:1px solid black; width:30em">
+<div class="single-review" >
   <div class="star">
-		<span class="fa fa-star checked" *ngIf = "rate.Point >= 1"></span>
-		<span class="fa fa-star" *ngIf = "rate.Point < 1"></span>
-		<span class="fa fa-star checked" *ngIf = "rate.Point >= 2"></span>
-    <span class="fa fa-star" *ngIf = "rate.Point < 2"></span>
-    <span class="fa fa-star checked" *ngIf = "rate.Point >= 3"></span>
-    <span class="fa fa-star" *ngIf = "rate.Point < 3"></span>
-    <span class="fa fa-star checked" *ngIf = "rate.Point >= 4"></span>
-    <span class="fa fa-star" *ngIf = "rate.Point < 4"></span>
-    <span class="fa fa-star checked" *ngIf = "rate.Point >= 5"></span>
-		<span class="fa fa-star" *ngIf = "rate.Point < 5"></span>
+    <span class="fa fa-star checked" *ngIf = "ocena >= 1" (click)='oceni(1)'></span>
+    <span class="fa fa-star" *ngIf = "ocena < 1" (click)='oceni(1)'></span>
+    <span class="fa fa-star checked" *ngIf = "ocena >= 2" (click)='oceni(2)'></span>
+    <span class="fa fa-star" *ngIf = "ocena < 2" (click)='oceni(2)'></span>
+    <span class="fa fa-star checked" *ngIf = "ocena >= 3" (click)='oceni(3)'></span>
+    <span class="fa fa-star" *ngIf = "ocena < 3" (click)='oceni(3)'></span>
+    <span class="fa fa-star checked" *ngIf = "ocena >= 4" (click)='oceni(4)'></span>
+    <span class="fa fa-star" *ngIf = "ocena < 4" (click)='oceni(4)'></span>
+    <span class="fa fa-star checked" *ngIf = "ocena >= 5" (click)='oceni(5)'></span>
+    <span class="fa fa-star" *ngIf = "ocena < 5" (click)='oceni(5)'></span>
   </div>
-  <textarea>{{rate.Comment}}</textarea>
+  <textarea [(ngModel)]="rate.Comment" *ngIf= "smeDaIzmeni" ></textarea>
+  <textarea [(ngModel)]="rate.Comment" *ngIf= "!smeDaIzmeni" disabled></textarea>
+  <br>
+  <p>Author</p>
+  <input class="form-control txt-field" type="text" name="name" placeholder="Name" [(ngModel)]="rate.AppUser.Username" disabled>
+    
+
   <a class="genric-btn success btn-block text-center text-uppercase" *ngIf= "smeDaIzmeni" (click) = 'edit()'>Edit</a>
   <br>
   <a class="genric-btn danger btn-block text-center text-uppercase" *ngIf= "smeDaIzmeni"  (click) = 'delete()' >Delete</a>
