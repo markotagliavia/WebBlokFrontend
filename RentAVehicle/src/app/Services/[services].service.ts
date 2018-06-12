@@ -411,6 +411,21 @@ export class ServiceManager {
         `http://localhost:51432/api/Vehicles/DeleteVehicle/${car.Id}`
         , opts);
   }
+
+  setAvailable(carId: number,token : string):Observable<any>
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+
+    return this.http.get(
+        `http://localhost:51432/api/Vehicles/SetAvaiable/${carId}`
+        , opts);
+  }
     //end of cars section ----------------------------------------------------------------------------
     //reservation section ----------------------------------------------------------------------------
   checkReservation(reservation : Reservation, token: string)

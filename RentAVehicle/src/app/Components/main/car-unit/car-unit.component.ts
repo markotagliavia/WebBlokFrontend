@@ -17,6 +17,7 @@ export class CarUnitComponent implements OnInit , OnChanges{
   client : boolean;
   manager : boolean;
   admin : boolean;
+  idui : string;
   @Output() messageEvent = new EventEmitter<string>();
 
   
@@ -25,6 +26,7 @@ export class CarUnitComponent implements OnInit , OnChanges{
     this.client = false;
     this.manager = false;
     this.admin = false;
+    //this.idui = "switch" + this.car.Id;
    }
 
    ngOnChanges(changes: SimpleChanges) {
@@ -49,6 +51,7 @@ export class CarUnitComponent implements OnInit , OnChanges{
   }
 
   ngOnInit() {
+    this.idui = "switch" + this.car.Id;
     if(this.authService.currentUserName() != undefined)
     {
         if(this.authService.currentUserName().length > 0)
@@ -71,28 +74,29 @@ export class CarUnitComponent implements OnInit , OnChanges{
     }
   }
 
-  checkedChange()
+  checkedChange(num : number)
   {
     if (this.car.Available == false) {
-     /* this.authService.ServiceCreationRight(this.user, this.authService.currentUserToken(), false).subscribe(
+     this.serviceManager.setAvailable(num, this.authService.currentUserToken()).subscribe(
         (res : any) => { 
-            this.refresh();
+           // this.car.Available = true;
         },
         error =>{
             console.log(error);
             window.alert(error);
-        });*/
+        });
     } else {
-      /*this.authService.ServiceCreationRight(this.user, this.authService.currentUserToken(), true).subscribe(
+      this.serviceManager.setAvailable(num, this.authService.currentUserToken()).subscribe(
         (res : any) => { 
-            this.refresh();
+          //this.car.Available = false;
         },
         error =>{
             console.log(error);
             window.alert(error);
-        });*/
+        });
     }
   }
+
 
   deleteVehicle()
   {

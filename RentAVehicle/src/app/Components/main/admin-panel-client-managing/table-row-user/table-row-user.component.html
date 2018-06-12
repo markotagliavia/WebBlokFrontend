@@ -11,9 +11,8 @@
 									<div class="visit" *ngIf = "manager">Manager</div>
 									<div class="visit" *ngIf = "manager"><a class="genric-btn primary">Client</a></div>
 									<div class="visit" *ngIf = "manager">
-										<div class="confirm-switch">
-											<input type="checkbox" id="confirm-switch" [(ngModel)]="user.CreateService" name="swithc" (change)="checkedChange()">
-											<label for="confirm-switch"></label>
+										<div>
+											<input type="checkbox" [(ngModel)]="user.CreateService" name="{{idui}}" (change)="checkedChange()">
 										</div>
 									</div>
 									

@@ -17,6 +17,7 @@ export class TableRowUserComponent implements OnInit {
   manager : boolean;
   unverified : boolean;
   currUserPom : CurrentUser;
+  idui : string;
 
   constructor(private http: HttpService, private authService: AuthService,private _DomSanitizationService: DomSanitizer) {
     this.client = false;
@@ -30,6 +31,7 @@ export class TableRowUserComponent implements OnInit {
 
   refresh()
   {
+    this.idui = "switch" + this.user.Id;
     if(this.user.Role == "AppUser" && this.user.Approved)
     {
       this.client = true;
