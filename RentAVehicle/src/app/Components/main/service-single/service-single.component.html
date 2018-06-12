@@ -21,6 +21,9 @@
       <agm-info-window>{{koordinata.info}}</agm-info-window>
   </agm-marker>
 </agm-map>
+<div class="row d-flex justify-content-center pb-40">
+  <img *ngFor="let koordinataa of koordinates" [src]="koordinataa.slika">
+</div>
 </div>
 </div>
 </section>

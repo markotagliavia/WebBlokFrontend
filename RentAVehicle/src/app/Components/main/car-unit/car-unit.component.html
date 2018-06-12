@@ -22,6 +22,6 @@
 			
 	</div>
 	<div class="col-lg-6 model-right">
-		<img class="img-fluid" src="assets/img/car.jpg" alt="">
+		<img class="img-fluid"   *ngIf="car.Pics.length > 0" [src]="car.Pics[0].Path" alt="">
 	</div>
 </div>

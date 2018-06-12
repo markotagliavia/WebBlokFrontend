@@ -47,6 +47,20 @@ export class ServiceManager {
         }), opts);
   }
 
+  getBranchPicture(id : number, token : string)
+  {
+    const headers: Headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    let usertoken = `Bearer ${token}`;
+    headers.append('Authorization', usertoken);
+
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = headers;
+
+    var url = `http://localhost:51432/api/Branches/Path/${id}`;
+    return this.http.get(url, opts).pipe(map((res: Response) => this.extractData(res)));
+  }
+
   putBranch(branch: Branch, branchNova : Branch, token: string) : Observable<any>
   {
     const headers: Headers = new Headers();
@@ -345,7 +359,7 @@ export class ServiceManager {
     ,manuName : string,modelName : string, year : string, fromPrice : number, toPrice : number, type : string, serviceId : number): Observable<any>
     {
       const headers: Headers = new Headers();
-      headers.append('Content-type', 'application/x-www-form-urlencoded');
+      headers.append('Content-type', 'application/json');
       let usertoken = `Bearer ${token}`;
       headers.append('Authorization', usertoken);
   
@@ -359,7 +373,7 @@ export class ServiceManager {
       ,manuName : string,modelName : string, year : string, fromPrice : number, toPrice : number, type : string, serviceId : number)
     {
       const headers: Headers = new Headers();
-      headers.append('Content-type', 'application/x-www-form-urlencoded');
+      headers.append('Content-type', 'application/json');
       let usertoken = `Bearer ${token}`;
       headers.append('Authorization', usertoken);
   
@@ -425,6 +439,30 @@ export class ServiceManager {
     return this.http.get(
         `http://localhost:51432/api/Vehicles/SetAvaiable/${carId}`
         , opts);
+  }
+
+  uploadCarPicture(carid: number, files : File[], token: string):Observable<any>
+  {
+
+      const headers: Headers = new Headers();
+      //headers.append('Content-type', 'multipart/form-data');
+      let usertoken = `Bearer ${token}`;
+      headers.append('Authorization', usertoken);
+
+      const opts: RequestOptions = new RequestOptions();
+      opts.headers = headers;
+      let formData:FormData = new FormData();
+      for(let i = 0; i < files.length; i++)
+      {
+        formData.append('uploadFile'+i, files[i], files[i].name);
+      }
+      
+      
+      
+      return this.http.post(
+          `http://localhost:51432/api/Upload/PostCarImage/${carid}`,
+          formData, opts);
+      
   }
     //end of cars section ----------------------------------------------------------------------------
     //reservation section ----------------------------------------------------------------------------

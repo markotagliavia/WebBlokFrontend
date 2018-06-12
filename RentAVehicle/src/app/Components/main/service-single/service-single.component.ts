@@ -181,12 +181,23 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
                 {
                   if(res[f1].ServiceId == this.service.Id)
                   {
-                    var djesTijana = 
-                    {
-                      Latitude: res[f1].Latitude,
-                      Longitude: res[f1].Longitude,
-                      info : res[f1].Name + " (" + res[f1].Address + ")"
-                    }
+                    var slikaPov = '';
+                    this.serviceManager.getBranchPicture(res[f1].Id,this.authService.currentUserToken()).subscribe(
+                         (res : any) => {
+                             slikaPov = res;
+                         },
+                         error =>{
+                           console.log(error);
+                         }
+       
+                   )
+                   var djesTijana =
+                   {
+                     Latitude: res[f1].Latitude,
+                     Longitude: res[f1].Longitude,
+                     info : res[f1].Name + " (" + res[f1].Address + ")",
+                     slika : slikaPov
+                   }
                     this.koordinates.push(djesTijana);
                   }
                 }
@@ -394,11 +405,22 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
         {
           if(res[f1].ServiceId == this.service.Id)
           {
-            var djesTijana = 
+            var slikaPov = '';
+             this.serviceManager.getBranchPicture(res[f1].Id,this.authService.currentUserToken()).subscribe(
+                  (res : any) => {
+                      slikaPov = res;
+                  },
+                  error =>{
+                    console.log(error);
+                  }
+
+            )
+            var djesTijana =
             {
               Latitude: res[f1].Latitude,
               Longitude: res[f1].Longitude,
-              info : res[f1].Name + " (" + res[f1].Address + ")"
+              info : res[f1].Name + " (" + res[f1].Address + ")",
+              slika : slikaPov
             }
             this.koordinates.push(djesTijana);
           }

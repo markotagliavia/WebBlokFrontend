@@ -2,7 +2,7 @@
 <app-navbar  [title] = "'Reservation'"></app-navbar>
 <section class="model-area section-gap" id="new_car">
 	<div class="container" style="width:30em">
-		<h4 class="row d-flex pb-30 justify-content-center" style="color:black">Book car_name from service_name</h4>
+		<h4 class="row d-flex pb-30 justify-content-center" style="color:black">Book car</h4>
 							<form class="form" role="form" autocomplete="off" novalidate>
 							    <div class="form-group">
 							       	<div class="default-select" id="default-select">
@@ -41,5 +41,9 @@
 									</div>
 								</div>
 							</form>
+							<br>
+							<div class="row d-flex pb-30 justify-content-center">
+								<img *ngFor = "let pic of car.Pics" [src]="pic.Path" style="padding-top:8px; width:20em; height:20em">
+							</div>
 						</div>
 </section>

@@ -93,7 +93,26 @@ export class AddNewCarComponent implements OnInit, OnDestroy {
             (res: any) =>
             {
                     console.log('ok');
-                    this.car = new Vehicle(-1,'','','','',true,-1,this.serviceId,[],[],-1);
+                    if(this.selectedFile != undefined)
+                    {
+                      this.serviceManager.uploadCarPicture(price.VehicleId,this.selectedFile,this.authService.currentUserToken()).subscribe
+                      (
+                            (res : any) => {
+                                    //alert(res._body);  
+                                    this.car = new Vehicle(-1,'','','','',true,-1,this.serviceId,[],[],-1);                             
+                            },
+                            error =>
+                            {
+                                    alert(error.json().Message);
+                                    return false;
+                            }
+                      )
+                      
+                    }
+                    else
+                    {
+                      this.car = new Vehicle(-1,'','','','',true,-1,this.serviceId,[],[],-1);  
+                    }
             },
             error =>
             {
@@ -102,23 +121,10 @@ export class AddNewCarComponent implements OnInit, OnDestroy {
             
           )
 
-         /* if(this.selectedFile != undefined)
-          {
-            this.serviceManager.uploadServicePicture(res._body,this.selectedFile[0],this.authService.currentUserToken()).subscribe
-            (
-                  (res : any) => {
-                          //alert(res._body);                             
-                  },
-                  error =>
-                  {
-                          alert(error.json().Message);
-                          return false;
-                  }
-            )
-          }*/
+        
               
             alert("Successfully added new vehicle");   
-            this.car = new Vehicle(-1,'','','','',true,-1,this.serviceId,[],[],-1);  
+            //this.car = new Vehicle(-1,'','','','',true,-1,this.serviceId,[],[],-1);  
       },
       error =>
       {
@@ -133,7 +139,13 @@ export class AddNewCarComponent implements OnInit, OnDestroy {
   }
 
   onFileChanged(event) {
-    this.selectedFile = event.target.files;
+    if(this.selectedFile == undefined)
+    {
+      this.selectedFile = [];
+    }
+    let p : File;
+    p = event.target.files[0];
+    this.selectedFile.push(p);
   }
 
 }
