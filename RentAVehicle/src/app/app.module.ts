@@ -40,6 +40,15 @@ import { RatesControlComponent } from './Components/main/service-single/rates-co
 import { RateUnitComponent } from './Components/main/service-single/rate-unit/rate-unit.component';
 import { EditReservationComponent } from './Components/main/edit-reservation/edit-reservation.component';
 import { NotificationsComponent } from './Components/main/notifications/notifications.component';
+import { AccountGuard } from './Components/main/account-main/account-guard';
+import { AddCarGuard } from './Components/main/add-new-car/add-new-car-guard';
+import { AddServiceGuard } from './Components/main/add-new-service/add-new-service-guard';
+import { AdminPanelGuard } from './Components/main/admin-panel-main/admin-panel-guard';
+import { EditCarGuard } from './Components/main/edit-car/edit-car-guard';
+import { EditReservationGuard } from './Components/main/edit-reservation/edit-reservation-guard';
+import { EditServiceGuard } from './Components/main/edit-service/edit-service-guard';
+import { ManagerPanelGuard } from './Components/main/manager-panel-main/manager-panel-guard';
+import { ReservationGuard } from './Components/main/reservation/reservation-guard';
 @NgModule({
   declarations: [
     AppComponent,
@@ -86,7 +95,7 @@ import { NotificationsComponent } from './Components/main/notifications/notifica
     apiKey: 'AIzaSyCbacKCVoG5Oplis1L0IOvOy5Dwm3i3ICU'
   })
   ],
-  providers: [HttpService, AuthService, NotificationService],
+  providers: [HttpService, AuthService, NotificationService, AccountGuard, AddCarGuard, AddServiceGuard, AdminPanelGuard, EditCarGuard, EditReservationGuard, EditServiceGuard, ManagerPanelGuard, ReservationGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
