@@ -86,7 +86,13 @@ export class EditCarComponent implements OnInit,OnChanges,OnDestroy {
   }
 
   onFileChanged(event) {
-    this.selectedFile = event.target.files;
+    if(this.selectedFile == undefined)
+    {
+      this.selectedFile = [];
+    }
+    let p : File;
+    p = event.target.files[0];
+    this.selectedFile.push(p);
   }
   ngOnDestroy() {
     this.sub.unsubscribe();
@@ -123,6 +129,26 @@ export class EditCarComponent implements OnInit,OnChanges,OnDestroy {
             (res: any) =>
             {
                     console.log('ok');
+                    if(this.selectedFile != undefined)
+                    {
+                      this.serviceManager.uploadCarPicture(price.VehicleId,this.selectedFile,this.authService.currentUserToken()).subscribe
+                      (
+                            (res : any) => {
+                                    //alert(res._body);  
+                                    //this.car = new Vehicle(-1,'','','','',true,-1,this.car,[],[],-1);                             
+                            },
+                            error =>
+                            {
+                                    alert(error.json().Message);
+                                    return false;
+                            }
+                      )
+                      
+                    }
+                    else
+                    {
+                      //this.car = new Vehicle(-1,'','','','',true,-1,this.serviceId,[],[],-1);  
+                    }
                     
             },
             error =>
@@ -132,20 +158,7 @@ export class EditCarComponent implements OnInit,OnChanges,OnDestroy {
             
           )
 
-         /* if(this.selectedFile != undefined)
-          {
-            this.serviceManager.uploadServicePicture(res._body,this.selectedFile[0],this.authService.currentUserToken()).subscribe
-            (
-                  (res : any) => {
-                          //alert(res._body);                             
-                  },
-                  error =>
-                  {
-                          alert(error.json().Message);
-                          return false;
-                  }
-            )
-          }*/
+         
               
             alert("Successfully edited vehicle");   
             

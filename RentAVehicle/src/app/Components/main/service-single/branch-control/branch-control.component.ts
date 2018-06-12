@@ -178,14 +178,54 @@ export class BranchControlComponent implements OnChanges {
           this.serviceManager.putBranch(this.branches[i],this.branch,this.authService.currentUserToken()).subscribe(
 
             (res: any) => {
-              this.branch = {
-                'Id' : -1,
-                'Name':'',
-                'Address' : '',
-                'Longitude': -1,
-                'Latitude' : -1,
-                'ServiceId' : -1,
-              };
+              if(this.selectedFile != undefined)
+              {
+                this.serviceManager.uploadBranchPicture(this.branches[i].Id,this.selectedFile,this.authService.currentUserToken()).subscribe
+                (
+                  (res : any) => {
+                    this.branch = {
+                      'Id' : -1,
+                      'Name':'',
+                      'Address' : '',
+                      'Longitude': -1,
+                      'Latitude' : -1,
+                      'ServiceId' : -1,
+                    };
+                    this.branches = [];
+                    this.serviceManager.getBranches(this.authService.currentUserToken()).subscribe(
+                    (res: any) => {
+                            
+                            for(let i=0; i<res.length; i++){
+                            if(this.service.Id == res[i].ServiceId) 
+                            {
+                              this.branches.push(res[i]); //use i instead of 0
+                            }
+                          }     
+                    },
+                    error =>{
+                      console.log(error);
+                    }
+                
+              )
+                  },
+                  error =>
+                  {
+
+                  }
+                )
+              }
+              else
+              {
+                this.branch = {
+                  'Id' : -1,
+                  'Name':'',
+                  'Address' : '',
+                  'Longitude': -1,
+                  'Latitude' : -1,
+                  'ServiceId' : -1,
+                };
+              }
+              
                    
               alert('Successfully modify branch');
               this.messageEvent.emit("ok");

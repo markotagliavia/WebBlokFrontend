@@ -17,13 +17,14 @@
 	<div class="container">
     <div class="row d-flex justify-content-center pb-40">
 <agm-map [latitude]=45.25024259251935  [longitude]=19.835199103219566 [zoom] = "11" (mapClick)="mapClicked($event)">
-  <agm-marker *ngFor="let koordinata of koordinates" [latitude]="koordinata.Latitude" [longitude]="koordinata.Longitude">
+  <agm-marker *ngFor="let koordinata of koordinates"   [latitude]="koordinata.Latitude" [longitude]="koordinata.Longitude">
       <agm-info-window>{{koordinata.info}}</agm-info-window>
   </agm-marker>
 </agm-map>
-<div class="row d-flex justify-content-center pb-40">
-  <img *ngFor="let koordinataa of koordinates" [src]="koordinataa.slika">
-</div>
+  <div *ngFor="let koordinataa of koordinates" >
+  <img [src]="koordinataa.slika" style="padding-top:8px; width:20em; height:20em">
+  <p>{{koordinataa.info}}</p>>
+  </div>
 </div>
 </div>
 </section>

@@ -181,24 +181,26 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
                 {
                   if(res[f1].ServiceId == this.service.Id)
                   {
+                    let pom = res[f1];
                     var slikaPov = '';
                     this.serviceManager.getBranchPicture(res[f1].Id,this.authService.currentUserToken()).subscribe(
                          (res : any) => {
                              slikaPov = res;
+                             var djesTijana =
+                            {
+                              Latitude: pom.Latitude,
+                              Longitude: pom.Longitude,
+                              info : pom.Name + " (" + pom.Address + ")",
+                              slika : slikaPov
+                            }
+                              this.koordinates.push(djesTijana);
                          },
                          error =>{
                            console.log(error);
                          }
        
                    )
-                   var djesTijana =
-                   {
-                     Latitude: res[f1].Latitude,
-                     Longitude: res[f1].Longitude,
-                     info : res[f1].Name + " (" + res[f1].Address + ")",
-                     slika : slikaPov
-                   }
-                    this.koordinates.push(djesTijana);
+                   
                   }
                 }
               },
@@ -405,24 +407,26 @@ export class ServiceSingleComponent implements OnChanges, OnDestroy,OnInit {
         {
           if(res[f1].ServiceId == this.service.Id)
           {
+            let pom = res[f1];
             var slikaPov = '';
              this.serviceManager.getBranchPicture(res[f1].Id,this.authService.currentUserToken()).subscribe(
                   (res : any) => {
                       slikaPov = res;
+                      var djesTijana =
+                      {
+                        Latitude: pom.Latitude,
+                        Longitude: pom.Longitude,
+                        info : pom.Name + " (" + pom.Address + ")",
+                        slika : slikaPov
+                      }
+            this.koordinates.push(djesTijana);
                   },
                   error =>{
                     console.log(error);
                   }
 
             )
-            var djesTijana =
-            {
-              Latitude: res[f1].Latitude,
-              Longitude: res[f1].Longitude,
-              info : res[f1].Name + " (" + res[f1].Address + ")",
-              slika : slikaPov
-            }
-            this.koordinates.push(djesTijana);
+            
           }
         }
       },
